@@ -1,16 +1,19 @@
-# librarian_frontend
+# Librarian Frontend
 
-A new Flutter project.
+This project contains the frontend application for the [Librarian](https://www.yourlibrarian.ca) platform.
 
-## Getting Started
+Built using Flutter levering Firebase, Get, and Redux.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- Cool feature
+ Info about the cool feature
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Cool feature 2
+ Info about the next cool feature
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Downloads
+
+- [Android](https://#)
+- [iOS](https://#)
+- [Web App](https://app.yourlibrarian.ca)
