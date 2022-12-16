@@ -9,89 +9,76 @@ final Map<String, dynamic> englishStrings = <String, dynamic>{
   'exit-confirmation-message': 'Do you want to exit?',
   'google-sign-in-button': 'Sign in with Google',
   'search-collection': 'Search collection ...',
-  'languages': <String, dynamic>{
-    'en': 'English',
-    'fr': 'French',
-    'es': 'Spanish',
-  },
-  'login': <String, dynamic>{
-    'email': 'Email',
-    'password': 'Password',
-    'sign-in': 'Sign In',
-    'verify-email': 'Verify email address before signing in!',
-    'error-initializing': 'Error initializing Firebase',
-    'empty-email': 'Email cannot be empty!',
-    'email-format': 'Email must be proper format!',
-    'empty-password': 'Password cannot be empty!',
-    'create-account': 'Sign Up',
-    'forgot-password': 'Forgot Password?'
-  },
-  'drawer': <String, dynamic>{
-    '1-book-msg': '1 book in library',
-    'no-books-msg': 'No books in library',
-    'num-books-msg': '{} books in library',
-    'signed-in-as': 'Signed in as',
-    'about-app': 'About app',
-    'sign-out': 'Sign out',
-    'settings': {
-      'title': 'Settings',
-      'dark-mode': 'Dark Mode',
-      'light-mode': 'Light Mode'
-    }
-  },
-  'parse-error': <String, dynamic>{
-    'author': 'Unknown author',
-    'title': 'Unknown title',
-    'publisher': 'Unknown Publisher'
-  },
-  'manual-search-dialog': <String, dynamic>{
-    'title': 'Keyword Search',
-    'body': 'Search for new books using one or more keywords below',
-    'search-row-labels': <String, dynamic>{
-      'keywords': 'Keywords',
-      'title': 'Title',
-      'author': 'Author',
-      'publisher': 'Publisher',
-      'isbn': 'ISBN'
-    }
-  },
-  'book-details-screen': <String, dynamic>{
-    'page-count': '{} pages',
-    'publisher': 'Published {} by {}',
-    'in-faves': 'In Faves',
-    'in-wishlist': 'In Wishlist',
-    'in-shopping-list': 'In Shopping List',
-    'have-read': 'Have Read'
-  },
-  'fancy-fab': <String, dynamic>{
-    'barcode-search': 'Search by barcode',
-    'keyword-search': 'Search by keywords',
-    'add-book-manually': 'Add book manually'
-  },
-  'filter-bar': <String, dynamic>{
-    'new': 'New',
-    'old': 'Old',
-    'author-asc': 'Author Asc',
-    'author-desc': 'Author Desc',
-    'title-asc': 'Title Asc',
-    'title-desc': 'Title Desc',
-    'published-asc': 'Published Asc',
-    'published-desc': 'Published Desc',
-    'all': 'All',
-    'faves': 'Faves',
-    'wishlist': 'Wishlist',
-    'unread': 'Unread',
-    'show': 'Show: ',
-    'sort': 'Sort: '
-  },
-  'search-results-dialog': <String, dynamic>{
-    'title': 'Search Results',
-    'body':
-        'Multiple results have been found!  Please select the correct book for your collection:'
-  },
+  'languages-en': 'English',
+  'languages-fr': 'French',
+  'languages-es': 'Spanish',
+  //
+  'login.email': 'Email',
+  'login.password': 'Password',
+  'login.sign-in': 'Sign In',
+  'login.verify-email': 'Verify email address before signing in!',
+  'login.error-initializing': 'Error initializing Firebase',
+  'login.empty-email': 'Email cannot be empty!',
+  'login.email-format': 'Email must be proper format!',
+  'login.empty-password': 'Password cannot be empty!',
+  'login.create-account': 'Sign Up',
+  'login.forgot-password': 'Forgot Password?',
+  //
+  'drawer.1-book-msg': '1 book in library',
+  'drawer.no-books-msg': 'No books in library',
+  'drawer.num-books-msg': '{} books in library',
+  'drawer.signed-in-as': 'Signed in as',
+  'drawer.about-app': 'About app',
+  'drawer.sign-out': 'Sign out',
+  'drawer.settings.title': 'Settings',
+  'drawer.settings.dark-mode': 'Dark Mode',
+  'drawer.settings.light-mode': 'Light Mode',
+  //
+  'parse-error.author': 'Unknown author',
+  'parse-error.title': 'Unknown title',
+  'parse-error.publisher': 'Unknown Publisher',
+  //
+  'manual-search-dialog.title': 'Keyword Search',
+  'manual-search-dialog.body':
+      'Search for new books using one or more keywords below',
+  'manual-search-dialog.search-row-labels.keywords': 'Keywords',
+  'manual-search-dialog.search-row-labels.title': 'Title',
+  'manual-search-dialog.search-row-labels.author': 'Author',
+  'manual-search-dialog.search-row-labels.publisher': 'Publisher',
+  'manual-search-dialog.search-row-labels.isbn': 'ISBN',
+  //
+  'book-details-screen.page-count': '{} pages',
+  'book-details-screen.publisher': 'Published {} by {}',
+  'book-details-screen.in-faves': 'In Faves',
+  'book-details-screen.in-wishlist': 'In Wishlist',
+  'book-details-screen.in-shopping-list': 'In Shopping List',
+  'book-details-screen.have-read': 'Have Read',
+  //
+  'fancy-fab.barcode-search': 'Search by barcode',
+  'fancy-fab.keyword-search': 'Search by keywords',
+  'fancy-fab.add-book-manually': 'Add book manually',
+  //
+  'filter-bar.new': 'New',
+  'filter-bar.old': 'Old',
+  'filter-bar.author-asc': 'Author Asc',
+  'filter-bar.author-desc': 'Author Desc',
+  'filter-bar.title-asc': 'Title Asc',
+  'filter-bar.title-desc': 'Title Desc',
+  'filter-bar.published-asc': 'Published Asc',
+  'filter-bar.published-desc': 'Published Desc',
+  'filter-bar.all': 'All',
+  'filter-bar.faves': 'Faves',
+  'filter-bar.wishlist': 'Wishlist',
+  'filter-bar.unread': 'Unread',
+  'filter-bar.show': 'Show: ',
+  'filter-bar.sort': 'Sort: ',
+  //
+  'search-results-dialog.title': 'Search Results',
+  'search-results-dialog.body':
+      'Multiple results have been found!  Please select the correct book for your collection:',
+  //
   'grid-resize-modal': <String, dynamic>{'title': 'Grid item size: '},
-  'color-picker': <String, dynamic>{
-    'title': 'Choose Accent Color',
-    'submit-button': 'OK'
-  }
+  //
+  'color-picker.title': 'Choose Accent Color',
+  'color-picker.submit-button': 'OK',
 };
