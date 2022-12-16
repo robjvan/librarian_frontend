@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:librarian_frontend/pages/library_screen/library_screen.dart';
+import 'package:librarian_frontend/state.dart';
 import 'package:redux/redux.dart';
-
-import '../../screens/screens.dart';
-import '../../state.dart';
 
 class GoogleSignInButtonViewModel {
   final TextStyle buttonCaptionStyle;
@@ -21,7 +20,9 @@ class GoogleSignInButtonViewModel {
   factory GoogleSignInButtonViewModel.create(Store<GlobalAppState> store) {
     void _navToIntroScreen(User user, BuildContext ctx) {
       Navigator.of(ctx).pushReplacement(
-        MaterialPageRoute(builder: (context) => IntroScreen(user: user)),
+        // TODO(Rob): Implement intro screen
+        // MaterialPageRoute(builder: (context) => IntroScreen(user: user)),
+        MaterialPageRoute(builder: (context) => const LibraryScreen()),
       );
     }
 
