@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:librarian_frontend/api/apis.dart';
+import 'package:librarian_frontend/firebase_options.dart';
 import 'package:librarian_frontend/init.dart';
 import 'package:librarian_frontend/middleware/middleware.dart';
 import 'package:librarian_frontend/pages/pages.dart';
@@ -11,7 +13,6 @@ import 'package:librarian_frontend/reducers/reducers.dart';
 import 'package:librarian_frontend/routes.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:redux/redux.dart';
-
 
 Store<GlobalAppState>? globalStore;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -23,6 +24,7 @@ GoogleBooksApi googleBooksApi = GoogleBooksApi(googleBooksApiProvider);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // if (await Config().isRooted()) {
   //   log('Device is rooted, preventing app start');
