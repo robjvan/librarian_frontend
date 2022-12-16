@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
+import 'package:librarian_frontend/pages/library_screen/library_screen.dart';
 import 'package:librarian_frontend/pages/login_screen/login_screen_view_model.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
@@ -14,8 +16,8 @@ import 'package:librarian_frontend/utilities/authentication.dart';
 import 'package:librarian_frontend/widgets/widgets.dart';
 import 'package:redux/redux.dart';
 
-// final CollectionReference<Map<String, dynamic>> usersRef =
-//     FirebaseFirestore.instance.collection('users');
+final CollectionReference<Map<String, dynamic>> usersRef =
+    FirebaseFirestore.instance.collection('users');
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({final Key? key}) : super(key: key);
