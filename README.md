@@ -2,7 +2,7 @@
 
 This project contains the frontend application for the [Librarian](https://www.yourlibrarian.ca) platform.
 
-Built using Flutter levering Firebase, Get, and Redux.
+Built using Flutter leveraging Firebase, Get, and Redux.
 
 ## Features
 
