@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/main.dart';
 import 'package:librarian_frontend/models/models.dart';
-import 'package:librarian_frontend/screens/login_screen/login_screen.dart';
+import 'package:librarian_frontend/pages/login_screen/login_screen.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/widgets/widgets.dart';
 import 'package:redux/redux.dart';
