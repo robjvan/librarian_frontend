@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "501589424932",
+    "firebase_url": "https://librarianapp-default-rtdb.firebaseio.com",
+    "project_id": "librarianapp",
+    "storage_bucket": "librarianapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501589424932:android:cf70b64af35105bfc311b1",
+        "android_client_info": {
+          "package_name": "ca.eastcoastdev.librarian"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501589424932-ib4l61ao2sslaccl9c4dge7phg1knio8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH87okQyTf34eaLqyvfioK2epIsmeT9W4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501589424932-ib4l61ao2sslaccl9c4dge7phg1knio8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "501589424932-3qhdg7i2m9o3tcf2mklrvpcmbq137fkg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ca.eastcoastdev.librarian"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501589424932:android:3dd19e6964159926c311b1",
+        "android_client_info": {
+          "package_name": "ca.robjvan.librarian_frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501589424932-93b9rmrkrf4ajshcbv4ukgaclampmb92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.robjvan.librarian_frontend",
+            "certificate_hash": "32852ff9a648ae94f00416a4cc5c8b8ee85a4dd5"
+          }
+        },
+        {
+          "client_id": "501589424932-bff4ijq5gbh86d68sabsa8kmptjppsce.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.robjvan.librarian_frontend",
+            "certificate_hash": "730d98a8f7a1adebd2445b19b477df848a41c4ae"
+          }
+        },
+        {
+          "client_id": "501589424932-ib4l61ao2sslaccl9c4dge7phg1knio8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH87okQyTf34eaLqyvfioK2epIsmeT9W4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501589424932-ib4l61ao2sslaccl9c4dge7phg1knio8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "501589424932-3qhdg7i2m9o3tcf2mklrvpcmbq137fkg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ca.eastcoastdev.librarian"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
