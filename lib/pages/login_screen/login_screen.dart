@@ -73,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // return 'Email must be proper format!';
             return 'login.email-format'.tr;
           }
+          return null;
         },
       );
 
@@ -89,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (text == null || text.isEmpty) {
             return 'login.empty-password'.tr;
           }
+          return null;
         },
       );
 
@@ -150,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     await usersRef.doc(user.uid).get();
 
                 if (!doc.exists) {
-                  await usersRef.doc(user.uid).set({
+                  await usersRef.doc(user.uid).set(<String, dynamic>{
                     'id': user.uid,
                     'email': user.email,
                     'photoUrl': user.photoURL,
@@ -162,29 +164,36 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 if (doc.get('firstRun') == true) {
                   unawaited(
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute<dynamic>(
-                        builder: (final BuildContext context) =>
-                            IntroScreen(user: user),
-                      ),
-                    ),
+                    Get.offAll(IntroScreen(user: user)),
+                    // Navigator.of(context).pushReplacement(
+                    //   MaterialPageRoute<dynamic>(
+                    //     builder: (final BuildContext context) =>
+                    //         IntroScreen(user: user),
+                    //   ),
+                    // ),
                   );
                 } else {
                   unawaited(
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute<dynamic>(
-                        builder: (final BuildContext context) =>
-                            const LibraryScreen(),
-                      ),
-                    ),
+                    Get.offAll(const LibraryScreen()),
+                    // Navigator.of(context).pushReplacement(
+                    //   MaterialPageRoute<dynamic>(
+                    //     builder: (final BuildContext context) =>
+                    //         const LibraryScreen(),
+                    //   ),
+                    // ),
                   );
                 }
               } else {
                 await user
                     ?.sendEmailVerification(); // TODO: Remove this later, move it to SignUp methods
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('login.verify-email'.tr)),
+                Get.snackbar(
+                  '',
+                  'login.verify-email'.tr,
+                  snackPosition: SnackPosition.TOP,
                 );
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   SnackBar(content: Text('login.verify-email'.tr)),
+                // );
                 await FirebaseAuth.instance.signOut();
               }
             }

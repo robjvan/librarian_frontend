@@ -86,6 +86,8 @@ linter:
     # lines_longer_than_80_chars: true
     # Missing whitespace between adjacent strings
     missing_whitespace_between_adjacent_strings: true
+    
+    no_leading_underscores_for_local_identifiers: false
     # Noop primitive operations
     noop_primitive_operations: true
     # Provide doc comments for all public APIs

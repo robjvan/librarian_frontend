@@ -33,15 +33,19 @@ class IntroScreen extends StatelessWidget {
         child: IntroductionScreen(
           pages: buildIntroPages,
           onDone: () {
-            usersRef.doc(user!.uid).update({'firstRun': false});
+            usersRef.doc(user!.uid).update(<String, bool>{'firstRun': false});
             Navigator.of(context).push(
-              MaterialPageRoute<dynamic>(builder: (_) => const LibraryScreen()),
+              MaterialPageRoute<dynamic>(
+                builder: (final _) => const LibraryScreen(),
+              ),
             );
           },
           onSkip: () {
-            usersRef.doc(user!.uid).update({'firstRun': false});
+            usersRef.doc(user!.uid).update(<String, bool>{'firstRun': false});
             Navigator.of(context).push(
-              MaterialPageRoute<dynamic>(builder: (_) => const LibraryScreen()),
+              MaterialPageRoute<dynamic>(
+                builder: (final _) => const LibraryScreen(),
+              ),
             );
           },
           showSkipButton: true,

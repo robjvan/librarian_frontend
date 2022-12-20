@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/api/api_utils.dart';
 import 'package:librarian_frontend/api/apis.dart';
@@ -36,10 +38,11 @@ Middleware<GlobalAppState> handleSearchIsbnRequest() {
         int? selectedIndex;
 
         if (results.length > 1) {
-          selectedIndex = await showDialog(
-            context: navigatorKey.currentContext!,
-            builder: (final _) => SearchResultsDialog(results),
-          );
+          selectedIndex = await Get.dialog(SearchResultsDialog(results));
+          // selectedIndex = await showDialog(
+          //   context: navigatorKey.currentContext!,
+          //   builder: (final _) => SearchResultsDialog(results),
+          // );
           if (selectedIndex != -1) {
             selectedBook = results[selectedIndex!];
           }
@@ -50,16 +53,22 @@ Middleware<GlobalAppState> handleSearchIsbnRequest() {
           store.dispatch(AddBookToCollectionAction(selectedBook));
         }
       } else {
-        await showDialog(
-          context: navigatorKey.currentContext!,
-          builder: (final _) => const ErrorDialog('Try a different barcode.'),
-        ); // TODO(Rob): Add translations
+        unawaited(
+          Get.dialog(
+            const ErrorDialog(
+              'Try a different barcode.', // TODO(Rob): Add translations
+            ),
+          ),
+        );
       }
     } on Exception {
-      await showDialog(
-        context: navigatorKey.currentContext!,
-        builder: (final _) => const ErrorDialog('Try a different barcode.'),
-      ); // TODO(Rob): Add translations
+      unawaited(
+        Get.dialog(
+          const ErrorDialog(
+            'Try a different barcode.', // TODO(Rob): Add translations
+          ),
+        ),
+      );
     }
   };
 }
@@ -103,15 +112,15 @@ Middleware<GlobalAppState> handleKeywordSearchRequest() {
 
       try {
         if (results!.isNotEmpty) {
-          int? selectedIndex;
+          int selectedIndex = -1;
 
           if (results.length > 1) {
-            selectedIndex = await showDialog(
-              context: navigatorKey.currentContext!,
-              builder: (final _) => SearchResultsDialog(results),
+            selectedIndex = await Get.dialog(
+              SearchResultsDialog(results),
             );
+
             if (selectedIndex != -1) {
-              selectedBook = results[selectedIndex!];
+              selectedBook = results[selectedIndex];
             }
           } else {
             selectedBook = results[0];

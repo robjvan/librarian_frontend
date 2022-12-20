@@ -16,9 +16,9 @@ class Book extends Entity<Book> {
   final String isbn10;
 
   final int? pageCount;
-  final String publishYear;
-  final int readCount;
-  final double rating;
+  final String? publishYear;
+  final int? readCount;
+  final double? rating;
 
   final bool isMature;
   final bool haveRead;

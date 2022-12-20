@@ -26,7 +26,7 @@ final Map<String, String> englishStrings = <String, String>{
   //
   'drawer.1-book-msg': '1 book in library',
   'drawer.no-books-msg': 'No books in library',
-  'drawer.num-books-msg': '{} books in library',
+  'drawer.num-books-msg': '@numBooks books in library',
   'drawer.signed-in-as': 'Signed in as',
   'drawer.about-app': 'About app',
   'drawer.sign-out': 'Sign out',
@@ -47,7 +47,7 @@ final Map<String, String> englishStrings = <String, String>{
   'manual-search-dialog.search-row-labels.publisher': 'Publisher',
   'manual-search-dialog.search-row-labels.isbn': 'ISBN',
   //
-  'book-details-screen.page-count': '{} pages',
+  'book-details-screen.page-count': '@pageCount pages',
   'book-details-screen.publisher': 'Published {} by {}',
   'book-details-screen.in-faves': 'In Faves',
   'book-details-screen.in-wishlist': 'In Wishlist',

@@ -75,7 +75,7 @@ class SettingsStateRepository extends Entity<SettingsStateRepository> {
   bool get isValid => !isNotValid;
 
   @override
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'useDarkMode': useDarkMode,
         'useGridView': useGridView,
         'searchBoxVisible': false,

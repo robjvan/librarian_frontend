@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 
-import '../pages/library_screen/library_screen.dart';
 
 class Authentication {
   // this method initializes the Firebase App
