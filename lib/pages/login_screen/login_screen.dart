@@ -4,17 +4,14 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
-import 'package:librarian_frontend/pages/library_screen/library_screen.dart';
 import 'package:librarian_frontend/pages/login_screen/login_screen_view_model.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/utilities/authentication.dart';
 import 'package:librarian_frontend/widgets/widgets.dart';
-import 'package:redux/redux.dart';
 
 final CollectionReference<Map<String, dynamic>> usersRef =
     FirebaseFirestore.instance.collection('users');
@@ -45,10 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
     /// Uncomment this line to autofill email credentials
     // emailController.text = 'rob@eastcoastdev.ca';
     // passwordController.text = 'Password1!';
+    // tryAutologin();
     emailController.text = 'rob@robjvan.ca';
     passwordController.text = 'Asdf123!';
     super.initState();
   }
+
+  // Future<void> tryAutologin() async {
+  //   final User? user = await FirebaseAuth.instance.currentUser;
+  //   debugPrint('Current user = $user');
+
+  //   if (user != null) {}
+  // }
 
   Widget _buildEmailField() => TextFormField(
         onChanged: (final String newVal) => userEmail = newVal,
@@ -141,8 +146,19 @@ class _LoginScreenState extends State<LoginScreen> {
               );
 
               if (user.emailVerified) {
-                final DocumentSnapshot<Object?> doc =
+                DocumentSnapshot<Object?> doc =
                     await usersRef.doc(user.uid).get();
+
+                if (!doc.exists) {
+                  await usersRef.doc(user.uid).set({
+                    'id': user.uid,
+                    'email': user.email,
+                    'photoUrl': user.photoURL,
+                    'displayName': user.displayName,
+                    'firstRun': true
+                  });
+                  doc = await usersRef.doc(user.uid).get();
+                }
 
                 if (doc.get('firstRun') == true) {
                   unawaited(
@@ -173,6 +189,14 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             }
           },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -187,14 +211,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ],
-          ),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-            ),
           ),
         ),
       );
@@ -239,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Image.asset('assets/images/bookshelf.jpg', fit: BoxFit.cover),
               Center(
                 child: Text(
-                  'Librarian',
+                  'app-title'.tr,
                   textAlign: TextAlign.center,
                   style: vm.titleStyle,
                 ),
@@ -255,8 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(final BuildContext context) {
     return StoreConnector<GlobalAppState, LoginScreenViewModel>(
       distinct: true,
-      converter: (final Store<GlobalAppState> store) =>
-          LoginScreenViewModel.create(store),
+      converter: LoginScreenViewModel.create,
       builder: (final BuildContext context, final dynamic vm) {
         final double sh = MediaQuery.of(context).size.height;
 
@@ -275,8 +290,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     _buildEmailSignInButton(),
                     const SizedBox(height: 16.0),
                     _buildGoogleButton(),
-                    // TODO: Add "Sign In With Apple" functionality
-                    // _buildAppleButton(),
                     const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
