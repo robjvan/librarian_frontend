@@ -45,7 +45,7 @@ class LibraryScreen extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 FirebaseAuth.instance.signOut();
-                                Get.offAll(new LoginScreen());
+                                Get.offAll(() => LoginScreen());
                               },
                               child: Text('Logout'),
                             ),
