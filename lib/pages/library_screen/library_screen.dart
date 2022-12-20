@@ -41,13 +41,13 @@ class LibraryScreen extends StatelessWidget {
                       body: SafeArea(
                         child: Column(
                           children: [
-                            Text('Library Screen'),
+                            const Text('Library Screen'),
                             ElevatedButton(
                               onPressed: () {
                                 FirebaseAuth.instance.signOut();
-                                Get.offAll(() => LoginScreen());
+                                Get.offAll(() => const LoginScreen());
                               },
-                              child: Text('Logout'),
+                              child: const Text('Logout'),
                             ),
                           ],
                         ),
