@@ -1,4 +1,4 @@
-final Map<String, dynamic> englishStrings = <String, dynamic>{
+final Map<String, String> englishStrings = <String, String>{
   'app-title': 'Librarian',
   'login-button': 'Login',
   'register-button': 'Register',
@@ -77,7 +77,7 @@ final Map<String, dynamic> englishStrings = <String, dynamic>{
   'search-results-dialog.body':
       'Multiple results have been found!  Please select the correct book for your collection:',
   //
-  'grid-resize-modal': <String, dynamic>{'title': 'Grid item size: '},
+  'grid-resize-modal.title': 'Grid item size: ',
   //
   'color-picker.title': 'Choose Accent Color',
   'color-picker.submit-button': 'OK',

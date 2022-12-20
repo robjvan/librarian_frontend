@@ -12,6 +12,7 @@ import 'package:librarian_frontend/providers/providers.dart';
 import 'package:librarian_frontend/reducers/reducers.dart';
 import 'package:librarian_frontend/routes.dart';
 import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/utilities/localization/translations.dart';
 import 'package:redux/redux.dart';
 
 Store<GlobalAppState>? globalStore;
@@ -64,6 +65,7 @@ class LibrarianApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         locale: const Locale('en', 'US'),
         title: 'app-title'.tr,
+        translations: MyTranslations(),
         theme: ThemeData(
           primaryColor: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
