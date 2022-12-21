@@ -13,34 +13,34 @@ class SettingsFooter extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    Route<dynamic> _routeToSignInScreen(final SettingsDrawerViewModel vm) {
-      return PageRouteBuilder<dynamic>(
-        pageBuilder: (
-          final BuildContext context,
-          final Animation<double> animation,
-          final Animation<double> secondaryAnimation,
-        ) =>
-            const LoginScreen(),
-        transitionsBuilder: (
-          final BuildContext context,
-          final Animation<double> animation,
-          final Animation<double> secondaryAnimation,
-          final Widget child,
-        ) {
-          const Offset begin = Offset(-1.0, 0.0);
-          const Offset end = Offset.zero;
-          const Cubic curve = Curves.ease;
+    // Route<dynamic> _routeToSignInScreen() {
+    //   return PageRouteBuilder<dynamic>(
+    //     pageBuilder: (
+    //       final BuildContext context,
+    //       final Animation<double> animation,
+    //       final Animation<double> secondaryAnimation,
+    //     ) =>
+    //         const LoginScreen(),
+    //     transitionsBuilder: (
+    //       final BuildContext context,
+    //       final Animation<double> animation,
+    //       final Animation<double> secondaryAnimation,
+    //       final Widget child,
+    //     ) {
+    //       const Offset begin = Offset(-1.0, 0.0);
+    //       const Offset end = Offset.zero;
+    //       const Cubic curve = Curves.ease;
 
-          final Animatable<Offset> tween = Tween<Offset>(begin: begin, end: end)
-              .chain(CurveTween(curve: curve));
+    //       final Animatable<Offset> tween = Tween<Offset>(begin: begin, end: end)
+    //           .chain(CurveTween(curve: curve));
 
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        },
-      );
-    }
+    //       return SlideTransition(
+    //         position: animation.drive(tween),
+    //         child: child,
+    //       );
+    //     },
+    //   );
+    // }
 
     Widget _aboutAppDialog(final SettingsDrawerViewModel vm) {
       return AlertDialog(
@@ -102,9 +102,10 @@ class SettingsFooter extends StatelessWidget {
               onTap: () async {
                 await Authentication.signOut(context: context);
                 unawaited(
-                  Navigator.of(context).pushReplacement(
-                    _routeToSignInScreen(vm),
-                  ),
+                  // Navigator.of(context).pushReplacement(
+                  //   _routeToSignInScreen(),
+                  // ),
+                  Get.offAll(() => const LoginScreen()),
                 );
               },
             ),

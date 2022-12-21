@@ -63,9 +63,11 @@ class GoogleSignInButtonState extends State<GoogleSignInButton> {
                           setState(() => _isSigningIn = false);
 
                           if (doc.get('firstRun') == true) {
-                            vm.navToIntroScreen(user, context);
+                            // vm.navToIntroScreen(user, context);
+                            vm.navToIntroScreen(user);
                           } else {
-                            vm.navToLibraryScreen(user, context);
+                            // vm.navToLibraryScreen(user, context);
+                            vm.navToLibraryScreen(user);
                           }
                         } else {
                           setState(() => _isSigningIn = false);
