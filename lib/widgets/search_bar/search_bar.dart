@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_lambdas
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,23 +8,23 @@ import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/utilities/theme.dart';
 import 'package:librarian_frontend/widgets/search_bar/grid_resize_modal/grid_resize_modal.dart';
 import 'package:librarian_frontend/widgets/search_bar/search_bar_view_model.dart';
-import 'package:redux/redux.dart';
 
 class SearchBar extends StatefulWidget with PreferredSizeWidget {
   @override
   final Size preferredSize;
-  SearchBar({Key? key})
+  SearchBar({final Key? key})
       : preferredSize = const Size.fromHeight(50.0),
         super(key: key);
 
   @override
-  _SearchBarState createState() => _SearchBarState();
+  SearchBarState createState() => SearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class SearchBarState extends State<SearchBar> {
   final TextEditingController _searchController = TextEditingController();
 
-  Widget _buildSearchBox(SearchBarViewModel vm, double _sw) => Container(
+  Widget _buildSearchBox(final SearchBarViewModel vm, final double _sw) =>
+      Container(
         height: 32,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
@@ -30,7 +32,8 @@ class _SearchBarState extends State<SearchBar> {
         ),
         child: TextFormField(
           autofocus: true,
-          onChanged: (val) => vm.updateSearchTerm(_searchController.text),
+          onChanged: (final String val) =>
+              vm.updateSearchTerm(_searchController.text),
           controller: _searchController,
           decoration: InputDecoration(
             hintText: 'search-collection'.tr,
@@ -59,14 +62,17 @@ class _SearchBarState extends State<SearchBar> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final double _sw = MediaQuery.of(context).size.width;
 
-    return StoreConnector(
+    return StoreConnector<GlobalAppState, SearchBarViewModel>(
       distinct: true,
-      converter: (Store<GlobalAppState> store) =>
-          SearchBarViewModel.create(store),
-      builder: (context, SearchBarViewModel vm) => AppBar(
+      converter: SearchBarViewModel.create,
+      builder: (
+        final BuildContext context,
+        final SearchBarViewModel vm,
+      ) =>
+          AppBar(
         elevation: vm.filterBarVisible ? 0 : 4,
         backgroundColor: vm.canvasColor,
         leading: IconButton(
@@ -75,7 +81,7 @@ class _SearchBarState extends State<SearchBar> {
         ),
         titleSpacing: 0,
         title: vm.searchBoxVisible ? _buildSearchBox(vm, _sw) : null,
-        actions: [
+        actions: <Widget>[
           IconButton(
             color: vm.searchBoxVisible ? vm.userColor : vm.textColor,
             visualDensity: VisualDensity.compact,

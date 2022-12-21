@@ -13,11 +13,12 @@ class FancyFAB extends StatefulWidget {
   const FancyFAB({final Key? key}) : super(key: key);
 
   @override
-  _FancyFABState createState() => _FancyFABState();
+  FancyFABState createState() => FancyFABState();
 }
 
-class _FancyFABState extends State<FancyFAB> {
-  List<SpeedDialChild> _buildSpeedDialChildren(final FancyFABViewModel vm) => [
+class FancyFABState extends State<FancyFAB> {
+  List<SpeedDialChild> _buildSpeedDialChildren(final FancyFABViewModel vm) =>
+      <SpeedDialChild>[
         SpeedDialChild(
           onTap: () => vm.dispatch(ScanIsbnAction()),
           elevation: 0,

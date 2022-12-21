@@ -23,7 +23,7 @@ class SettingsDrawerViewModel {
     required this.toggleDarkMode,
   });
 
-  factory SettingsDrawerViewModel.create(Store<GlobalAppState> store) {
+  factory SettingsDrawerViewModel.create(final Store<GlobalAppState> store) {
     bool _checkDarkMode() {
       return store.state.userSettings.useDarkMode;
     }
@@ -34,7 +34,7 @@ class SettingsDrawerViewModel {
       isLoading: store.state.loadingStatus == LoadingStatus.loading,
       canvasColor: _checkDarkMode() ? darkModeBgColor : lightModeBgColor,
       textColor: _checkDarkMode() ? darkModeTextColor : lightModeTextColor,
-      dispatch: (action) => store.dispatch(action),
+      dispatch: store.dispatch,
       toggleDarkMode: () => store.dispatch(ToggleDarkModeAction()),
     );
   }

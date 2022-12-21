@@ -6,11 +6,10 @@ import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/utilities/theme.dart';
 import 'package:librarian_frontend/widgets/settings_drawer/settings_drawer_view_model.dart';
-import 'package:redux/redux.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class SettingsSection extends StatefulWidget {
-  const SettingsSection({key}) : super(key: key);
+  const SettingsSection({final dynamic key}) : super(key: key);
 
   @override
   State<SettingsSection> createState() => _SettingsSectionState();
@@ -18,10 +17,13 @@ class SettingsSection extends StatefulWidget {
 
 class _SettingsSectionState extends State<SettingsSection> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final double _sw = MediaQuery.of(context).size.width;
 
-    _buildDarkModeToggle(SettingsDrawerViewModel vm, double _sw) {
+    Widget _buildDarkModeToggle(
+      final SettingsDrawerViewModel vm,
+      final double _sw,
+    ) {
       int _index = 0;
       final double halfSw = (_sw - 64) / 3;
       if (vm.useDarkMode) {
@@ -30,21 +32,21 @@ class _SettingsSectionState extends State<SettingsSection> {
         _index = 0;
       }
       return Column(
-        children: [
+        children: <Widget>[
           ToggleSwitch(
-            customWidths: [halfSw, halfSw],
+            customWidths: <double>[halfSw, halfSw],
             initialLabelIndex: _index,
-            labels: [
+            labels: <String>[
               'drawer.settings.light-mode'.tr,
               'drawer.settings.dark-mode'.tr
             ],
             totalSwitches: 2,
-            onToggle: (_) => {vm.toggleDarkMode()},
+            onToggle: (final _) => <dynamic>{vm.toggleDarkMode()},
             animate: true,
             curve: Curves.easeInOut,
             animationDuration: 250,
             inactiveFgColor: vm.textColor,
-            activeBgColor: [vm.userColor],
+            activeBgColor: <Color>[vm.userColor],
             inactiveBgColor:
                 vm.useDarkMode ? const Color(0xFF303030) : lightGrey,
           )
@@ -52,31 +54,39 @@ class _SettingsSectionState extends State<SettingsSection> {
       );
     }
 
-    _buildColorChooser(SettingsDrawerViewModel vm, double _sw) {
+    Widget _buildColorChooser(
+      final SettingsDrawerViewModel vm,
+      final double _sw,
+    ) {
       Color _newColor = vm.userColor;
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
+          children: <Widget>[
             Text(
               'Accent Color: ', // TODO: Add translations
               style: TextStyle(color: vm.textColor),
             ),
             GestureDetector(
+              // TODO(Rob): Convert to Get.dialog
               onTap: () async => await showDialog(
                 context: context,
-                builder: (ctx) => StatefulBuilder(
-                  builder: (context, setState) => AlertDialog(
+                builder: (final BuildContext ctx) => StatefulBuilder(
+                  builder: (
+                    final BuildContext context,
+                    final Function(void Function()) setState,
+                  ) =>
+                      AlertDialog(
                     backgroundColor: vm.canvasColor,
                     title: Text(
                       'color-picker.title'.tr,
                       style: TextStyle(color: vm.textColor),
                     ),
-                    actions: [
+                    actions: <Widget>[
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: _newColor,
+                          backgroundColor: _newColor,
                         ),
                         child: Text(
                           'color-picker.submit-button'
@@ -89,7 +99,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                     content: BlockPicker(
                       useInShowDialog: true,
                       pickerColor: vm.userColor,
-                      onColorChanged: (selectedColor) {
+                      onColorChanged: (final Color selectedColor) {
                         setState(() => _newColor = selectedColor);
                         vm.dispatch(
                           ChangeUserColorAction(selectedColor),
@@ -104,7 +114,9 @@ class _SettingsSectionState extends State<SettingsSection> {
                 decoration: BoxDecoration(
                   border: Border.all(color: vm.textColor),
                   borderRadius: BorderRadius.circular(4),
-                  boxShadow: [BoxShadow(color: vm.textColor.withOpacity(0.1))],
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(color: vm.textColor.withOpacity(0.1))
+                  ],
                 ),
                 child: Container(
                   width: 20,
@@ -118,14 +130,14 @@ class _SettingsSectionState extends State<SettingsSection> {
       );
     }
 
-    return StoreConnector(
+    return StoreConnector<GlobalAppState, SettingsDrawerViewModel>(
       distinct: true,
-      converter: (Store<GlobalAppState> store) =>
-          SettingsDrawerViewModel.create(store),
-      builder: (context, dynamic vm) => SingleChildScrollView(
+      converter: SettingsDrawerViewModel.create,
+      builder: (final BuildContext context, final dynamic vm) =>
+          SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(

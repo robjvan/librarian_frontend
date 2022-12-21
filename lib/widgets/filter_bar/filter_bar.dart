@@ -28,7 +28,7 @@ class FilterBar extends StatelessWidget {
           width: 160,
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Text(label, style: TextStyle(color: _mainColor)),
               const Spacer(),
               Icon(
@@ -40,7 +40,7 @@ class FilterBar extends StatelessWidget {
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
                   Text(
                     label.contains('Published')
                         ? sortDirection == 'desc'
@@ -156,7 +156,7 @@ class FilterBar extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+                    children: <Widget>[
                       const SizedBox(width: 8),
                       Text(
                         'filter-bar.show'.tr,

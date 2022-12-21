@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:librarian_frontend/models/models.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/widgets/dialogs/confirm_delete_dialog/confirm_delete_dialog_view_model.dart';
-import 'package:redux/redux.dart';
 
 class ConfirmDeleteDialog extends StatelessWidget {
   final Book book;
@@ -16,8 +15,7 @@ class ConfirmDeleteDialog extends StatelessWidget {
   @override
   Widget build(final BuildContext context) =>
       StoreConnector<GlobalAppState, ConfirmDeleteDialogViewModel>(
-        converter: (final Store<GlobalAppState> store) =>
-            ConfirmDeleteDialogViewModel.create(store),
+        converter: ConfirmDeleteDialogViewModel.create,
         distinct: true,
         builder: (
           final BuildContext context,
@@ -29,11 +27,11 @@ class ConfirmDeleteDialog extends StatelessWidget {
             'Confirm Delete',
             style: TextStyle(color: vm.textColor),
           ),
-          children: [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: Column(
-                children: [
+                children: <Widget>[
                   DecoratedBox(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
@@ -76,7 +74,7 @@ class ConfirmDeleteDialog extends StatelessWidget {
                   const SizedBox(height: 24),
                   Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: [
+                    children: <Widget>[
                       TextButton(
                         child: Text(
                           'Cancel',
@@ -86,7 +84,9 @@ class ConfirmDeleteDialog extends StatelessWidget {
                       ),
                       const Spacer(),
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: vm.userColor),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: vm.userColor,
+                        ),
                         child: Text(
                           'Delete',
                           style: TextStyle(color: vm.textColor),

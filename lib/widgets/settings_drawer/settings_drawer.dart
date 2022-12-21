@@ -7,7 +7,6 @@ import 'package:librarian_frontend/widgets/settings_drawer/settings_drawer_view_
 import 'package:librarian_frontend/widgets/settings_drawer/settings_footer/settings_footer.dart';
 import 'package:librarian_frontend/widgets/settings_drawer/settings_header/settings_header.dart';
 import 'package:librarian_frontend/widgets/settings_drawer/settings_section/settings_section.dart';
-import 'package:redux/redux.dart';
 
 class SettingsDrawer extends StatefulWidget {
   final User? user;
@@ -18,33 +17,34 @@ class SettingsDrawer extends StatefulWidget {
 }
 
 class _SettingsDrawerState extends State<SettingsDrawer> {
-  _buildDivider(final SettingsDrawerViewModel vm) =>
+  Widget _buildDivider(final SettingsDrawerViewModel vm) =>
       Divider(indent: 16, endIndent: 16, thickness: 2, color: vm.textColor);
 
   @override
   Widget build(final BuildContext context) {
     final double _sw = MediaQuery.of(context).size.width;
     final double _sh = MediaQuery.of(context).size.height;
-    final booksStream = FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.user!.uid)
-        .collection('books')
-        .snapshots();
+    final Stream<QuerySnapshot<Map<String, dynamic>>> booksStream =
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(widget.user!.uid)
+            .collection('books')
+            .snapshots();
 
-    return StoreConnector(
+    return StoreConnector<GlobalAppState, SettingsDrawerViewModel>(
       distinct: true,
-      converter: (final Store<GlobalAppState> store) =>
-          SettingsDrawerViewModel.create(store),
-      builder: (final context, final SettingsDrawerViewModel vm) => Padding(
-        padding: EdgeInsets.only(left: (_sw * 0.1) / 2, top: (_sh * 0.025)),
+      converter: SettingsDrawerViewModel.create,
+      builder: (final BuildContext context, final SettingsDrawerViewModel vm) =>
+          Padding(
+        padding: EdgeInsets.only(left: (_sw * 0.1) / 2, top: _sh * 0.025),
         child: Container(
           width: _sw * 0.9,
           height: _sh * 0.9,
           decoration: BoxDecoration(
-            boxShadow: const [
+            boxShadow: const <BoxShadow>[
               BoxShadow(
                 color: Colors.black54,
-                offset: Offset(0, 0),
+                offset: Offset.zero,
                 spreadRadius: 2,
                 blurRadius: 10,
               ),
@@ -54,12 +54,15 @@ class _SettingsDrawerState extends State<SettingsDrawer> {
           ),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
-            child: StreamBuilder<QuerySnapshot>(
+            child: StreamBuilder<QuerySnapshot<dynamic>>(
               stream: booksStream,
-              builder: (final context, final snapshot) {
+              builder: (
+                final BuildContext context,
+                final AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+              ) {
                 if (snapshot.hasData) {
                   return Column(
-                    children: [
+                    children: <Widget>[
                       SettingsHeader(user: widget.user),
                       _buildDivider(vm),
                       const SettingsSection(),

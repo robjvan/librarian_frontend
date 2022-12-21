@@ -1,7 +1,6 @@
+import 'package:librarian_frontend/models/models.dart';
+import 'package:librarian_frontend/state.dart';
 import 'package:redux/redux.dart';
-
-import '../../models/models.dart';
-import '../../state.dart';
 
 class CollectionViewViewModel {
   final bool useGridView;
@@ -18,7 +17,7 @@ class CollectionViewViewModel {
     required this.gridItemSize,
   });
 
-  factory CollectionViewViewModel.create(Store<GlobalAppState> store) {
+  factory CollectionViewViewModel.create(final Store<GlobalAppState> store) {
     return CollectionViewViewModel(
       useGridView: store.state.userSettings.useGridView,
       searchTerm: store.state.userSettings.searchTerm,

@@ -4,26 +4,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
-import 'package:redux/redux.dart';
-
-import '../../../state.dart';
-import '../settings_drawer_view_model.dart';
+import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/widgets/settings_drawer/settings_drawer_view_model.dart';
 
 class SettingsHeader extends StatelessWidget {
   final User? user;
-  const SettingsHeader({Key? key, this.user}) : super(key: key);
+  const SettingsHeader({final Key? key, this.user}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    var booksStream = FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .collection('books')
-        .snapshots();
+  Widget build(final BuildContext context) {
+    final Stream<QuerySnapshot<Map<String, dynamic>>> booksStream =
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .collection('books')
+            .snapshots();
 
-    _buildBookCountWidget(
-      SettingsDrawerViewModel vm,
-      AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
+    Widget _buildBookCountWidget(
+      final SettingsDrawerViewModel vm,
+      final AsyncSnapshot<QuerySnapshot<Object?>> snapshot,
     ) {
       return Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 8.0),
@@ -33,8 +32,11 @@ class SettingsHeader extends StatelessWidget {
                   ? snapshot.data!.docs.length == 1
                       ? 'drawer.1-book-msg'.tr
                       : 'drawer.no-books-msg'.tr
-                  : 'drawer.num-books-msg'
-                      .trParams({'numBooks': '${snapshot.data!.docs.length}'})
+                  : 'drawer.num-books-msg'.trParams(
+                      <String, String>{
+                        'numBooks': '${snapshot.data!.docs.length}'
+                      },
+                    )
               // args: ['${snapshot.data!.docs.length}'],
 
               : '',
@@ -47,7 +49,7 @@ class SettingsHeader extends StatelessWidget {
       );
     }
 
-    _exitButton(SettingsDrawerViewModel vm) {
+    Widget _exitButton(final SettingsDrawerViewModel vm) {
       return Positioned(
         top: 0,
         right: 0,
@@ -60,9 +62,9 @@ class SettingsHeader extends StatelessWidget {
       );
     }
 
-    _userInfoRow(SettingsDrawerViewModel vm) {
+    Widget _userInfoRow(final SettingsDrawerViewModel vm) {
       return Row(
-        children: [
+        children: <Widget>[
           const Spacer(),
           user!.photoURL == null
               ? const CircleAvatar(
@@ -72,15 +74,27 @@ class SettingsHeader extends StatelessWidget {
                       AssetImage('assets/images/image_placeholder.png'),
                 )
               : CachedNetworkImage(
-                  placeholder: (context, url) => const SizedBox(
+                  placeholder: (
+                    final BuildContext context,
+                    final String url,
+                  ) =>
+                      const SizedBox(
                     height: 32,
                     width: 32,
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  errorWidget: (
+                    final BuildContext context,
+                    final String url,
+                    final dynamic error,
+                  ) =>
+                      const Icon(Icons.error),
                   fit: BoxFit.contain,
                   imageUrl: user!.photoURL!,
-                  imageBuilder: (context, imageProvider) {
+                  imageBuilder: (
+                    final BuildContext context,
+                    final ImageProvider<Object> imageProvider,
+                  ) {
                     return CircleAvatar(
                       minRadius: 32,
                       maxRadius: 32,
@@ -91,7 +105,7 @@ class SettingsHeader extends StatelessWidget {
           const SizedBox(width: 32),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 'drawer.signed-in-as'.tr,
                 style: TextStyle(
@@ -116,7 +130,7 @@ class SettingsHeader extends StatelessWidget {
       );
     }
 
-    _appTitleHeader(SettingsDrawerViewModel vm) {
+    Widget _appTitleHeader(final SettingsDrawerViewModel vm) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 24.0),
         child: Center(
@@ -132,23 +146,25 @@ class SettingsHeader extends StatelessWidget {
       );
     }
 
-    return StoreConnector(
+    return StoreConnector<GlobalAppState, SettingsDrawerViewModel>(
       distinct: true,
-      converter: (Store<GlobalAppState> store) =>
-          SettingsDrawerViewModel.create(store),
-      builder: (context, SettingsDrawerViewModel vm) {
+      converter: SettingsDrawerViewModel.create,
+      builder: (final BuildContext context, final SettingsDrawerViewModel vm) {
         final double _sw = MediaQuery.of(context).size.width;
-        return StreamBuilder<QuerySnapshot>(
+        return StreamBuilder<QuerySnapshot<dynamic>>(
           stream: booksStream,
-          builder: (context, snapshot) {
+          builder: (
+            final BuildContext context,
+            final AsyncSnapshot<QuerySnapshot<dynamic>> snapshot,
+          ) {
             if (!snapshot.hasData) return Container();
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 SizedBox(
                   width: _sw,
                   child: Stack(
-                    children: [
+                    children: <Widget>[
                       _exitButton(vm),
                       _appTitleHeader(vm),
                     ],

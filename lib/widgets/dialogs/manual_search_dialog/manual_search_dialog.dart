@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
-import 'package:redux/redux.dart';
-
-import '../../../actions/actions.dart';
-import '../../../models/data_models/search_params.dart';
-import '../../../state.dart';
-import 'manual_search_dialog_view_model.dart';
+import 'package:librarian_frontend/actions/actions.dart';
+import 'package:librarian_frontend/models/data_models/search_params.dart';
+import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/widgets/dialogs/manual_search_dialog/manual_search_dialog_view_model.dart';
 
 class ManualSearchDialog extends StatefulWidget {
-  const ManualSearchDialog({Key? key}) : super(key: key);
+  const ManualSearchDialog({final Key? key}) : super(key: key);
 
   @override
   State<ManualSearchDialog> createState() => _ManualSearchDialogState();
@@ -58,10 +56,10 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
     super.dispose();
   }
 
-  _buildHeaderWidget(ManualSearchDialogViewModel vm) => Padding(
+  Widget _buildHeaderWidget(final ManualSearchDialogViewModel vm) => Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               'manual-search-dialog.title'.tr,
               style: TextStyle(
@@ -80,14 +78,14 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
         ),
       );
 
-  _buildSearchForm(ManualSearchDialogViewModel vm) {
-    _genericRow(
-      TextEditingController controller,
-      String labelText,
-      FocusNode? node,
+  Widget _buildSearchForm(final ManualSearchDialogViewModel vm) {
+    Widget _genericRow(
+      final TextEditingController controller,
+      final String labelText,
+      final FocusNode? node,
     ) =>
         Row(
-          children: [
+          children: <Widget>[
             Expanded(
               child: TextField(
                 focusNode: node,
@@ -112,7 +110,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
           ],
         );
 
-    final List<Widget> searchRows = [
+    final List<Widget> searchRows = <Widget>[
       const SizedBox(height: 16),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -162,7 +160,10 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
 
     return Form(
       key: _formKey,
-      child: Column(mainAxisSize: MainAxisSize.min, children: [...searchRows]),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[...searchRows],
+      ),
     );
   }
 
@@ -170,7 +171,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
         padding: const EdgeInsets.only(top: 32, bottom: 24.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
+          children: <Widget>[
             TextButton(
               child: Text('cancel'.tr, style: TextStyle(color: vm.textColor)),
               onPressed: () {
@@ -212,24 +213,26 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
       );
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(final BuildContext context) => Scaffold(
         backgroundColor: Colors.transparent,
-        body: StoreConnector(
+        body: StoreConnector<GlobalAppState, ManualSearchDialogViewModel>(
           distinct: true,
-          converter: (Store<GlobalAppState> store) =>
-              ManualSearchDialogViewModel.create(store),
-          builder: (context, ManualSearchDialogViewModel vm) {
+          converter: ManualSearchDialogViewModel.create,
+          builder: (
+            final BuildContext context,
+            final ManualSearchDialogViewModel vm,
+          ) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: vm.canvasColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: ListView(
                     shrinkWrap: true,
-                    children: [
+                    children: <Widget>[
                       _buildHeaderWidget(vm),
                       _buildSearchForm(vm),
                       _buildBottomButtons(vm),

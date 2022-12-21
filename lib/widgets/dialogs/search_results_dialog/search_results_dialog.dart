@@ -2,20 +2,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
-import 'package:redux/redux.dart';
-
-import '../../../state.dart';
-import 'search_results_dialog_view_model.dart';
+import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/widgets/dialogs/search_results_dialog/search_results_dialog_view_model.dart';
 
 class SearchResultsDialog extends StatelessWidget {
   final List<dynamic>? results;
   // ignore: use_key_in_widget_constructors
   const SearchResultsDialog(this.results);
 
-  _buildDialogHeader(SearchResultsDialogViewModel vm) => Padding(
+  Widget _buildDialogHeader(
+    final SearchResultsDialogViewModel vm,
+  ) =>
+      Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               'search-results-dialog.title'.tr,
               style: TextStyle(
@@ -33,12 +34,15 @@ class SearchResultsDialog extends StatelessWidget {
         ),
       );
 
-  _buildResultsBox(BuildContext context, SearchResultsDialogViewModel vm) =>
-      Container(
+  Widget _buildResultsBox(
+    final BuildContext context,
+    final SearchResultsDialogViewModel vm,
+  ) =>
+      DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: vm.userColor),
-          boxShadow: [
+          boxShadow: <BoxShadow>[
             const BoxShadow(color: Colors.black54),
             BoxShadow(
               color: vm.canvasColor,
@@ -55,7 +59,7 @@ class SearchResultsDialog extends StatelessWidget {
             crossAxisSpacing: 8,
             mainAxisSpacing: 8,
           ),
-          itemBuilder: (ctx, i) {
+          itemBuilder: (final BuildContext ctx, final int i) {
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
@@ -87,10 +91,13 @@ class SearchResultsDialog extends StatelessWidget {
         ),
       );
 
-  _buildBottomButtons(BuildContext context, SearchResultsDialogViewModel vm) =>
+  Widget _buildBottomButtons(
+    final BuildContext context,
+    final SearchResultsDialogViewModel vm,
+  ) =>
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
+        children: <Widget>[
           TextButton(
             child: Text(
               'cancel'.tr,
@@ -102,42 +109,46 @@ class SearchResultsDialog extends StatelessWidget {
       );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final double _sh = MediaQuery.of(context).size.height;
     final double _sw = MediaQuery.of(context).size.width;
 
-    return StoreConnector(
+    return StoreConnector<GlobalAppState, SearchResultsDialogViewModel>(
       distinct: true,
-      converter: (Store<GlobalAppState> store) =>
-          SearchResultsDialogViewModel.create(store),
-      builder: (context, SearchResultsDialogViewModel vm) => Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: vm.canvasColor,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.all(16.0),
-            width: _sw * .95,
-            height: _sh * .8,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                _buildDialogHeader(vm),
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    child: _buildResultsBox(context, vm),
+      converter: SearchResultsDialogViewModel.create,
+      builder: (
+        final BuildContext context,
+        final SearchResultsDialogViewModel vm,
+      ) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                color: vm.canvasColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.all(16.0),
+              width: _sw * .95,
+              height: _sh * .8,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  _buildDialogHeader(vm),
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      child: _buildResultsBox(context, vm),
+                    ),
                   ),
-                ),
-                _buildBottomButtons(context, vm),
-              ],
+                  _buildBottomButtons(context, vm),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

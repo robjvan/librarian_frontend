@@ -7,7 +7,6 @@ import 'package:librarian_frontend/models/models.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/widgets/book_list_tile/book_list_tile_view_model.dart';
-import 'package:redux/redux.dart';
 
 class BookListTile extends StatelessWidget {
   final Book book;
@@ -54,7 +53,7 @@ class BookListTile extends StatelessWidget {
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+              children: <Widget>[
                 SizedBox(
                   width: double.infinity,
                   child: Text(
@@ -88,7 +87,7 @@ class BookListTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
+          children: <Widget>[
             RatingBar(
               allowHalfRating: true,
               minRating: 0,
@@ -102,11 +101,11 @@ class BookListTile extends StatelessWidget {
                 half: Icon(Icons.star_half, color: vm.textColor),
                 empty: Icon(Icons.star_border, color: vm.textColor),
               ),
-              onRatingUpdate: (final rating) => usersRef
+              onRatingUpdate: (final double rating) => usersRef
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('books')
-                  .doc(book.id.toString())
-                  .update({'rating': rating}),
+                  .doc(book.id)
+                  .update(<String, double>{'rating': rating}),
             ),
           ],
         ),
@@ -140,7 +139,7 @@ class BookListTile extends StatelessWidget {
           ),
           height: 60,
           child: Row(
-            children: [
+            children: <Widget>[
               _buildBookThumbnail(context, book),
               const SizedBox(width: 8),
               _buildTitleBox(context, book, vm),

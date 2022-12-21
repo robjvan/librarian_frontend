@@ -19,7 +19,8 @@ class SearchResultsDialogViewModel {
   });
 
   factory SearchResultsDialogViewModel.create(
-      final Store<GlobalAppState> store) {
+    final Store<GlobalAppState> store,
+  ) {
     bool checkDarkMode() {
       return store.state.userSettings.useDarkMode;
     }

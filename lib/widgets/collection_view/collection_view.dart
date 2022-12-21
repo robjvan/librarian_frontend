@@ -2,17 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:librarian_frontend/models/models.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/widgets/book_grid_tile/book_grid_tile.dart';
 import 'package:librarian_frontend/widgets/book_list_tile/book_list_tile.dart';
 import 'package:librarian_frontend/widgets/collection_view/collection_view_view_model.dart';
-// import 'package:librarian/models/models.dart';
-// import 'package:librarian/state.dart';
-// import 'package:librarian/widgets/collection_view/collection_view_view_model.dart';
-// import 'package:librarian/widgets/widgets.dart';
-import 'package:redux/redux.dart';
-
-import '../../models/models.dart';
 
 // final CollectionReference<Map<String, dynamic>> usersRef =
 //     FirebaseFirestore.instance.collection('users');
@@ -23,8 +17,7 @@ class CollectionView extends StatelessWidget {
   @override
   Widget build(final BuildContext context) =>
       StoreConnector<GlobalAppState, CollectionViewViewModel>(
-        converter: (final Store<GlobalAppState> store) =>
-            CollectionViewViewModel.create(store),
+        converter: CollectionViewViewModel.create,
         builder:
             (final BuildContext context, final CollectionViewViewModel vm) =>
                 StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(

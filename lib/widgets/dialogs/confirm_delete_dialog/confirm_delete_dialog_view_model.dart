@@ -17,7 +17,8 @@ class ConfirmDeleteDialogViewModel {
   });
 
   factory ConfirmDeleteDialogViewModel.create(
-      final Store<GlobalAppState> store) {
+    final Store<GlobalAppState> store,
+  ) {
     bool _checkDarkMode() => store.state.userSettings.useDarkMode;
 
     return ConfirmDeleteDialogViewModel(

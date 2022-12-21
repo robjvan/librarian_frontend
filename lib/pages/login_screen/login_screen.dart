@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               } else {
                 await user
-                    ?.sendEmailVerification(); // TODO: Remove this later, move it to SignUp methods
+                    ?.sendEmailVerification(); // TODO(Rob): Remove this later, move it to SignUp methods
                 Get.snackbar(
                   '',
                   'login.verify-email'.tr,

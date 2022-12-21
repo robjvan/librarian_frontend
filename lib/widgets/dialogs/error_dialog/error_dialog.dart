@@ -17,12 +17,12 @@ class ErrorDialog extends StatelessWidget {
         return AlertDialog(
           backgroundColor: vm.canvasColor,
           title: Text(
-            'No results found!  $errorMessage', // TODO: Add translations
+            'No results found!  $errorMessage', // TODO(Rob): Add translations
             style: TextStyle(color: vm.textColor),
           ),
-          actions: [
+          actions: <Widget>[
             ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: vm.userColor),
+              style: ElevatedButton.styleFrom(backgroundColor: vm.userColor),
               onPressed: () => Navigator.pop(context),
               child: Text('OK', style: TextStyle(color: vm.textColor)),
             ),

@@ -44,13 +44,13 @@ class SearchBarViewModel {
     required this.gridItemSize,
   });
 
-  factory SearchBarViewModel.create(Store<GlobalAppState> store) {
+  factory SearchBarViewModel.create(final Store<GlobalAppState> store) {
     bool _checkDarkMode() {
       return store.state.userSettings.useDarkMode;
     }
 
     return SearchBarViewModel(
-      dispatch: (action) => store.dispatch(action),
+      dispatch: store.dispatch,
       userColor: store.state.userSettings.userColor,
       canvasColor: _checkDarkMode() ? darkModeBgColor : lightModeBgColor,
       textColor: _checkDarkMode() ? darkModeTextColor : lightModeTextColor,
@@ -61,9 +61,9 @@ class SearchBarViewModel {
       toggleGridView: () => store.dispatch(ToggleGridViewAction()),
       toggleFilterBar: () => store.dispatch(ToggleFilterBarAction()),
       toggleSearchBox: () => store.dispatch(ToggleSearchBoxAction()),
-      updateSearchTerm: (searchTerm) =>
+      updateSearchTerm: (final String searchTerm) =>
           store.dispatch(UpdateSearchTermAction(searchTerm)),
-      clearSearchTerm: (controller) {
+      clearSearchTerm: (final TextEditingController controller) {
         controller.clear();
         store.dispatch(const UpdateSearchTermAction(''));
       },

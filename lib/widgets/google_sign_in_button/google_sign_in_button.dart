@@ -11,13 +11,13 @@ import 'package:librarian_frontend/utilities/authentication.dart';
 import 'package:librarian_frontend/widgets/google_sign_in_button/google_sign_in_button_view_model.dart';
 
 class GoogleSignInButton extends StatefulWidget {
-  const GoogleSignInButton({Key? key}) : super(key: key);
+  const GoogleSignInButton({final Key? key}) : super(key: key);
 
   @override
-  _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
+  GoogleSignInButtonState createState() => GoogleSignInButtonState();
 }
 
-class _GoogleSignInButtonState extends State<GoogleSignInButton> {
+class GoogleSignInButtonState extends State<GoogleSignInButton> {
   bool _isSigningIn = false;
   @override
   Widget build(final BuildContext context) =>
@@ -40,15 +40,17 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                     onPressed: () async {
                       try {
                         setState(() => _isSigningIn = true);
-                        User? user = await Authentication.signInWithGoogle(
-                            context: context);
+                        final User? user =
+                            await Authentication.signInWithGoogle(
+                          context: context,
+                        );
 
                         if (user != null) {
                           DocumentSnapshot<dynamic> doc =
                               await usersRef.doc(user.uid).get();
 
                           if (!doc.exists) {
-                            await usersRef.doc(user.uid).set({
+                            await usersRef.doc(user.uid).set(<String, dynamic>{
                               'id': user.uid,
                               'email': user.email,
                               'photoUrl': user.photoURL,
@@ -74,11 +76,14 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Image.asset('assets/images/google_g.png', height: 24),
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 16, top: 16, bottom: 16),
+                            left: 16,
+                            top: 16,
+                            bottom: 16,
+                          ),
                           child: Text(
                             'google-sign-in-button'.tr,
                             style: vm.buttonCaptionStyle,

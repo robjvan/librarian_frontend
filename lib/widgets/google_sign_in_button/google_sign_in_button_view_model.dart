@@ -17,18 +17,24 @@ class GoogleSignInButtonViewModel {
     required this.navToLibraryScreen,
   });
 
-  factory GoogleSignInButtonViewModel.create(Store<GlobalAppState> store) {
-    void _navToIntroScreen(User user, BuildContext ctx) {
+  factory GoogleSignInButtonViewModel.create(
+    final Store<GlobalAppState> store,
+  ) {
+    void _navToIntroScreen(final User user, final BuildContext ctx) {
       Navigator.of(ctx).pushReplacement(
         // TODO(Rob): Implement intro screen
         // MaterialPageRoute(builder: (context) => IntroScreen(user: user)),
-        MaterialPageRoute(builder: (context) => const LibraryScreen()),
+        MaterialPageRoute<dynamic>(
+          builder: (final BuildContext context) => const LibraryScreen(),
+        ),
       );
     }
 
-    void _navToLibraryScreen(User user, BuildContext ctx) {
+    void _navToLibraryScreen(final User user, final BuildContext ctx) {
       Navigator.of(ctx).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LibraryScreen()),
+        MaterialPageRoute<dynamic>(
+          builder: (final BuildContext context) => const LibraryScreen(),
+        ),
       );
     }
 
@@ -39,8 +45,10 @@ class GoogleSignInButtonViewModel {
         color: Color(0xFF424242),
         fontWeight: FontWeight.w600,
       ),
-      navToIntroScreen: (user, ctx) => _navToIntroScreen(user, ctx),
-      navToLibraryScreen: (user, ctx) => _navToLibraryScreen(user, ctx),
+      // navToIntroScreen: (user, ctx) => _navToIntroScreen(user, ctx),
+      navToIntroScreen: _navToIntroScreen,
+      // navToLibraryScreen: (user, ctx) => _navToLibraryScreen(user, ctx),
+      navToLibraryScreen: _navToLibraryScreen,
     );
   }
 }

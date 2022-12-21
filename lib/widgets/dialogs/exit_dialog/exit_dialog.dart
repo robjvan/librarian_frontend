@@ -26,20 +26,23 @@ Future<bool?> showExitPopup(final BuildContext context) async => showDialog(
                 ],
               ),
             ),
-            actions: [
+            actions: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+                children: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    style: ElevatedButton.styleFrom(primary: vm.canvasColor),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: vm.canvasColor,
+                    ),
                     child: Text('no'.tr, style: TextStyle(color: vm.textColor)),
                   ),
                   const SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: () => exit(0),
-                    style:
-                        ElevatedButton.styleFrom(primary: Colors.red.shade800),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red.shade800,
+                    ),
                     child: Text('yes'.tr),
                   ),
                 ],
