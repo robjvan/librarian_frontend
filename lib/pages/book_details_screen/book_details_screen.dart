@@ -44,8 +44,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final dynamic author,
     final BookDetailsScreenViewModel vm,
   ) =>
-      Text(author,
-          style: AppTextStyles.bookAuthorStyle.copyWith(color: vm.textColor));
+      Text(
+        author,
+        style: AppTextStyles.bookAuthorStyle.copyWith(color: vm.textColor),
+      );
 
   Widget _buildDescriptionSection(
     final BookDetailsScreenViewModel vm,
@@ -116,7 +118,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final BookDetailsScreenViewModel vm,
     final Book book,
   ) {
-    final bool _isPortrait = 
+    final bool _isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Padding(

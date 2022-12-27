@@ -218,7 +218,6 @@ class AuthService {
   }
 
   static dynamic sendPasswordResetEmail(final String email) {
-    // try {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((final _) {
       AuthService.customSnackBar(
         type: 'success',
