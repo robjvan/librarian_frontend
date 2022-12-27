@@ -48,7 +48,7 @@ class _SettingsSectionState extends State<SettingsSection> {
             inactiveFgColor: vm.textColor,
             activeBgColor: <Color>[vm.userColor],
             inactiveBgColor:
-                vm.useDarkMode ? const Color(0xFF303030) : lightGrey,
+                vm.useDarkMode ? const Color(0xFF303030) : AppColors.lightGrey,
           )
         ],
       );

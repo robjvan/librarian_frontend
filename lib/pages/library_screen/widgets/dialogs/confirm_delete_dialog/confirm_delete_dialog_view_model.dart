@@ -22,8 +22,12 @@ class ConfirmDeleteDialogViewModel {
     bool _checkDarkMode() => store.state.userSettings.useDarkMode;
 
     return ConfirmDeleteDialogViewModel(
-      canvasColor: _checkDarkMode() ? darkModeBgColor : lightModeBgColor,
-      textColor: _checkDarkMode() ? darkModeTextColor : lightModeTextColor,
+      canvasColor: _checkDarkMode()
+          ? AppColors.darkModeBgColor
+          : AppColors.lightModeBgColor,
+      textColor: _checkDarkMode()
+          ? AppColors.darkModeTextColor
+          : AppColors.lightModeTextColor,
       userColor: store.state.userSettings.userColor,
       dispatch: store.dispatch,
     );

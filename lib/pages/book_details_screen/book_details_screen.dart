@@ -36,7 +36,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   Widget _buildTitleRow(final BookDetailsScreenViewModel vm, final Book book) =>
       Text(
         book.title!,
-        style: bookTitleStyle.copyWith(color: vm.textColor),
+        style: AppTextStyles.bookTitleStyle.copyWith(color: vm.textColor),
         textAlign: TextAlign.center,
       );
 
@@ -44,7 +44,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final dynamic author,
     final BookDetailsScreenViewModel vm,
   ) =>
-      Text(author, style: bookAuthorStyle.copyWith(color: vm.textColor));
+      Text(author,
+          style: AppTextStyles.bookAuthorStyle.copyWith(color: vm.textColor));
 
   Widget _buildDescriptionSection(
     final BookDetailsScreenViewModel vm,

@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
@@ -11,6 +8,7 @@ import 'package:librarian_frontend/pages/login_screen/widgets/widgets.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/utilities/authentication.dart';
+import 'package:redux/redux.dart';
 
 final CollectionReference<Map<String, dynamic>> usersRef =
     FirebaseFirestore.instance.collection('users');
@@ -99,41 +97,23 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
 
-  Widget _buildGoogleButton() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Center(
-          child: FutureBuilder<FirebaseApp>(
-            future: AuthService.initializeFirebase(context: context),
-            builder: (
-              final BuildContext context,
-              final AsyncSnapshot<Object?> snapshot,
-            ) {
-              if (snapshot.hasError) {
-                log('Error initializing firebase');
-                log('DEBUG: ${snapshot.error}');
-                log('DEBUG: ${snapshot.data}');
-                return Text('login.error-initializing'.tr);
-              } else if (snapshot.connectionState == ConnectionState.done) {
-                return const GoogleSignInButton();
-              }
-              return const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-              );
-            },
-          ),
-        ),
-      );
+  Widget _buildGoogleButton() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32),
+      child: GoogleSignInButton(),
+    );
+  }
 
   Widget _buildEmailSignInButton(final LoginScreenViewModel vm) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: OutlinedButton(
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              //   vm.signInWithEmail(
-              //     context,
-              //     emailController.text,
-              //     passwordController.text,
-              //   );
+              vm.signInWithEmail(
+                context,
+                emailController.text,
+                passwordController.text,
+              );
             }
           },
           style: vm.emailSigninButtonStyle,
@@ -168,16 +148,36 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () => Get.to(() => const ForgotPasswordScreen()),
       );
 
+  Widget _buildForm() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 32.0,
+        vertical: 24,
+      ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            _buildEmailField(),
+            _buildPasswordField(),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(final BuildContext context) {
     return StoreConnector<GlobalAppState, LoginScreenViewModel>(
+      onInit: (final Store<GlobalAppState> store) =>
+          AuthService.initializeFirebase(context: context),
       distinct: true,
       converter: LoginScreenViewModel.create,
       builder: (final BuildContext context, final LoginScreenViewModel vm) {
         final double sh = MediaQuery.of(context).size.height;
 
         return Scaffold(
-          resizeToAvoidBottomInset: false,
+          // resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: SizedBox(
               height: sh,
@@ -185,19 +185,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   const LoginHeader(),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        _buildEmailField(),
-                        _buildPasswordField(),
-                      ],
-                    ),
-                  ),
+                  _buildForm(),
+                  const SizedBox(height: 16.0),
                   _buildEmailSignInButton(vm),
                   const SizedBox(height: 16.0),
                   _buildGoogleButton(),
-                  const Spacer(),
+                  // const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[

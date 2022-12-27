@@ -34,7 +34,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget _buildSubheader() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Text('forgot-password'.tr, style: loginSubheaderStyle),
+      child:
+          Text('forgot-password'.tr, style: AppTextStyles.loginSubheaderStyle),
     );
   }
 

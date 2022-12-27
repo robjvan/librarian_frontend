@@ -26,9 +26,13 @@ class ManualSearchDialogViewModel {
     }
 
     return ManualSearchDialogViewModel(
-      canvasColor: _checkDarkMode() ? darkModeBgColor : lightModeBgColor,
+      canvasColor: _checkDarkMode()
+          ? AppColors.darkModeBgColor
+          : AppColors.lightModeBgColor,
       userColor: store.state.userSettings.userColor,
-      textColor: _checkDarkMode() ? darkModeTextColor : lightModeTextColor,
+      textColor: _checkDarkMode()
+          ? AppColors.darkModeTextColor
+          : AppColors.lightModeTextColor,
       dispatch: store.dispatch,
       isDarkMode: store.state.userSettings.useDarkMode,
     );

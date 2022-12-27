@@ -30,8 +30,12 @@ class LibraryScreenViewModel {
     return LibraryScreenViewModel(
       useDarkMode: _checkDarkMode(),
       isLoading: store.state.loadingStatus == LoadingStatus.loading,
-      canvasColor: _checkDarkMode() ? darkModeBgColor : lightModeBgColor,
-      textColor: _checkDarkMode() ? darkModeTextColor : lightModeTextColor,
+      canvasColor: _checkDarkMode()
+          ? AppColors.darkModeBgColor
+          : AppColors.lightModeBgColor,
+      textColor: _checkDarkMode()
+          ? AppColors.darkModeTextColor
+          : AppColors.lightModeTextColor,
       dispatch: store.dispatch,
       searchTerm: store.state.userSettings.searchTerm,
       filterBarVisible: store.state.userSettings.filterBarVisible,

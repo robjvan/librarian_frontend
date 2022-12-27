@@ -37,7 +37,7 @@ class SearchBarState extends State<SearchBar> {
           controller: _searchController,
           decoration: InputDecoration(
             hintText: 'search-collection'.tr,
-            hintStyle: const TextStyle(color: grey, fontSize: 16),
+            hintStyle: const TextStyle(color: AppColors.grey, fontSize: 16),
             border: InputBorder.none,
             suffixIcon: _searchController.text.isNotEmpty
                 ? InkWell(

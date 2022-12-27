@@ -26,9 +26,13 @@ class SearchResultsDialogViewModel {
     }
 
     return SearchResultsDialogViewModel(
-      canvasColor: checkDarkMode() ? darkModeBgColor : lightModeBgColor,
+      canvasColor: checkDarkMode()
+          ? AppColors.darkModeBgColor
+          : AppColors.lightModeBgColor,
       userColor: store.state.userSettings.userColor,
-      textColor: checkDarkMode() ? darkModeTextColor : lightModeTextColor,
+      textColor: checkDarkMode()
+          ? AppColors.darkModeTextColor
+          : AppColors.lightModeTextColor,
       dispatch: store.dispatch,
       isDarkMode: store.state.userSettings.useDarkMode,
     );

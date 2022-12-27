@@ -36,8 +36,12 @@ class FilterBarViewModel {
       useDarkMode: _checkDarkMode(),
       userColor: store.state.userSettings.userColor,
       isLoading: store.state.loadingStatus == LoadingStatus.loading,
-      canvasColor: _checkDarkMode() ? darkModeBgColor : lightModeBgColor,
-      textColor: _checkDarkMode() ? darkModeTextColor : lightModeTextColor,
+      canvasColor: _checkDarkMode()
+          ? AppColors.darkModeBgColor
+          : AppColors.lightModeBgColor,
+      textColor: _checkDarkMode()
+          ? AppColors.darkModeTextColor
+          : AppColors.lightModeTextColor,
       dispatch: store.dispatch,
       visibileFilterBar: store.state.userSettings.filterBarVisible,
       sortMethod: store.state.userSettings.sortMethod,

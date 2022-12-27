@@ -52,8 +52,12 @@ class SearchBarViewModel {
     return SearchBarViewModel(
       dispatch: store.dispatch,
       userColor: store.state.userSettings.userColor,
-      canvasColor: _checkDarkMode() ? darkModeBgColor : lightModeBgColor,
-      textColor: _checkDarkMode() ? darkModeTextColor : lightModeTextColor,
+      canvasColor: _checkDarkMode()
+          ? AppColors.darkModeBgColor
+          : AppColors.lightModeBgColor,
+      textColor: _checkDarkMode()
+          ? AppColors.darkModeTextColor
+          : AppColors.lightModeTextColor,
       isLoading: store.state.loadingStatus == LoadingStatus.loading,
       useDarkMode: _checkDarkMode(),
       useGridView: store.state.userSettings.useGridView,

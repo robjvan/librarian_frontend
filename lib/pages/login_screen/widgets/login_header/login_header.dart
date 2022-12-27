@@ -29,7 +29,7 @@ class LoginHeader extends StatelessWidget {
                     child: Text(
                       'app-title'.tr,
                       textAlign: TextAlign.center,
-                      style: loginHeaderStyle,
+                      style: AppTextStyles.loginHeaderStyle,
                     ),
                   ),
                 ],

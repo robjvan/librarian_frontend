@@ -89,6 +89,7 @@ final Map<String, String> englishStrings = <String, String>{
   'color-picker.title': 'Choose Accent Color',
   'color-picker.label': 'Accent Color: ',
   //
-  'error-dialog.content': 'No results found!  @error'
-
+  'error-dialog.content': 'No results found!  @error',
+  'send-reset-link':
+      'Enter your email address to have a reset link sent to you.',
 };

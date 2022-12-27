@@ -18,8 +18,12 @@ class ExitDialogViewModel {
     }
 
     return ExitDialogViewModel(
-      textColor: checkDarkMode() ? darkModeTextColor : lightModeTextColor,
-      canvasColor: checkDarkMode() ? darkModeBgColor : lightModeBgColor,
+      textColor: checkDarkMode()
+          ? AppColors.darkModeTextColor
+          : AppColors.lightModeTextColor,
+      canvasColor: checkDarkMode()
+          ? AppColors.darkModeBgColor
+          : AppColors.lightModeBgColor,
     );
   }
 }

@@ -170,7 +170,7 @@ Middleware<GlobalAppState> handleLoadLocalDataAction() => (
           : true;
       final Color userColor = prefs.containsKey('userColor')
           ? Color(int.parse(prefs.getString('userColor')!))
-          : green;
+          : AppColors.green;
 
       final SettingsStateRepository settings =
           SettingsStateRepository.createEmpty().copyWith(

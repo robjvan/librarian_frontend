@@ -20,10 +20,34 @@ class AuthService {
     // attempt auto-login
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      unawaited(Get.offAll(() => const LibraryScreen()));
+      await Get.offAll(() => const LibraryScreen());
     }
 
     return firebaseApp;
+  }
+
+  static dynamic customSnackBar({
+    required final String type,
+    required final String content,
+  }) {
+    String title = '';
+    late IconData icon;
+    switch (type) {
+      case 'error':
+        title = 'error'.tr;
+        icon = Icons.error_outline;
+        break;
+      case 'success':
+        title = 'success'.tr;
+        icon = Icons.check_circle_outline;
+        break;
+    }
+    return Get.snackbar(
+      title,
+      content,
+      icon: Icon(icon, color: Colors.red),
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
 
   // this method is used for Google sign-in
@@ -88,7 +112,6 @@ class AuthService {
             type: 'error',
             content: 'Error occurred using Google Sign-In. Try again.',
           );
-          
         }
       }
 
@@ -98,11 +121,11 @@ class AuthService {
     return null;
   }
 
-  static Future<void> createUserWithEmail({
-    required final String userEmail,
-    required final String userPassword,
-    required final String displayName,
-  }) async {
+  static Future<void> createUserWithEmail(
+    final String userEmail,
+    final String userPassword,
+    final String displayName,
+  ) async {
     User? user;
 
     try {
@@ -194,21 +217,17 @@ class AuthService {
     }
   }
 
-  static dynamic sendPasswordResetEmail(
-    final String email,
-    final BuildContext context,
-  ) {
+  static dynamic sendPasswordResetEmail(final String email) {
     // try {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((final _) {
       AuthService.customSnackBar(
-        type: 'error',
+        type: 'success',
         content:
             'login.reset-pass-sent'.trParams(<String, String>{'email': email}),
       );
       Get.back();
     }).catchError((final dynamic e) {
       if (e.code == 'user-not-found' || e.code == 'invalid-email') {
-        // return e;
         AuthService.customSnackBar(
           type: 'error',
           content: 'login.email-error'.trParams(
@@ -220,30 +239,8 @@ class AuthService {
           type: 'error',
           content: 'Firebase error - too many requests',
         );
-      }
+      } 
     });
-  }
-
-  static dynamic customSnackBar({
-    required final String type,
-    required final String content,
-    final IconData? icon,
-  }) {
-    String title = '';
-    switch (type) {
-      case 'error':
-        title = 'error'.tr;
-        break;
-      case 'success':
-        title = 'success'.tr;
-        break;
-    }
-    return Get.snackbar(
-      title,
-      content,
-      icon: icon != null ? Icon(icon, color: Colors.red) : null,
-      snackPosition: SnackPosition.BOTTOM,
-    );
   }
 
   static Future<void> signOut({required final BuildContext context}) async {
