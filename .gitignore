@@ -45,3 +45,5 @@ app.*.map.json
 
 lib/utilities/api_keys.dart
 lib/firebase_options.dart
+
+.VSCodeCounter
