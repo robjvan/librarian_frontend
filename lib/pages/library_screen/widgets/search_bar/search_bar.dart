@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:librarian_frontend/state.dart';
-import 'package:librarian_frontend/utilities/theme.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/search_bar/grid_resize_modal/grid_resize_modal.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/search_bar/search_bar_view_model.dart';
+import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/utilities/theme.dart';
 
 class SearchBar extends StatefulWidget with PreferredSizeWidget {
   @override

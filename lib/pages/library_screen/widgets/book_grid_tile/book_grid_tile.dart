@@ -7,9 +7,9 @@ import 'package:get/get.dart';
 import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/models/models.dart';
 import 'package:librarian_frontend/pages/book_details_screen/book_details_screen.dart';
-import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/book_grid_tile/book_grid_tile_view_model.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/dialogs/confirm_delete_dialog/confirm_delete_dialog.dart';
+import 'package:librarian_frontend/state.dart';
 
 class BookGridTile extends StatelessWidget {
   final Book book;

@@ -4,10 +4,10 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:librarian_frontend/actions/actions.dart';
-import 'package:librarian_frontend/state.dart';
-import 'package:librarian_frontend/utilities/librarian_icons.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/dialogs/manual_search_dialog/manual_search_dialog.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/fancy_fab/fancy_fab_view_model.dart';
+import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/utilities/librarian_icons.dart';
 
 class FancyFAB extends StatefulWidget {
   const FancyFAB({final Key? key}) : super(key: key);

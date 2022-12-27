@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:librarian_frontend/models/models.dart';
-import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/book_grid_tile/book_grid_tile.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/book_list_tile/book_list_tile.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/collection_view/collection_view_view_model.dart';
+import 'package:librarian_frontend/state.dart';
 
 // final CollectionReference<Map<String, dynamic>> usersRef =
 //     FirebaseFirestore.instance.collection('users');

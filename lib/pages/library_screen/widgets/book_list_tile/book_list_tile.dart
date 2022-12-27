@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:librarian_frontend/models/models.dart';
+import 'package:librarian_frontend/pages/library_screen/widgets/book_list_tile/book_list_tile_view_model.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
-import 'package:librarian_frontend/pages/library_screen/widgets/book_list_tile/book_list_tile_view_model.dart';
 
 class BookListTile extends StatelessWidget {
   final Book book;
