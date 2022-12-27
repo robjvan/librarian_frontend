@@ -40,7 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
     /// Uncomment this line to autofill email credentials
     // emailController.text = 'rob@eastcoastdev.ca';
     // passwordController.text = 'Password1!';
-    // tryAutologin();
     emailController.text = 'rob@robjvan.ca';
     passwordController.text = 'Asdf123!';
     super.initState();
@@ -177,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final double sh = MediaQuery.of(context).size.height;
 
         return Scaffold(
-          // resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: false,
           body: SafeArea(
             child: SizedBox(
               height: sh,
@@ -190,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   _buildEmailSignInButton(vm),
                   const SizedBox(height: 16.0),
                   _buildGoogleButton(),
-                  // const Spacer(),
+                  const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
