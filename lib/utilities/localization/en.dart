@@ -15,6 +15,7 @@ final Map<String, String> englishStrings = <String, String>{
   'error': 'Error',
   'submit': 'Submit',
   'ok': 'OK',
+  'forgot-password': 'Forgot password',
   //
   'login.email': 'Email',
   'login.password': 'Password',
@@ -89,4 +90,5 @@ final Map<String, String> englishStrings = <String, String>{
   'color-picker.label': 'Accent Color: ',
   //
   'error-dialog.content': 'No results found!  @error'
+
 };
