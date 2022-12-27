@@ -52,7 +52,7 @@ class GoogleBooksApi {
                   message: response.body,
                 );
               } else {
-                final List<dynamic> _parsedData = _parsed['items'];
+                final List<dynamic> _parsedData = _secondApiParsed['items'];
                 if (_parsedData.isNotEmpty) {
                   for (final dynamic item in _parsedData) {
                     final Book _newBook = Book.fromGBooksJson(item);
