@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get/get.dart';
 import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/models/models.dart';
+import 'package:librarian_frontend/pages/book_details_screen/book_details_screen.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/widgets/book_grid_tile/book_grid_tile_view_model.dart';
 import 'package:librarian_frontend/widgets/dialogs/confirm_delete_dialog/confirm_delete_dialog.dart';
@@ -78,14 +80,7 @@ class BookGridTile extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 GestureDetector(
-                  onTap: () {
-                    // TODO(Rob): Add routing to book details screen
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute<dynamic>(
-                    //     builder: (final _) => BookDetailsScreen(book, book.id),
-                    //   ),
-                    // );
-                  },
+                  onTap: () => Get.to(BookDetailsScreen(book, book.id)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: GridTile(

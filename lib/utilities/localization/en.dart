@@ -48,7 +48,7 @@ final Map<String, String> englishStrings = <String, String>{
   'manual-search-dialog.search-row-labels.isbn': 'ISBN',
   //
   'book-details-screen.page-count': '@pageCount pages',
-  'book-details-screen.publisher': 'Published {} by {}',
+  'book-details-screen.publisher': 'Published @publishYear by @publisher',
   'book-details-screen.in-faves': 'In Faves',
   'book-details-screen.in-wishlist': 'In Wishlist',
   'book-details-screen.in-shopping-list': 'In Shopping List',
