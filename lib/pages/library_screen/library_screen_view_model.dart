@@ -12,7 +12,7 @@ class LibraryScreenViewModel {
   final Color canvasColor;
   final bool isLoading;
   final bool useDarkMode;
-  final Function testLoadingStatus;
+  // final Function testLoadingStatus;
   final String searchTerm;
   final bool filterBarVisible;
 
@@ -22,7 +22,7 @@ class LibraryScreenViewModel {
     required this.isLoading,
     required this.useDarkMode,
     required this.dispatch,
-    required this.testLoadingStatus,
+    // required this.testLoadingStatus,
     required this.searchTerm,
     required this.filterBarVisible,
   });
@@ -30,11 +30,11 @@ class LibraryScreenViewModel {
   factory LibraryScreenViewModel.create(final Store<GlobalAppState> store) {
     bool _checkDarkMode() => store.state.userSettings.useDarkMode;
 
-    Future<void> _testLoadingStatus() async {
-      store.dispatch(const SetLoadingStatusAction(LoadingStatus.loading));
-      await Future<dynamic>.delayed(const Duration(seconds: 1));
-      store.dispatch(const SetLoadingStatusAction(LoadingStatus.idle));
-    }
+    // Future<void> _testLoadingStatus() async {
+    //   store.dispatch(const SetLoadingStatusAction(LoadingStatus.loading));
+    //   await Future<dynamic>.delayed(const Duration(seconds: 1));
+    //   store.dispatch(const SetLoadingStatusAction(LoadingStatus.idle));
+    // }
 
     return LibraryScreenViewModel(
       useDarkMode: _checkDarkMode(),
@@ -42,7 +42,7 @@ class LibraryScreenViewModel {
       canvasColor: _checkDarkMode() ? darkModeBgColor : lightModeBgColor,
       textColor: _checkDarkMode() ? darkModeTextColor : lightModeTextColor,
       dispatch: store.dispatch,
-      testLoadingStatus: _testLoadingStatus,
+      // testLoadingStatus: _testLoadingStatus,
       searchTerm: store.state.userSettings.searchTerm,
       filterBarVisible: store.state.userSettings.filterBarVisible,
     );

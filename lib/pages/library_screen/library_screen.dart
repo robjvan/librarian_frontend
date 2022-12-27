@@ -7,9 +7,6 @@ import 'package:librarian_frontend/pages/library_screen/library_screen_view_mode
 import 'package:librarian_frontend/pages/library_screen/widgets/widgets.dart';
 import 'package:librarian_frontend/pages/settings_drawer/settings_drawer.dart';
 import 'package:librarian_frontend/state.dart';
-// import 'package:librarian_frontend/pages/library_screen/widgets/collection_view/collection_view.dart';
-// import 'package:librarian_frontend/pages/settings_drawer/settings_drawer.dart';
-// import 'package:librarian_frontend/library_screen/widgets/widgets.dart';
 import 'package:redux/redux.dart';
 
 class LibraryScreen extends StatelessWidget {
@@ -56,37 +53,12 @@ class LibraryScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          // body: SafeArea(
-                          //   child: Column(
-                          //     mainAxisSize: MainAxisSize.min,
-                          //     children: [
-                          //       const Text('Library Screen'),
-                          //       ElevatedButton(
-                          //         onPressed: () {
-                          //           FirebaseAuth.instance.signOut();
-                          //           ;
-                          //         },
-                          //         child: const Text('Logout'),
-                          //       ),
-                          //       const CollectionView()
-                          //     ],
-                          //   ),
-                          // ),
                           drawer: SettingsDrawer(
                             user: FirebaseAuth.instance.currentUser,
                           ),
                           appBar: SearchBar(),
                           backgroundColor: vm.canvasColor,
                           floatingActionButton: const FancyFAB(),
-                          // body: SizedBox(
-                          //   child: Column(
-                          //     mainAxisSize: MainAxisSize.min,
-                          //     children: <Widget>[
-                          //       if (vm.filterBarVisible) const FilterBar(),
-                          //       const Expanded(child: CollectionView()),
-                          //     ],
-                          //   ),
-                          // ),
                         );
                 } else {
                   return Container();
