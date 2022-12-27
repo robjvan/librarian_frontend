@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _passwordObscured = true;
   String userEmail = '';
   String userPass = '';
 
@@ -71,13 +72,25 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   Widget _buildPasswordField() => TextFormField(
-        obscureText: true,
+        obscureText: _passwordObscured,
         onChanged: (final String newPass) => userPass = newPass,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: passwordController,
         decoration: InputDecoration(
           labelText: 'login.password'.tr,
           labelStyle: const TextStyle(fontSize: 20),
+          suffixIcon: IconButton(
+            icon: Icon(
+              _passwordObscured
+                  ? Icons.visibility_outlined
+                  : Icons.visibility_off_outlined,
+            ),
+            onPressed: () {
+              setState(() {
+                _passwordObscured = !_passwordObscured;
+              });
+            },
+          ),
         ),
         validator: (final String? text) {
           if (text == null || text.isEmpty) {
