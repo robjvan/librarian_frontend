@@ -103,9 +103,10 @@ linter:
     # 
     prefer_single_quotes: true  
 
-    # # Sort constructor declarations before other members
-    # sort_constructors_first: true
-
+    # Sort constructor declarations before other members
+    sort_constructors_first: false
+    #Use Key in widget constructors
+    use_key_in_widget_constructors: false
     # Sort unnamed constructor declarations first
     sort_unnamed_constructors_first: true
     # Type annotate public APIs
