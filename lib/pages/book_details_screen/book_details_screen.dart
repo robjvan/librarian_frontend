@@ -107,9 +107,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
         left: 0,
         child: IconButton(
           icon: Icon(Icons.arrow_back_ios_new, color: vm.textColor),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: Get.back,
         ),
       );
 
@@ -117,7 +115,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final BookDetailsScreenViewModel vm,
     final Book book,
   ) {
-    final bool _isPortrait =
+    final bool _isPortrait = 
         MediaQuery.of(context).orientation == Orientation.portrait;
 
     return Padding(
