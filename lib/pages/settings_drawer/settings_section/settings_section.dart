@@ -65,20 +65,13 @@ class _SettingsSectionState extends State<SettingsSection> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              // TODO(Rob): Add translations
-              'Accent Color: ',
+              'color-picker.label'.tr,
               style: TextStyle(color: vm.textColor),
             ),
             GestureDetector(
-              // TODO(Rob): Convert to Get.dialog
-              onTap: () async => showDialog(
-                context: context,
-                builder: (final BuildContext ctx) => StatefulBuilder(
-                  builder: (
-                    final BuildContext context,
-                    final Function(void Function()) setState,
-                  ) =>
-                      AlertDialog(
+              onTap: () {
+                Get.dialog(
+                  AlertDialog(
                     backgroundColor: vm.canvasColor,
                     title: Text(
                       'color-picker.title'.tr,
@@ -90,8 +83,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                           backgroundColor: _newColor,
                         ),
                         child: Text(
-                          // TODO(Rob): Add translations
-                          'color-picker.submit-button'.tr,
+                          'submit'.tr,
                           style: const TextStyle(color: Colors.white),
                         ),
                         onPressed: () => Navigator.pop(context),
@@ -108,8 +100,46 @@ class _SettingsSectionState extends State<SettingsSection> {
                       },
                     ),
                   ),
-                ),
-              ),
+                );
+              },
+              // onTap: () async => showDialog(
+              //   context: context,
+              //   builder: (final BuildContext ctx) => StatefulBuilder(
+              //     builder: (
+              //       final BuildContext context,
+              //       final Function(void Function()) setState,
+              //     ) =>
+              //         AlertDialog(
+              //       backgroundColor: vm.canvasColor,
+              //       title: Text(
+              //         'color-picker.title'.tr,
+              //         style: TextStyle(color: vm.textColor),
+              //       ),
+              //       actions: <Widget>[
+              //         ElevatedButton(
+              //           style: ElevatedButton.styleFrom(
+              //             backgroundColor: _newColor,
+              //           ),
+              //           child: Text(
+              //             'submit'.tr,
+              //             style: const TextStyle(color: Colors.white),
+              //           ),
+              //           onPressed: () => Navigator.pop(context),
+              //         )
+              //       ],
+              //       content: BlockPicker(
+              //         useInShowDialog: true,
+              //         pickerColor: vm.userColor,
+              //         onColorChanged: (final Color selectedColor) {
+              //           setState(() => _newColor = selectedColor);
+              //           vm.dispatch(
+              //             ChangeUserColorAction(selectedColor),
+              //           );
+              //         },
+              //       ),
+              //     ),
+              //   ),
+              // ),
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(

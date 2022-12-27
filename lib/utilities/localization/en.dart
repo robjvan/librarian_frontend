@@ -14,6 +14,7 @@ final Map<String, String> englishStrings = <String, String>{
   'languages-es': 'Spanish',
   'error': 'Error',
   'submit': 'Submit',
+  'ok': 'OK',
   //
   'login.email': 'Email',
   'login.password': 'Password',
@@ -80,9 +81,12 @@ final Map<String, String> englishStrings = <String, String>{
   'search-results-dialog.title': 'Search Results',
   'search-results-dialog.body':
       'Multiple results have been found!  Please select the correct book for your collection:',
+  'search-error.barcode': 'Try a different barcode.',
   //
   'grid-resize-modal.title': 'Grid item size: ',
   //
   'color-picker.title': 'Choose Accent Color',
-  'color-picker.submit-button': 'OK',
+  'color-picker.label': 'Accent Color: ',
+  //
+  'error-dialog.content': 'No results found!  @error'
 };

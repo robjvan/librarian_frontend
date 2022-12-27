@@ -51,18 +51,14 @@ Middleware<GlobalAppState> handleSearchIsbnRequest() {
       } else {
         unawaited(
           Get.dialog(
-            const ErrorDialog(
-              'Try a different barcode.', // TODO(Rob): Add translations
-            ),
+            ErrorDialog('search-error.barcode'.tr),
           ),
         );
       }
     } on Exception {
       unawaited(
         Get.dialog(
-          const ErrorDialog(
-            'Try a different barcode.', // TODO(Rob): Add translations
-          ),
+          ErrorDialog('search-error.barcode'.tr),
         ),
       );
     }
@@ -127,18 +123,14 @@ Middleware<GlobalAppState> handleKeywordSearchRequest() {
         } else {
           await showDialog(
             context: navigatorKey.currentContext!,
-            builder: (final _) => const ErrorDialog(
-              'Try a different barcode.',
-            ),
-          ); // TODO(Rob): Add translations
+            builder: (final _) => ErrorDialog('search-error.barcode'.tr),
+          );
         }
       } on Exception {
         await showDialog(
           context: navigatorKey.currentContext!,
-          builder: (final _) => const ErrorDialog(
-            'Try a different barcode.',
-          ),
-        ); // TODO(Rob): Add translations
+          builder: (final _) => ErrorDialog('search-error.barcode'.tr),
+        );
       }
     }
   };
