@@ -34,14 +34,15 @@ class GoogleSignInButtonState extends State<GoogleSignInButton> {
                   )
                 : OutlinedButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xD58CD9FF)),
+                      backgroundColor: MaterialStateProperty.all(
+                        const Color(0xD58CD9FF),
+                      ),
                     ),
                     onPressed: () async {
                       try {
                         setState(() => _isSigningIn = true);
                         final User? user =
-                            await Authentication.signInWithGoogle(
+                            await AuthService.signInWithGoogle(
                           context: context,
                         );
 
@@ -50,24 +51,24 @@ class GoogleSignInButtonState extends State<GoogleSignInButton> {
                               await usersRef.doc(user.uid).get();
 
                           if (!doc.exists) {
-                            await usersRef.doc(user.uid).set(<String, dynamic>{
-                              'id': user.uid,
-                              'email': user.email,
-                              'photoUrl': user.photoURL,
-                              'displayName': user.displayName,
-                              'firstRun': true
-                            });
+                            await usersRef.doc(user.uid).set(
+                              <String, dynamic>{
+                                'id': user.uid,
+                                'email': user.email,
+                                'photoUrl': user.photoURL,
+                                'displayName': user.displayName,
+                                'firstRun': true
+                              },
+                            );
                             doc = await usersRef.doc(user.uid).get();
                           }
 
                           setState(() => _isSigningIn = false);
 
                           if (doc.get('firstRun') == true) {
-                            // vm.navToIntroScreen(user, context);
-                            vm.navToIntroScreen(user);
+                            vm.navToIntroScreen();
                           } else {
-                            // vm.navToLibraryScreen(user, context);
-                            vm.navToLibraryScreen(user);
+                            vm.navToLibraryScreen();
                           }
                         } else {
                           setState(() => _isSigningIn = false);
