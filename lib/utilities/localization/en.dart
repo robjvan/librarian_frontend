@@ -23,6 +23,7 @@ final Map<String, String> englishStrings = <String, String>{
   'login.empty-password': 'Password cannot be empty!',
   'login.create-account': 'Sign Up',
   'login.forgot-password': 'Forgot Password?',
+  'login.reset-pass-sent': 'Password reset email has been sent to @email',
   //
   'drawer.1-book-msg': '1 book in library',
   'drawer.no-books-msg': 'No books in library',
