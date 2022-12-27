@@ -1,13 +1,12 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
 import 'package:librarian_frontend/pages/login_screen/login_screen_view_model.dart';
+import 'package:librarian_frontend/pages/login_screen/widgets/login_header/login_header.dart';
 import 'package:librarian_frontend/pages/login_screen/widgets/widgets.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
@@ -100,19 +99,6 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
 
-  Widget _buildLoginForm(final GlobalKey<FormState> _formKey) => Padding(
-        padding: const EdgeInsets.all(32),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              _buildEmailField(),
-              _buildPasswordField(),
-            ],
-          ),
-        ),
-      );
-
   Widget _buildGoogleButton() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Center(
@@ -138,64 +124,19 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-  Widget _buildEmailSignInButton() => Padding(
+  Widget _buildEmailSignInButton(final LoginScreenViewModel vm) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: OutlinedButton(
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              final dynamic user = await AuthService.signInWithEmail(
-                context: context,
-                userEmail: emailController.text,
-                userPassword: passwordController.text,
-              );
-
-              if (user.emailVerified) {
-                DocumentSnapshot<Object?> doc =
-                    await usersRef.doc(user.uid).get();
-
-                if (!doc.exists) {
-                  await usersRef.doc(user.uid).set(<String, dynamic>{
-                    'id': user.uid,
-                    'email': user.email,
-                    'photoUrl': user.photoURL,
-                    'displayName': user.displayName,
-                    'firstRun': true
-                  });
-                  doc = await usersRef.doc(user.uid).get();
-                }
-
-                if (doc.get('firstRun') == true) {
-                  unawaited(
-                    Get.offAll(IntroScreen(user: user)),
-                  );
-                } else {
-                  unawaited(
-                    Get.offAll(const LibraryScreen()),
-                  );
-                }
-              } else {
-                // TODO(Rob): Copy this to SignUp methods
-                await user?.sendEmailVerification();
-                Get.snackbar(
-                  '',
-                  'login.verify-email'.tr,
-                  snackPosition: SnackPosition.TOP,
-                );
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(content: Text('login.verify-email'.tr)),
-                // );
-                await FirebaseAuth.instance.signOut();
-              }
+              //   vm.signInWithEmail(
+              //     context,
+              //     emailController.text,
+              //     passwordController.text,
+              //   );
             }
           },
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-            ),
-          ),
+          style: vm.emailSigninButtonStyle,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -227,36 +168,12 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () => Get.to(() => const ForgotPasswordScreen()),
       );
 
-  Widget _buildSignInHeader(final double sh, final LoginScreenViewModel vm) {
-    return SizedBox(
-      height: sh / 3,
-      child: Hero(
-        tag: 'headerHero',
-        child: Material(
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              Image.asset('assets/images/bookshelf.jpg', fit: BoxFit.cover),
-              Center(
-                child: Text(
-                  'app-title'.tr,
-                  textAlign: TextAlign.center,
-                  style: vm.titleStyle,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(final BuildContext context) {
     return StoreConnector<GlobalAppState, LoginScreenViewModel>(
       distinct: true,
       converter: LoginScreenViewModel.create,
-      builder: (final BuildContext context, final dynamic vm) {
+      builder: (final BuildContext context, final LoginScreenViewModel vm) {
         final double sh = MediaQuery.of(context).size.height;
 
         return Scaffold(
@@ -267,9 +184,17 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  _buildSignInHeader(sh, vm),
-                  _buildLoginForm(_formKey),
-                  _buildEmailSignInButton(),
+                  const LoginHeader(),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        _buildEmailField(),
+                        _buildPasswordField(),
+                      ],
+                    ),
+                  ),
+                  _buildEmailSignInButton(vm),
                   const SizedBox(height: 16.0),
                   _buildGoogleButton(),
                   const Spacer(),

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
 import 'package:librarian_frontend/pages/login_screen/forgot_password_screen/forgot_password_screen_view_model.dart';
+import 'package:librarian_frontend/pages/login_screen/widgets/login_header/login_header.dart';
 import 'package:librarian_frontend/state.dart';
-import 'package:librarian_frontend/utilities/authentication.dart';
+import 'package:librarian_frontend/utilities/theme.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({final Key? key}) : super(key: key);
@@ -24,34 +25,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  Widget _buildSubheader(final ForgotPasswordScreenViewModel vm) {
+  Widget _buildSubheader() {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
-      child: Text('Forgot password', style: vm.subheaderStyle),
-    );
-  }
-
-  Widget _buildHeader(final double sh, final ForgotPasswordScreenViewModel vm) {
-    return SizedBox(
-      height: sh / 3,
-      child: Hero(
-        tag: 'headerHero',
-        child: Material(
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              Image.asset('assets/images/bookshelf.jpg', fit: BoxFit.cover),
-              Center(
-                child: Text(
-                  'app-title'.tr,
-                  textAlign: TextAlign.center,
-                  style: vm.titleStyle,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      child: Text('forgot-password'.tr, style: loginHeaderStyle),
     );
   }
 
@@ -90,28 +67,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  void submitFn() {
-    if (_formKey.currentState!.validate()) {
-      AuthService.sendPasswordResetEmail(
-        emailController.text,
-        context,
-      );
-    }
-  }
-
-  Widget _buildSubmitButton() {
+  Widget _buildSubmitButton(final ForgotPasswordScreenViewModel vm) {
     return ElevatedButton(
-      onPressed: _submitDisabled ? null : submitFn,
+      onPressed: _submitDisabled
+          ? null
+          : vm.submitFn(_formKey, emailController.text, context),
       child: Text('submit'.tr),
-    );
-  }
-
-  Widget _buildForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[_buildEmailField(), _buildSubmitButton()],
-      ),
     );
   }
 
@@ -124,15 +85,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         final BuildContext context,
         final ForgotPasswordScreenViewModel vm,
       ) {
-        final double sh = MediaQuery.of(context).size.height;
-
         return Scaffold(
           body: SafeArea(
             child: Column(
               children: <Widget>[
-                _buildHeader(sh, vm),
-                _buildSubheader(vm),
-                _buildForm(),
+                const LoginHeader(),
+                _buildSubheader(),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      _buildEmailField(),
+                      _buildSubmitButton(vm)
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
