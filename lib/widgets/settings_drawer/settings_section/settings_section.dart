@@ -65,12 +65,13 @@ class _SettingsSectionState extends State<SettingsSection> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              'Accent Color: ', // TODO: Add translations
+              // TODO(Rob): Add translations
+              'Accent Color: ', 
               style: TextStyle(color: vm.textColor),
             ),
             GestureDetector(
               // TODO(Rob): Convert to Get.dialog
-              onTap: () async => await showDialog(
+              onTap: () async => showDialog(
                 context: context,
                 builder: (final BuildContext ctx) => StatefulBuilder(
                   builder: (
@@ -89,8 +90,9 @@ class _SettingsSectionState extends State<SettingsSection> {
                           backgroundColor: _newColor,
                         ),
                         child: Text(
+                          // TODO(Rob): Add translations
                           'color-picker.submit-button'
-                              .tr, // TODO: Add translations
+                              .tr, 
                           style: const TextStyle(color: Colors.white),
                         ),
                         onPressed: () => Navigator.pop(context),

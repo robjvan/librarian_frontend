@@ -184,8 +184,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                 }
               } else {
-                await user
-                    ?.sendEmailVerification(); // TODO(Rob): Remove this later, move it to SignUp methods
+                // TODO(Rob): Copy this to SignUp methods
+                await user?.sendEmailVerification();
                 Get.snackbar(
                   '',
                   'login.verify-email'.tr,

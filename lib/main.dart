@@ -26,9 +26,10 @@ void main() async {
   await GetStorage.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  // TODO(Rob): Enable root blocking
   // if (await Config().isRooted()) {
   //   log('Device is rooted, preventing app start');
-  //   runApp(RootWarningDialog()); // TODO(Rob): Enable root blocking
+  //   runApp(RootWarningDialog());
   //   return;
   // }
 

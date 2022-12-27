@@ -73,6 +73,7 @@ class Authentication {
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             // handle account-already-exists error here
+            // TODO(Rob): Convert to Get snackbar
             ScaffoldMessenger.of(context).showSnackBar(
               Authentication.customSnackBar(
                 content:
@@ -81,6 +82,7 @@ class Authentication {
             );
           } else if (e.code == 'invalid-credential') {
             // handle invalid-credential error here
+            // TODO(Rob): Convert to Get snackbar
             ScaffoldMessenger.of(context).showSnackBar(
               Authentication.customSnackBar(
                 content:
@@ -92,6 +94,7 @@ class Authentication {
           }
         } on Exception {
           // handle generic errors here
+          // TODO(Rob): Convert to Get snackbar
           ScaffoldMessenger.of(context).showSnackBar(
             Authentication.customSnackBar(
               content: 'Error occurred using Google Sign-In. Try again.',
