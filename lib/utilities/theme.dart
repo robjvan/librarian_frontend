@@ -30,6 +30,20 @@ const TextStyle bookTitleStyle = TextStyle(
 const TextStyle bookAuthorStyle =
     TextStyle(fontSize: 18, fontFamily: Fonts.carroisSC);
 
+const TextStyle loginHeaderStyle = TextStyle(
+  fontFamily: 'CarroisSC',
+  fontSize: 64,
+  fontWeight: FontWeight.w600,
+  color: Color(0xFFFFFFFF),
+);
+
+const TextStyle loginSubheaderStyle = TextStyle(
+  // fontFamily: 'CarroisSC',
+  fontSize: 28,
+  fontWeight: FontWeight.w600,
+  color: Color(0xFF424242),
+);
+
 // Colors
 const Color white = Color(0xFFFFFFFF);
 const Color black = Color(0xFF000000);
