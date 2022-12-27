@@ -68,33 +68,27 @@ class AuthService {
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             // handle account-already-exists error here
-            // TODO(Rob): Convert to Get snackbar
-            ScaffoldMessenger.of(context).showSnackBar(
-              AuthService.customSnackBar(
-                content:
-                    'The account already exists with a different credential.',
-              ),
+            AuthService.customSnackBar(
+              type: 'error',
+              content:
+                  'The account already exists with a different credential.',
             );
           } else if (e.code == 'invalid-credential') {
             // handle invalid-credential error here
-            // TODO(Rob): Convert to Get snackbar
-            ScaffoldMessenger.of(context).showSnackBar(
-              AuthService.customSnackBar(
-                content:
-                    'Error occurred while accessing credentials. Try again.',
-              ),
+            AuthService.customSnackBar(
+              type: 'error',
+              content: 'Error occurred while accessing credentials. Try again.',
             );
           } else {
             log(e.toString());
           }
         } on Exception {
           // handle generic errors here
-          // TODO(Rob): Convert to Get snackbar
-          ScaffoldMessenger.of(context).showSnackBar(
-            AuthService.customSnackBar(
-              content: 'Error occurred using Google Sign-In. Try again.',
-            ),
+          AuthService.customSnackBar(
+            type: 'error',
+            content: 'Error occurred using Google Sign-In. Try again.',
           );
+          
         }
       }
 
@@ -200,35 +194,57 @@ class AuthService {
     }
   }
 
-  static void sendPasswordResetEmail(final String email) {
-    try {
-      FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'auth/invalid-email') {
-        // TODO(Rob) - Add error handling with snackbar
-      } else if (e.code == 'auth/user-not-found') {
-        // TODO(Rob) - Add error handling with snackbar
-
+  static dynamic sendPasswordResetEmail(
+    final String email,
+    final BuildContext context,
+  ) {
+    // try {
+    FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((final _) {
+      AuthService.customSnackBar(
+        type: 'error',
+        content:
+            'login.reset-pass-sent'.trParams(<String, String>{'email': email}),
+      );
+      Get.back();
+    }).catchError((final dynamic e) {
+      if (e.code == 'user-not-found' || e.code == 'invalid-email') {
+        // return e;
+        AuthService.customSnackBar(
+          type: 'error',
+          content: 'login.email-error'.trParams(
+            <String, String>{'email': email},
+          ),
+        );
+      } else if (e.code == 'too-many-requests') {
+        AuthService.customSnackBar(
+          type: 'error',
+          content: 'Firebase error - too many requests',
+        );
       }
-    }
-    Get.snackbar(
-      '',
-      // TODO(Rob): Fix translations
-      'login.reset-pass-sent'.trParams(
-        <String, String>{'email': email},
-      ),
-      snackPosition: SnackPosition.TOP,
-    );
-    Get.back();
+    });
   }
 
-  static SnackBar customSnackBar({required final String content}) => SnackBar(
-        backgroundColor: Colors.black,
-        content: Text(
-          content,
-          style: const TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
-        ),
-      );
+  static dynamic customSnackBar({
+    required final String type,
+    required final String content,
+    final IconData? icon,
+  }) {
+    String title = '';
+    switch (type) {
+      case 'error':
+        title = 'error'.tr;
+        break;
+      case 'success':
+        title = 'success'.tr;
+        break;
+    }
+    return Get.snackbar(
+      title,
+      content,
+      icon: icon != null ? Icon(icon, color: Colors.red) : null,
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
 
   static Future<void> signOut({required final BuildContext context}) async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -239,8 +255,9 @@ class AuthService {
       }
       await FirebaseAuth.instance.signOut();
     } on Exception {
-      ScaffoldMessenger.of(context).showSnackBar(
-        AuthService.customSnackBar(content: 'Error signing out. Try again.'),
+      AuthService.customSnackBar(
+        type: 'error',
+        content: 'Error signing out. Try again.',
       );
     }
   }

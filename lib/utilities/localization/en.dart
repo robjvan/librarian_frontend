@@ -12,6 +12,8 @@ final Map<String, String> englishStrings = <String, String>{
   'languages-en': 'English',
   'languages-fr': 'French',
   'languages-es': 'Spanish',
+  'error': 'Error',
+  'submit': 'Submit',
   //
   'login.email': 'Email',
   'login.password': 'Password',
@@ -24,6 +26,7 @@ final Map<String, String> englishStrings = <String, String>{
   'login.create-account': 'Sign Up',
   'login.forgot-password': 'Forgot Password?',
   'login.reset-pass-sent': 'Password reset email has been sent to @email',
+  'login.email-error': 'Account with that email could not be found!',
   //
   'drawer.1-book-msg': '1 book in library',
   'drawer.no-books-msg': 'No books in library',
