@@ -5,8 +5,7 @@ import 'package:redux/redux.dart';
 
 @immutable
 class ForgotPasswordScreenViewModel {
-  // final TextStyle titleStyle;
-  // final TextStyle subheaderStyle;
+  final TextStyle blurbStyle;
   final Function(
     GlobalKey<FormState> formKey,
     String email,
@@ -15,8 +14,7 @@ class ForgotPasswordScreenViewModel {
 
   const ForgotPasswordScreenViewModel({
     required this.submitFn,
-    //   required this.titleStyle,
-    //   required this.subheaderStyle,
+    required this.blurbStyle,
   });
 
   factory ForgotPasswordScreenViewModel.create(
@@ -30,14 +28,14 @@ class ForgotPasswordScreenViewModel {
       if (formKey.currentState!.validate()) {
         AuthService.sendPasswordResetEmail(
           emailAddress,
-          context,
         );
       }
     }
 
     return ForgotPasswordScreenViewModel(
-      // titleStyle: loginHeaderStyle,
-      // subheaderStyle: loginSubheaderStyle,
+      blurbStyle: const TextStyle(
+        fontSize: 18,
+      ),
       submitFn: submitFn,
     );
   }

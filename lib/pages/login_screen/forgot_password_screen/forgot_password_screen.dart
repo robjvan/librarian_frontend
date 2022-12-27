@@ -25,45 +25,54 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    emailController.text = 'rob@test.com';
+  }
+
   Widget _buildSubheader() {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
-      child: Text('forgot-password'.tr, style: loginHeaderStyle),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Text('forgot-password'.tr, style: loginSubheaderStyle),
     );
   }
 
   Widget _buildEmailField() {
-    return TextFormField(
-      onChanged: (final String newVal) {
-        userEmail = newVal;
-        if (_formKey.currentState!.validate()) {
-          setState(() {
-            _submitDisabled = false;
-          });
-        } else {
-          setState(() {
-            _submitDisabled = true;
-          });
-        }
-      },
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      controller: emailController,
-      decoration: InputDecoration(
-        labelText: 'login.email'.tr,
-        labelStyle: const TextStyle(fontSize: 20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+      child: TextFormField(
+        onChanged: (final String newVal) {
+          userEmail = newVal;
+          if (_formKey.currentState!.validate()) {
+            setState(() {
+              _submitDisabled = false;
+            });
+          } else {
+            setState(() {
+              _submitDisabled = true;
+            });
+          }
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        controller: emailController,
+        decoration: InputDecoration(
+          labelText: 'login.email'.tr,
+          labelStyle: const TextStyle(fontSize: 20),
+        ),
+        validator: (final String? text) {
+          if (text == null || text.isEmpty) {
+            // return 'Email cannot be empty!';
+            return 'login.empty-email'.tr;
+          } else if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+          ).hasMatch(text)) {
+            // return 'Email must be proper format!';
+            return 'login.email-format'.tr;
+          }
+          return null;
+        },
       ),
-      validator: (final String? text) {
-        if (text == null || text.isEmpty) {
-          // return 'Email cannot be empty!';
-          return 'login.empty-email'.tr;
-        } else if (!RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-        ).hasMatch(text)) {
-          // return 'Email must be proper format!';
-          return 'login.email-format'.tr;
-        }
-        return null;
-      },
     );
   }
 
@@ -71,8 +80,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return ElevatedButton(
       onPressed: _submitDisabled
           ? null
-          : vm.submitFn(_formKey, emailController.text, context),
+          : () => vm.submitFn(_formKey, emailController.text, context),
       child: Text('submit'.tr),
+    );
+  }
+
+  Widget _buildBlurb(final ForgotPasswordScreenViewModel vm) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+      child: Text(
+        'send-reset-link'.tr,
+        style: vm.blurbStyle,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget _buildCancelButton() {
+    return TextButton(
+      onPressed: Get.back,
+      child: Text('cancel'.tr),
     );
   }
 
@@ -86,21 +113,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         final ForgotPasswordScreenViewModel vm,
       ) {
         return Scaffold(
+          // resizeToAvoidBottomInset: false,
           body: SafeArea(
-            child: Column(
-              children: <Widget>[
-                const LoginHeader(),
-                _buildSubheader(),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      _buildEmailField(),
-                      _buildSubmitButton(vm)
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  const LoginHeader(),
+                  _buildSubheader(),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        _buildBlurb(vm),
+                        const SizedBox(height: 32),
+                        _buildEmailField(),
+                        _buildSubmitButton(vm),
+                        _buildCancelButton(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
