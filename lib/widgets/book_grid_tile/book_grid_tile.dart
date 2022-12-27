@@ -80,7 +80,8 @@ class BookGridTile extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 GestureDetector(
-                  onTap: () => Get.to(BookDetailsScreen(book, book.id)),
+                  onTap: () => Get.to(() => BookDetailsScreen(book, book.id)),
+                  // onTap: vm.navToBookDetails(book, book.id),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: GridTile(

@@ -100,7 +100,7 @@ class SettingsFooter extends StatelessWidget {
                 style: TextStyle(color: vm.textColor),
               ),
               onTap: () async {
-                await Authentication.signOut(context: context);
+                await AuthService.signOut(context: context);
                 unawaited(
                   // Navigator.of(context).pushReplacement(
                   //   _routeToSignInScreen(),

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 
-class Authentication {
+class AuthService {
   // this method initializes the Firebase App
   static Future<FirebaseApp> initializeFirebase({
     required final BuildContext context,
@@ -21,11 +21,6 @@ class Authentication {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       unawaited(Get.offAll(() => const LibraryScreen()));
-      // await Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute<dynamic>(
-      //     builder: (final BuildContext context) => const LibraryScreen(),
-      //   ),
-      // );
     }
 
     return firebaseApp;
@@ -75,7 +70,7 @@ class Authentication {
             // handle account-already-exists error here
             // TODO(Rob): Convert to Get snackbar
             ScaffoldMessenger.of(context).showSnackBar(
-              Authentication.customSnackBar(
+              AuthService.customSnackBar(
                 content:
                     'The account already exists with a different credential.',
               ),
@@ -84,7 +79,7 @@ class Authentication {
             // handle invalid-credential error here
             // TODO(Rob): Convert to Get snackbar
             ScaffoldMessenger.of(context).showSnackBar(
-              Authentication.customSnackBar(
+              AuthService.customSnackBar(
                 content:
                     'Error occurred while accessing credentials. Try again.',
               ),
@@ -96,7 +91,7 @@ class Authentication {
           // handle generic errors here
           // TODO(Rob): Convert to Get snackbar
           ScaffoldMessenger.of(context).showSnackBar(
-            Authentication.customSnackBar(
+            AuthService.customSnackBar(
               content: 'Error occurred using Google Sign-In. Try again.',
             ),
           );
@@ -205,6 +200,28 @@ class Authentication {
     }
   }
 
+  static void sendPasswordResetEmail(final String email) {
+    try {
+      FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'auth/invalid-email') {
+        // TODO(Rob) - Add error handling with snackbar
+      } else if (e.code == 'auth/user-not-found') {
+        // TODO(Rob) - Add error handling with snackbar
+
+      }
+    }
+    Get.snackbar(
+      '',
+      // TODO(Rob): Fix translations
+      'login.reset-pass-sent'.trParams(
+        <String, String>{'email': email},
+      ),
+      snackPosition: SnackPosition.TOP,
+    );
+    Get.back();
+  }
+
   static SnackBar customSnackBar({required final String content}) => SnackBar(
         backgroundColor: Colors.black,
         content: Text(
@@ -223,7 +240,7 @@ class Authentication {
       await FirebaseAuth.instance.signOut();
     } on Exception {
       ScaffoldMessenger.of(context).showSnackBar(
-        Authentication.customSnackBar(content: 'Error signing out. Try again.'),
+        AuthService.customSnackBar(content: 'Error signing out. Try again.'),
       );
     }
   }

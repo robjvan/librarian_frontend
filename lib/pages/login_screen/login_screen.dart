@@ -48,13 +48,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  // Future<void> tryAutologin() async {
-  //   final User? user = await FirebaseAuth.instance.currentUser;
-  //   debugPrint('Current user = $user');
-
-  //   if (user != null) {}
-  // }
-
   Widget _buildEmailField() => TextFormField(
         onChanged: (final String newVal) => userEmail = newVal,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -115,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Center(
           child: FutureBuilder<FirebaseApp>(
-            future: Authentication.initializeFirebase(context: context),
+            future: AuthService.initializeFirebase(context: context),
             builder: (
               final BuildContext context,
               final AsyncSnapshot<Object?> snapshot,
@@ -141,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: OutlinedButton(
           onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              final dynamic user = await Authentication.signInWithEmail(
+              final dynamic user = await AuthService.signInWithEmail(
                 context: context,
                 userEmail: emailController.text,
                 userPassword: passwordController.text,
@@ -165,22 +158,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (doc.get('firstRun') == true) {
                   unawaited(
                     Get.offAll(IntroScreen(user: user)),
-                    // Navigator.of(context).pushReplacement(
-                    //   MaterialPageRoute<dynamic>(
-                    //     builder: (final BuildContext context) =>
-                    //         IntroScreen(user: user),
-                    //   ),
-                    // ),
                   );
                 } else {
                   unawaited(
                     Get.offAll(const LibraryScreen()),
-                    // Navigator.of(context).pushReplacement(
-                    //   MaterialPageRoute<dynamic>(
-                    //     builder: (final BuildContext context) =>
-                    //         const LibraryScreen(),
-                    //   ),
-                    // ),
                   );
                 }
               } else {
@@ -229,27 +210,12 @@ class _LoginScreenState extends State<LoginScreen> {
           'login.create-account'.tr,
           style: vm.createAccountButtonStyle,
         ),
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute<dynamic>(
-              builder: (final BuildContext context) => const SignUpScreen(),
-            ),
-          );
-        },
+        onPressed: () => Get.to(() => const SignUpScreen()),
       );
 
   Widget _buildForgotPassButton(final LoginScreenViewModel vm) => TextButton(
         child: Text('login.forgot-password'.tr, style: vm.passwordButtonStyle),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<dynamic>(
-              builder: (final BuildContext context) =>
-                  const ForgotPasswordScreen(),
-            ),
-          );
-        },
+        onPressed: () => Get.to(() => const ForgotPasswordScreen()),
       );
 
   Widget _buildSignInHeader(final double sh, final LoginScreenViewModel vm) {
@@ -284,31 +250,28 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (final BuildContext context, final dynamic vm) {
         final double sh = MediaQuery.of(context).size.height;
 
-        return GestureDetector(
-          onTap: () {},
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              child: SizedBox(
-                height: sh,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    _buildSignInHeader(sh, vm),
-                    _buildLoginForm(_formKey),
-                    _buildEmailSignInButton(),
-                    const SizedBox(height: 16.0),
-                    _buildGoogleButton(),
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        _buildCreateAcctButton(vm),
-                        _buildForgotPassButton(vm),
-                      ],
-                    ),
-                  ],
-                ),
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SafeArea(
+            child: SizedBox(
+              height: sh,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _buildSignInHeader(sh, vm),
+                  _buildLoginForm(_formKey),
+                  _buildEmailSignInButton(),
+                  const SizedBox(height: 16.0),
+                  _buildGoogleButton(),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      _buildCreateAcctButton(vm),
+                      _buildForgotPassButton(vm),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
