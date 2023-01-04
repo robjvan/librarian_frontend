@@ -20,13 +20,13 @@ class ForgotPasswordScreenViewModel {
   factory ForgotPasswordScreenViewModel.create(
     final Store<GlobalAppState> store,
   ) {
-    void submitFn(
+    Future<void> submitFn(
       final GlobalKey<FormState> formKey,
       final String emailAddress,
       final BuildContext context,
     ) async {
       if (formKey.currentState!.validate()) {
-        AuthService.sendPasswordResetEmail(emailAddress);
+        await AuthService.sendPasswordResetEmail(emailAddress);
       }
     }
 
