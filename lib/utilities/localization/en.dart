@@ -92,4 +92,14 @@ final Map<String, String> englishStrings = <String, String>{
   'error-dialog.content': 'No results found!  @error',
   'send-reset-link':
       'Enter your email address to have a reset link sent to you.',
+  //
+  'new-book.title-error': 'Title cannot be empty',
+  'new-book.title': 'Title',
+  'new-book.author': 'Author',
+  'new-book.publisher': 'Publisher',
+  'new-book.publish-year': 'Publish Year',
+  'new-book.page-count': 'Page Count',
+  'new-book.description': 'Description',
+
+
 };
