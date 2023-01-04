@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/dialogs/manual_search_dialog/manual_search_dialog.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/fancy_fab/fancy_fab_view_model.dart';
+import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/utilities/librarian_icons.dart';
 
@@ -53,7 +54,7 @@ class FancyFABState extends State<FancyFAB> {
           ),
         ),
         SpeedDialChild(
-          onTap: () {},
+          onTap: () => Get.to(() => const NewBookScreen()),
           elevation: 0,
           backgroundColor: vm.canvasColor,
           labelWidget: Text(
