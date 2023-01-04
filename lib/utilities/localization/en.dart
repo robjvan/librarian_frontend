@@ -16,6 +16,7 @@ final Map<String, String> englishStrings = <String, String>{
   'submit': 'Submit',
   'ok': 'OK',
   'forgot-password': 'Forgot password',
+  'send': 'Send',
   //
   'login.email': 'Email',
   'login.password': 'Password',
