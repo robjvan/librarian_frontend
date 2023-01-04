@@ -217,15 +217,36 @@ class AuthService {
     }
   }
 
-  static dynamic sendPasswordResetEmail(final String email) {
-    FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((final _) {
-      AuthService.customSnackBar(
-        type: 'success',
-        content:
-            'login.reset-pass-sent'.trParams(<String, String>{'email': email}),
+  static dynamic sendPasswordResetEmail(final String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      //     .catchError((final dynamic e) {
+      //   if (e.code == 'user-not-found' || e.code == 'invalid-email') {
+      //     // AuthService.customSnackBar(
+      //     //   type: 'error',
+      //     //   content: 'login.email-error'.trParams(
+      //     //     <String, String>{'email': email},
+      //     //   ),
+      //     // );
+      //   } else if (e.code == 'too-many-requests') {
+      //     // AuthService.customSnackBar(
+      //     //   type: 'error',
+      //     //   content: 'Firebase error - too many requests',
+      //     // );
+      //   }
+      // });
+      await Get.defaultDialog(
+        title: 'Sent!',
+        content: const Text('An email has been sent to do stuff with things'),
+        actions: <Widget>[
+          ElevatedButton(
+            onPressed: Get.back,
+            child: Text('ok'.tr),
+          ),
+        ],
       );
       Get.back();
-    }).catchError((final dynamic e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'invalid-email') {
         AuthService.customSnackBar(
           type: 'error',
@@ -238,8 +259,8 @@ class AuthService {
           type: 'error',
           content: 'Firebase error - too many requests',
         );
-      } 
-    });
+      }
+    }
   }
 
   static Future<void> signOut({required final BuildContext context}) async {
