@@ -181,6 +181,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
             ElevatedButton(
               focusNode: buttonNode,
               style: ElevatedButton.styleFrom(
+                backgroundColor: vm.userColor,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
