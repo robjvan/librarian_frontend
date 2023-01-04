@@ -82,7 +82,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       onPressed: _submitDisabled
           ? null
           : () => vm.submitFn(_formKey, emailController.text, context),
-      child: Text('submit'.tr),
+      child: Text('send'.tr),
     );
   }
 

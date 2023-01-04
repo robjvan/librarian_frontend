@@ -24,11 +24,9 @@ class ForgotPasswordScreenViewModel {
       final GlobalKey<FormState> formKey,
       final String emailAddress,
       final BuildContext context,
-    ) {
+    ) async {
       if (formKey.currentState!.validate()) {
-        AuthService.sendPasswordResetEmail(
-          emailAddress,
-        );
+        AuthService.sendPasswordResetEmail(emailAddress);
       }
     }
 
