@@ -19,11 +19,22 @@ class _NewBookFormState extends State<NewBookForm> {
   final TextEditingController pageCountController = TextEditingController();
   final TextEditingController authorController = TextEditingController();
   final TextEditingController publisherController = TextEditingController();
+  final TextEditingController publishYearController = TextEditingController();
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    pageCountController.dispose();
+    authorController.dispose();
+    publisherController.dispose();
+    publishYearController.dispose();
+    super.dispose();
+  }
 
   Widget _buildImageGrabber() => SizedBox(
         height: 200,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(8),
           // child: CachedNetworkImage(
           //   imageUrl: book.thumbnail!,
           //   fit: BoxFit.cover,
@@ -51,38 +62,72 @@ class _NewBookFormState extends State<NewBookForm> {
       ) {
         Widget _formFieldChild({
           required final TextEditingController controller,
+          required final String title,
           final bool? autoValidate,
           final TextInputType? keyboardType,
           final String? Function(String? s)? validatorFn,
           final bool? mini = false,
         }) {
-          return TextFormField(
-            maxLength: mini! ? 5 : 150,
-            autovalidateMode: autoValidate!
-                ? AutovalidateMode.onUserInteraction
-                : AutovalidateMode.disabled,
-            keyboardType: keyboardType ?? TextInputType.text,
-            decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: vm.textColor,
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: sw,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: controller.value.text.isEmpty
+                        ? vm.userColor.withAlpha(180)
+                        : vm.userColor.withAlpha(255),
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.start,
                 ),
               ),
-              focusedErrorBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.red,
+              const SizedBox(height: 4),
+              SizedBox(
+                width: mini! ? 100 : sw,
+                child: TextFormField(
+                  maxLength: mini ? 5 : 150,
+                  autovalidateMode: autoValidate!
+                      ? AutovalidateMode.onUserInteraction
+                      : AutovalidateMode.disabled,
+                  keyboardType: keyboardType ?? TextInputType.text,
+                  decoration: InputDecoration(
+                    counterText: '',
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: vm.textColor.withAlpha(100),
+                      ),
+                    ),
+                    errorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                    focusedErrorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: vm.textColor,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  style: TextStyle(color: vm.textColor),
+                  controller: controller,
+                  validator: validatorFn ??
+                      (final _) {
+                        return null;
+                      },
                 ),
               ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: vm.textColor,
-                  width: 2,
-                ),
-              ),
-            ),
-            style: AppTextStyles.bookTitleStyle.copyWith(color: vm.textColor),
-            controller: controller,
-            validator: validatorFn ?? (_) {},
+            ],
           );
         }
 
@@ -96,37 +141,31 @@ class _NewBookFormState extends State<NewBookForm> {
         }) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: SizedBox(
-              width: sw,
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    title,
-                    style: vm.titleStyle,
-                  ),
-                  const SizedBox(width: 16),
-                  mini!
-                      ? SizedBox(
-                          width: 80,
-                          child: _formFieldChild(
-                            controller: controller,
-                            autoValidate: autoValidate,
-                            keyboardType: keyboardType,
-                            mini: mini,
-                            validatorFn: validatorFn,
-                          ),
-                        )
-                      : Expanded(
-                          child: _formFieldChild(
-                            controller: controller,
-                            autoValidate: autoValidate,
-                            keyboardType: keyboardType,
-                            mini: mini,
-                            validatorFn: validatorFn,
-                          ),
+            child: Row(
+              children: <Widget>[
+                mini!
+                    ? SizedBox(
+                        width: 100,
+                        child: _formFieldChild(
+                          controller: controller,
+                          autoValidate: autoValidate,
+                          keyboardType: keyboardType,
+                          mini: mini,
+                          validatorFn: validatorFn,
+                          title: title,
                         ),
-                ],
-              ),
+                      )
+                    : Expanded(
+                        child: _formFieldChild(
+                          controller: controller,
+                          autoValidate: autoValidate,
+                          keyboardType: keyboardType,
+                          mini: mini,
+                          validatorFn: validatorFn,
+                          title: title,
+                        ),
+                      ),
+              ],
             ),
           );
         }
@@ -160,6 +199,7 @@ class _NewBookFormState extends State<NewBookForm> {
                     if (s!.isEmpty) {
                       return 'new-book.title-error'.tr;
                     }
+                    return null;
                   },
                   autoValidate: true,
                 ),
@@ -194,23 +234,37 @@ class _NewBookFormState extends State<NewBookForm> {
 
                 const SizedBox(height: 8),
 
-                // Page count field
-                _buildFormField(
-                    title: 'new-book.page-count'.tr,
-                    controller: pageCountController,
-                    mini: true,
-                    keyboardType: TextInputType.number,
-                    validatorFn: (s) {
-                      if (s!.isEmpty) {
-                        return '';
-                      }
-                    }),
-
-                const SizedBox(height: 8),
-
-                // PublishYear field
-                // TODO(Rob): Add year picker
-                _buildYearPicker(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    // Page count field
+                    _buildFormField(
+                      title: 'new-book.page-count'.tr,
+                      controller: pageCountController,
+                      mini: true,
+                      keyboardType: TextInputType.number,
+                      validatorFn: (s) {
+                        // TODO: Fix RegExp validators
+                        if (!RegExp('[a-zA-Z]').hasMatch(s!)) {
+                          return 'Numbers only!';
+                        }
+                      },
+                    ),
+                    // PublishYear field
+                    _buildFormField(
+                      title: 'new-book.publish-year'.tr,
+                      controller: publishYearController,
+                      mini: true,
+                      keyboardType: TextInputType.number,
+                      validatorFn: (s) {
+                        // TODO: Fix RegExp validators
+                        if (!RegExp("?=.*[a-zA-Z]").hasMatch(s!)) {
+                          return 'Numbers only!';
+                        }
+                      },
+                    ),
+                  ],
+                ),
 
                 const SizedBox(height: 8),
 
