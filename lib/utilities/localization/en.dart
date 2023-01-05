@@ -17,6 +17,7 @@ final Map<String, String> englishStrings = <String, String>{
   'ok': 'OK',
   'forgot-password': 'Forgot password',
   'send': 'Send',
+  'save': 'Save',
   //
   'login.email': 'Email',
   'login.password': 'Password',
@@ -101,6 +102,13 @@ final Map<String, String> englishStrings = <String, String>{
   'new-book.publish-year': 'Publish Year',
   'new-book.page-count': 'Page Count',
   'new-book.description': 'Description',
+  'new-book.rating': 'Rating',
+  'new-book.is-mature': 'Mature content',
+  'new-book.add-to-wishlist': 'Add to wishlist',
+  'new-book.add-to-shopping-list': 'Add to shopping list',
+  'new-book.have-read': 'Already read it',
+  'new-book.add-to-faves': 'Add to favorites',
+  'new-book.isbn': 'ISBN',
 
 
 };
