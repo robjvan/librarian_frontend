@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -32,14 +31,17 @@ class _NewBookFormState extends State<NewBookForm> {
   bool addToFaves = false;
   bool addToShoppingList = false;
   String coverImageUrl = '';
+  int isbn = -1;
+  int publishYear = -1;
+  int pageCount = -1;
 
-  void submitFn(final NewBookScreenViewModel vm) {
-    if (formKey.currentState!.validate()) {
-      final Book newBook = Book.createEmpty();
+  // void submitFn(final NewBookScreenViewModel vm) {
+  //   if (formKey.currentState!.validate()) {
+  //     final Book newBook = Book.createEmpty();
 
-      vm.dispatch(AddBookToCollectionAction(newBook));
-    }
-  }
+  //     vm.dispatch(AddBookToCollectionAction(newBook));
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -54,49 +56,60 @@ class _NewBookFormState extends State<NewBookForm> {
   }
 
   Widget _buildImageGrabber(final NewBookScreenViewModel vm) => SizedBox(
-        height: 200,
-        child: GestureDetector(
-          onTap: () async {
-            String newImageUrl = '';
-            try {
-              newImageUrl = await Get.defaultDialog(
-                confirm: ElevatedButton(
-                  onPressed: () {
-                    Get.back(result: 'Button pressed -> Dialog closed OK');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: vm.userColor,
-                  ),
-                  child: Text(
-                    'ok'.tr,
-                    style: TextStyle(
-                      color: Colors.white,
+        // height: 200,
+        child: Row(
+          children: [
+            Spacer(),
+            GestureDetector(
+              onTap: () async {
+                String newImageUrl = '';
+                try {
+                  newImageUrl = await Get.defaultDialog(
+                    confirm: ElevatedButton(
+                      onPressed: () {
+                        Get.back(result: 'Button pressed -> Dialog closed OK');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: vm.userColor,
+                      ),
+                      child: Text(
+                        'ok'.tr,
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
+                  );
+
+                  // print(newImageUrl);
+                  // TODO(Rob): Continue image grabber logic
+
+                } on Exception catch (_) {}
+
+                // if (newImageUrl != '') {
+                //   coverImageUrl = newImageUrl;
+                // }
+              },
+              child:
+                  // coverImageUrl.isEmpty
+                  //     ?
+                  ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  width: 200,
+                  fit: BoxFit.cover,
+                  'assets/images/image_placeholder.png',
                 ),
-              );
-
-              print(newImageUrl);
-              // TODO(Rob): Continue image grabber logic
-
-            } on Exception catch (_) {}
-
-            if (newImageUrl != '') {
-              coverImageUrl = newImageUrl;
-            }
-          },
-          child:
-              // coverImageUrl.isEmpty
-              //     ?
-              Image.asset(
-            'assets/images/image_placeholder.png',
-          )
-          // : CachedNetworkImage(
-          //     imageUrl: coverImageUrl,
-          //     fit: BoxFit.cover,
-          //     width: 200,
-          //   )
-          ,
+              )
+              // : CachedNetworkImage(
+              //     imageUrl: coverImageUrl,
+              //     fit: BoxFit.cover,
+              //     width: 200,
+              //   )
+              ,
+            ),
+            Spacer(),
+          ],
         ),
       );
 
@@ -105,31 +118,38 @@ class _NewBookFormState extends State<NewBookForm> {
   ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: Row(
+      child: Column(
         children: <Widget>[
-          Text(
-            'new-book.rating'.tr,
-            style: vm.titleStyle,
-          ),
-          const Spacer(),
-          RatingBar(
-            allowHalfRating: true,
-            minRating: 0,
-            initialRating: bookRating,
-            direction: Axis.horizontal,
-            itemSize: 24,
-            itemCount: 5,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-            ratingWidget: RatingWidget(
-              full: Icon(Icons.star, color: vm.textColor),
-              half: Icon(Icons.star_half, color: vm.textColor),
-              empty: Icon(Icons.star_border, color: vm.textColor),
+          SizedBox(
+            width: 150,
+            child: Text(
+              'new-book.rating'.tr,
+              style: vm.titleStyle,
+              textAlign: TextAlign.start,
             ),
-            onRatingUpdate: (final double rating) {
-              bookRating = rating;
-            },
           ),
-          const Spacer(),
+          SizedBox(
+            height: 48,
+            child: Center(
+              child: RatingBar(
+                allowHalfRating: true,
+                minRating: 0,
+                initialRating: bookRating,
+                direction: Axis.horizontal,
+                itemSize: 24,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+                ratingWidget: RatingWidget(
+                  full: Icon(Icons.star, color: vm.textColor),
+                  half: Icon(Icons.star_half, color: vm.textColor),
+                  empty: Icon(Icons.star_border, color: vm.textColor),
+                ),
+                onRatingUpdate: (final double rating) {
+                  bookRating = rating;
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -254,7 +274,51 @@ class _NewBookFormState extends State<NewBookForm> {
           ),
         ),
         ElevatedButton(
-          onPressed: () => submitFn(vm),
+          onPressed: () {
+            if (isbnController.value.text.contains(' ') ||
+                isbnController.value.text.contains('-') ||
+                isbnController.value.text == '') {
+              // do nothing
+            } else {
+              isbn = int.parse(isbnController.value.text);
+            }
+
+            if (publishYearController.value.text.contains(' ') ||
+                publishYearController.value.text.contains('-') ||
+                publishYearController.value.text == '') {
+              // do nothing
+            } else {
+              publishYear = int.parse(publishYearController.value.text);
+            }
+
+            if (pageCountController.value.text.contains(' ') ||
+                pageCountController.value.text.contains('-') ||
+                pageCountController.value.text == '') {
+              // do nothing
+            } else {
+              pageCount = int.parse(pageCountController.value.text);
+            }
+
+            if (formKey.currentState!.validate()) {
+              vm.submitFn(
+                title: titleController.value.text,
+                author: authorController.value.text,
+                description: descriptionController.value.text,
+                publisher: publisherController.value.text,
+                isbn: isbn,
+                publishYear: publishYear,
+                pageCount: pageCount,
+                rating: bookRating,
+                addToFaves: addToFaves,
+                addToShoppingList: addToShoppingList,
+                addToWishlist: addToWishlist,
+                alreadyRead: alreadyRead,
+                thumbnailUrl: coverImageUrl,
+              );
+
+              Get.back();
+            }
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: vm.userColor,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -316,10 +380,6 @@ class _NewBookFormState extends State<NewBookForm> {
                   keyboardType: TextInputType.multiline,
                 ),
                 const SizedBox(height: 16),
-                // Ratings bar
-                _buildRatingsBar(vm),
-                // _buildRatinsBar(vm),
-                const SizedBox(height: 16),
                 _buildBookToggles(vm, sw),
                 const SizedBox(height: 16),
                 // Publisher(s) field
@@ -330,19 +390,20 @@ class _NewBookFormState extends State<NewBookForm> {
                   vm: vm,
                 ),
                 const SizedBox(height: 16),
-                // Page count and Publish year row
+                // ISBN field
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     NewBookFormField(
-                      title: 'new-book.page-count'.tr,
-                      controller: pageCountController,
+                      title: 'new-book.isbn'.tr,
+                      controller: isbnController,
                       mini: true,
                       keyboardType: TextInputType.number,
                       validatorFn: vm.numberValidatorFn,
                       sw: sw,
                       vm: vm,
-                      maxLength: 5,
+                      maxLength: 13,
+                      width: 150,
                     ),
                     NewBookFormField(
                       title: 'new-book.publish-year'.tr,
@@ -353,26 +414,28 @@ class _NewBookFormState extends State<NewBookForm> {
                       sw: sw,
                       vm: vm,
                       maxLength: 4,
+                      width: 100,
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
-                // ISBN field
+                // Page count and Publish year row
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    const Spacer(),
+                    // Ratings bar
+                    _buildRatingsBar(vm),
                     NewBookFormField(
-                      title: 'new-book.isbn'.tr,
-                      controller: isbnController,
+                      title: 'new-book.page-count'.tr,
+                      controller: pageCountController,
                       mini: true,
                       keyboardType: TextInputType.number,
                       validatorFn: vm.numberValidatorFn,
                       sw: sw,
                       vm: vm,
-                      maxLength: 13,
-                      forIsbn: true,
+                      maxLength: 5,
+                      width: 100,
                     ),
-                    const Spacer(),
                   ],
                 ),
                 const SizedBox(height: 48),
