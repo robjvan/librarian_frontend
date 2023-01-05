@@ -1,5 +1,4 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 class ImageGrabberDialog extends StatefulWidget {
   const ImageGrabberDialog({super.key});
@@ -10,7 +9,7 @@ class ImageGrabberDialog extends StatefulWidget {
 
 class _ImageGrabberDialogState extends State<ImageGrabberDialog> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Container();
     // TODO(Rob): Build image grabber dialog
   }
