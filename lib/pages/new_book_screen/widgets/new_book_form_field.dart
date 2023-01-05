@@ -12,7 +12,7 @@ class NewBookFormField extends StatefulWidget {
   final TextInputType? keyboardType;
   final bool? autoValidate;
   final int? maxLength;
-  final bool? forIsbn;
+  final double? width;
   final bool? forTitle;
 
   const NewBookFormField({
@@ -25,7 +25,7 @@ class NewBookFormField extends StatefulWidget {
     this.keyboardType,
     this.autoValidate = false,
     this.maxLength,
-    this.forIsbn,
+    this.width,
     this.forTitle,
     super.key,
   });
@@ -46,18 +46,9 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
     final TextInputType? keyboardType,
     final String? Function(String? s)? validatorFn,
     final int? maxLength,
-    final bool? forIsbn,
     final bool? forTitle,
+    final double? width,
   }) {
-    if (maxLength != null) {
-      if (maxLength == 13) {
-        fieldWidth = 150;
-      } else if (maxLength < 10) {
-        fieldWidth = 100;
-      }
-    } else {
-      fieldWidth = sw;
-    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -73,7 +64,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
         ),
         const SizedBox(height: 4),
         SizedBox(
-          width: fieldWidth,
+          width: width ?? sw,
           child: TextFormField(
             maxLength: maxLength ?? 150,
             minLines: keyboardType == TextInputType.multiline ? 3 : 1,
@@ -91,7 +82,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
               ),
               counterText: '',
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  const EdgeInsets.all(8),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: vm.textColor.withAlpha(100),
@@ -129,13 +120,15 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
 
   @override
   Widget build(final BuildContext context) {
+    final double sw = MediaQuery.of(context).size.width;
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         children: <Widget>[
           widget.mini!
               ? SizedBox(
-                  width: fieldWidth,
+                  width: widget.width ?? 100,
                   child: _formFieldChild(
                     controller: widget.controller,
                     autoValidate: widget.autoValidate,
@@ -145,7 +138,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
                     vm: widget.vm,
                     sw: widget.sw,
                     maxLength: widget.maxLength,
-                    forIsbn: widget.forIsbn,
+                    width: widget.width,
                     forTitle: widget.forTitle,
                   ),
                 )
@@ -159,7 +152,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
                     vm: widget.vm,
                     sw: widget.sw,
                     maxLength: widget.maxLength,
-                    forIsbn: widget.forIsbn,
+                    width: widget.width,
                     forTitle: widget.forTitle,
                   ),
                 ),
