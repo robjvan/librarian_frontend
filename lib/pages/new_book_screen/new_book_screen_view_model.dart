@@ -32,7 +32,7 @@ class NewBookScreenViewModel {
     String? thumbnailUrl,
   }) submitFn;
 
-  NewBookScreenViewModel({
+  const NewBookScreenViewModel({
     required this.textColor,
     required this.canvasColor,
     required this.userColor,
@@ -63,7 +63,7 @@ class NewBookScreenViewModel {
       final bool? addToShoppingList,
       final bool? addToWishlist,
       final bool? alreadyRead,
-      String? thumbnailUrl,
+      final String? thumbnailUrl,
     }) {
       const Uuid uuid = Uuid();
       final String _newId = uuid.v4();
@@ -141,6 +141,7 @@ class NewBookScreenViewModel {
         if (s!.contains(' ') && s.contains('-') && s.contains('.')) {
           return 'Numbers only!';
         }
+        return null;
         // if (s!.contains(RegExp('[0-9]'))) {
         //   return 'Numbers only!';
         // }
