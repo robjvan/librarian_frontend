@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:librarian_frontend/models/entity.dart';
 
 class Book extends Entity<Book> {
-  final List<String> authors;
-  final String sortAuthor;
+  final List<String>? authors;
+  final String? sortAuthor;
   final String? title;
   final String? sortTitle;
   final String? publisher;
@@ -12,19 +12,19 @@ class Book extends Entity<Book> {
   final String? thumbnail;
   final String? description;
 
-  final String isbn13;
-  final String isbn10;
+  final String? isbn13;
+  final String? isbn10;
 
   final int? pageCount;
   final String? publishYear;
   final int? readCount;
   final double? rating;
 
-  final bool isMature;
-  final bool haveRead;
-  final bool inFavesList;
-  final bool inWishList;
-  final bool inShoppingList;
+  final bool? isMature;
+  final bool? haveRead;
+  final bool? inFavesList;
+  final bool? inWishList;
+  final bool? inShoppingList;
 
   Book({
     required this.thumbnail,
