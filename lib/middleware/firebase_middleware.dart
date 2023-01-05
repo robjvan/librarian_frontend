@@ -88,7 +88,7 @@ Middleware<GlobalAppState> handleAddBookToFirebaseRequest() => (
             });
           }
         });
-      } on Exception catch (e) {
+      } on Exception catch (_) {
         Get.snackbar(
           'Error',
           colorText: getTextColor(),
