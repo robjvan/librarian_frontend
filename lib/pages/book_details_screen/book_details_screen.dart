@@ -77,11 +77,11 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     } else if (book.publishYear == '-1' && book.publisher != '') {
       // publishYear is empty, publisher is not
       message = 'book-details-screen.empty-publishYear'
-          .trParams({'publisher': book.publisher!});
+          .trParams(<String, String>{'publisher': book.publisher!});
     } else if (book.publishYear != '-1' && book.publisher == '') {
       // publishYear is not empty, publisher is empty
       message = 'book-details-screen.empty-publisher'
-          .trParams({'publishYear': book.publishYear!});
+          .trParams(<String, String>{'publishYear': book.publishYear!});
     } else if (book.publishYear != '-1' && book.publisher != '') {
       // both properties are filled
       message = 'book-details-screen.publisher'.trParams(<String, String>{
