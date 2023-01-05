@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:librarian_frontend/utilities/api_keys.dart' show googleApiKey;
+import 'package:librarian_frontend/utilities/api_keys.dart';
 
 @immutable
 class GoogleBooksApiProvider {
@@ -11,12 +11,16 @@ class GoogleBooksApiProvider {
   const GoogleBooksApiProvider();
 
   Future<http.Response> getBookDataFromISBN(final String? isbn) => http
-      .get(Uri.parse('${_apiUrl}isbn:$isbn&maxResults=40&key=$googleApiKey'));
+      .get(
+        Uri.parse(
+          '${_apiUrl}isbn:$isbn&maxResults=40&key=${AppKeys.googleApiKey}',
+        ),
+      );
 
   Future<http.Response> getBookDataFromISBNOtherUrl(final String? isbn) =>
       http.get(
         Uri.parse(
-          '${_secondaryApiUrl}ISBN:$isbn&maxResults=40&key=$googleApiKey',
+          '${_secondaryApiUrl}ISBN:$isbn&maxResults=40&key=${AppKeys.googleApiKey}',
         ),
       );
 
@@ -24,6 +28,8 @@ class GoogleBooksApiProvider {
     final String queryString,
   ) async =>
       http.get(
-        Uri.parse('$_apiUrl$queryString&maxResults=40&key=$googleApiKey'),
+        Uri.parse(
+          '$_apiUrl$queryString&maxResults=40&key=${AppKeys.googleApiKey}',
+        ),
       );
 }
