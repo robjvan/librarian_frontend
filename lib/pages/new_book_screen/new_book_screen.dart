@@ -45,7 +45,7 @@ class NewBookScreen extends StatelessWidget {
                 final AsyncSnapshot<QuerySnapshot<dynamic>> snapshot,
               ) {
                 return Stack(
-                  children: [
+                  children: <Widget>[
                     const NewBookForm(),
                     _buildBackButton(vm),
                   ],

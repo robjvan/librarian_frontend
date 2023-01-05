@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
-import 'package:librarian_frontend/actions/actions.dart';
-import 'package:librarian_frontend/models/models.dart';
 import 'package:librarian_frontend/pages/new_book_screen/new_book_screen_view_model.dart';
 import 'package:librarian_frontend/pages/new_book_screen/widgets/new_book_form_field.dart';
 import 'package:librarian_frontend/state.dart';
@@ -58,8 +56,8 @@ class _NewBookFormState extends State<NewBookForm> {
   Widget _buildImageGrabber(final NewBookScreenViewModel vm) => SizedBox(
         // height: 200,
         child: Row(
-          children: [
-            Spacer(),
+          children: <Widget>[
+            const Spacer(),
             GestureDetector(
               onTap: () async {
                 String newImageUrl = '';
@@ -108,7 +106,7 @@ class _NewBookFormState extends State<NewBookForm> {
               //   )
               ,
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       );
@@ -360,7 +358,6 @@ class _NewBookFormState extends State<NewBookForm> {
                   validatorFn: vm.titleValidatorFn,
                   autoValidate: true,
                   forTitle: true,
-                  sw: sw,
                   vm: vm,
                 ),
                 const SizedBox(height: 16),
@@ -368,14 +365,12 @@ class _NewBookFormState extends State<NewBookForm> {
                 NewBookFormField(
                   title: 'new-book.author'.tr,
                   controller: authorController,
-                  sw: sw,
                   vm: vm,
                 ),
                 const SizedBox(height: 16),
                 NewBookFormField(
                   controller: descriptionController,
                   title: 'new-book.description'.tr,
-                  sw: sw,
                   vm: vm,
                   keyboardType: TextInputType.multiline,
                 ),
@@ -386,7 +381,6 @@ class _NewBookFormState extends State<NewBookForm> {
                 NewBookFormField(
                   title: 'new-book.publisher'.tr,
                   controller: publisherController,
-                  sw: sw,
                   vm: vm,
                 ),
                 const SizedBox(height: 16),
@@ -400,7 +394,6 @@ class _NewBookFormState extends State<NewBookForm> {
                       mini: true,
                       keyboardType: TextInputType.number,
                       validatorFn: vm.numberValidatorFn,
-                      sw: sw,
                       vm: vm,
                       maxLength: 13,
                       width: 150,
@@ -411,7 +404,6 @@ class _NewBookFormState extends State<NewBookForm> {
                       mini: true,
                       keyboardType: TextInputType.number,
                       validatorFn: vm.numberValidatorFn,
-                      sw: sw,
                       vm: vm,
                       maxLength: 4,
                       width: 100,
@@ -431,7 +423,6 @@ class _NewBookFormState extends State<NewBookForm> {
                       mini: true,
                       keyboardType: TextInputType.number,
                       validatorFn: vm.numberValidatorFn,
-                      sw: sw,
                       vm: vm,
                       maxLength: 5,
                       width: 100,
