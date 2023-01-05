@@ -45,19 +45,23 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final BookDetailsScreenViewModel vm,
   ) =>
       Text(
-        author,
-        style: AppTextStyles.bookAuthorStyle.copyWith(color: vm.textColor),
+        author != '' ? author : 'author unavailable',
+        style: author != ''
+            ? AppTextStyles.bookAuthorStyle.copyWith(color: vm.textColor)
+            : vm.unavailableStyle,
       );
 
   Widget _buildDescriptionSection(
     final BookDetailsScreenViewModel vm,
-    final Book book,
+    final String description,
   ) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Text(
-          book.description!,
-          style: TextStyle(color: vm.textColor, fontSize: 16),
+          description! != '' ? description : 'description unavailable',
+          style: description != ''
+              ? TextStyle(color: vm.textColor, fontSize: 16)
+              : vm.unavailableStyle,
         ),
       );
 
@@ -66,6 +70,26 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     final Book book,
   ) {
     final double _sw = MediaQuery.of(context).size.width;
+    String message = '';
+    if (book.publishYear == '-1' && book.publisher == '') {
+      // both properties are empty
+      message = '';
+    } else if (book.publishYear == '-1' && book.publisher != '') {
+      // publishYear is empty, publisher is not
+      message = 'book-details-screen.empty-publishYear'
+          .trParams({'publisher': book.publisher!});
+    } else if (book.publishYear != '-1' && book.publisher == '') {
+      // publishYear is not empty, publisher is empty
+      message = 'book-details-screen.empty-publisher'
+          .trParams({'publishYear': book.publishYear!});
+    } else if (book.publishYear != '-1' && book.publisher != '') {
+      // both properties are filled
+      message = 'book-details-screen.publisher'.trParams(<String, String>{
+        'publishYear': book.publishYear ?? '',
+        'publisher': book.publisher ?? ''
+      });
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -74,30 +98,21 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
           SizedBox(
             width: _sw / 2.5,
             child: Text(
-              'book-details-screen.page-count'.trParams(
-                <String, String>{'pageCount': book.pageCount.toString()},
-              ),
+              book.pageCount == -1
+                  ? ''
+                  : 'book-details-screen.page-count'.trParams(
+                      <String, String>{'pageCount': book.pageCount.toString()},
+                    ),
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                color: vm.textColor,
-                fontSize: 16,
-              ),
+              style: vm.pageCountStyle,
             ),
           ),
           SizedBox(
             width: _sw / 2.5,
             child: Text(
-              'book-details-screen.publisher'.trParams(<String, String>{
-                'publishYear': book.publishYear ?? '',
-                'publisher': book.publisher ?? ''
-              }),
+              message,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                color: vm.textColor,
-                fontSize: 16,
-              ),
+              style: vm.pageCountStyle,
             ),
           ),
         ],
@@ -167,7 +182,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 
       switch (key) {
         case 'inFavesList':
-          _checked = book.inFavesList;
+          _checked = book.inFavesList!;
           _label = 'book-details-screen.in-faves'.tr;
           _action = () {
             setState(() {
@@ -175,12 +190,12 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('books')
                   .doc(book.id)
-                  .update(<String, bool>{'inFavesList': !book.inFavesList});
+                  .update(<String, bool>{'inFavesList': !book.inFavesList!});
             });
           };
           break;
         case 'inWishList':
-          _checked = book.inWishList;
+          _checked = book.inWishList!;
           _label = 'book-details-screen.in-wishlist'.tr;
           _action = () {
             setState(() {
@@ -188,12 +203,12 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('books')
                   .doc(book.id)
-                  .update(<String, bool>{'inWishList': !book.inWishList});
+                  .update(<String, bool>{'inWishList': !book.inWishList!});
             });
           };
           break;
         case 'inShoppingList':
-          _checked = book.inShoppingList;
+          _checked = book.inShoppingList!;
           _label = 'book-details-screen.in-shopping-list'.tr;
           _action = () {
             setState(() {
@@ -202,13 +217,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   .collection('books')
                   .doc(book.id)
                   .update(
-                <String, bool>{'inShoppingList': !book.inShoppingList},
+                <String, bool>{'inShoppingList': !book.inShoppingList!},
               );
             });
           };
           break;
         case 'haveRead':
-          _checked = book.haveRead;
+          _checked = book.haveRead!;
           _label = 'book-details-screen.have-read'.tr;
           _action = () {
             setState(() {
@@ -216,7 +231,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('books')
                   .doc(book.id)
-                  .update(<String, bool>{'haveRead': !book.haveRead});
+                  .update(<String, bool>{'haveRead': !book.haveRead!});
             });
           };
           break;
@@ -339,13 +354,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                               const SizedBox(height: 32),
                               _buildTitleRow(vm, book),
                               const SizedBox(height: 4),
-                              for (String author in book.authors)
+                              for (String author in book.authors!)
                                 _buildAuthorsSection(author, vm),
                               _buildRatingsBar(vm, book),
                               const SizedBox(height: 16),
                               _buildBookToggles(vm, book),
                               const SizedBox(height: 16),
-                              _buildDescriptionSection(vm, book),
+                              _buildDescriptionSection(vm, book.description!),
                               _buildDivider(vm),
                               _buildPageCountPublisherRow(vm, book),
                             ],
