@@ -57,6 +57,8 @@ final Map<String, String> englishStrings = <String, String>{
   //
   'book-details-screen.page-count': '@pageCount pages',
   'book-details-screen.publisher': 'Published @publishYear by @publisher',
+  'book-details-screen.empty-publishYear': 'Published by @publisher',
+  'book-details-screen.empty-publisher': 'Published @publishYear',
   'book-details-screen.in-faves': 'In Faves',
   'book-details-screen.in-wishlist': 'In Wishlist',
   'book-details-screen.in-shopping-list': 'In Shopping List',
@@ -93,7 +95,7 @@ final Map<String, String> englishStrings = <String, String>{
   //
   'error-dialog.content': 'No results found!  @error',
   'send-reset-link':
-      'Enter your email address to have a reset link sent to you.',
+      'Enter your email address to have a password reset link sent to your inbox.',
   //
   'new-book.title-error': 'Title cannot be empty',
   'new-book.title': 'Title',
@@ -109,6 +111,6 @@ final Map<String, String> englishStrings = <String, String>{
   'new-book.have-read': 'Already read it',
   'new-book.add-to-faves': 'Add to favorites',
   'new-book.isbn': 'ISBN',
-
-
+  'new-book.already-exists':
+      'This book is already in your library!  Try a different book.',
 };
