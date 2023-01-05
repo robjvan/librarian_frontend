@@ -1,10 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
+import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/models/models.dart';
 import 'package:librarian_frontend/pages/new_book_screen/new_book_screen_view_model.dart';
+import 'package:librarian_frontend/pages/new_book_screen/widgets/new_book_form_field.dart';
 import 'package:librarian_frontend/state.dart';
-import 'package:librarian_frontend/utilities/theme.dart';
 
 class NewBookForm extends StatefulWidget {
   const NewBookForm({super.key});
@@ -20,6 +23,23 @@ class _NewBookFormState extends State<NewBookForm> {
   final TextEditingController authorController = TextEditingController();
   final TextEditingController publisherController = TextEditingController();
   final TextEditingController publishYearController = TextEditingController();
+  final TextEditingController isbnController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  double bookRating = 0;
+  bool isMature = false;
+  bool addToWishlist = false;
+  bool alreadyRead = false;
+  bool addToFaves = false;
+  bool addToShoppingList = false;
+  String coverImageUrl = '';
+
+  void submitFn(final NewBookScreenViewModel vm) {
+    if (formKey.currentState!.validate()) {
+      final Book newBook = Book.createEmpty();
+
+      vm.dispatch(AddBookToCollectionAction(newBook));
+    }
+  }
 
   @override
   void dispose() {
@@ -28,26 +48,225 @@ class _NewBookFormState extends State<NewBookForm> {
     authorController.dispose();
     publisherController.dispose();
     publishYearController.dispose();
+    isbnController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
-  Widget _buildImageGrabber() => SizedBox(
+  Widget _buildImageGrabber(final NewBookScreenViewModel vm) => SizedBox(
         height: 200,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          // child: CachedNetworkImage(
-          //   imageUrl: book.thumbnail!,
-          //   fit: BoxFit.cover,
-          //   width: 200,
-          // ),
-          child: Image.asset(
+        child: GestureDetector(
+          onTap: () async {
+            String newImageUrl = '';
+            try {
+              newImageUrl = await Get.defaultDialog(
+                confirm: ElevatedButton(
+                  onPressed: () {
+                    Get.back(result: 'Button pressed -> Dialog closed OK');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: vm.userColor,
+                  ),
+                  child: Text(
+                    'ok'.tr,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              );
+
+              print(newImageUrl);
+              // TODO(Rob): Continue image grabber logic
+
+            } on Exception catch (_) {}
+
+            if (newImageUrl != '') {
+              coverImageUrl = newImageUrl;
+            }
+          },
+          child:
+              // coverImageUrl.isEmpty
+              //     ?
+              Image.asset(
             'assets/images/image_placeholder.png',
-          ),
+          )
+          // : CachedNetworkImage(
+          //     imageUrl: coverImageUrl,
+          //     fit: BoxFit.cover,
+          //     width: 200,
+          //   )
+          ,
         ),
       );
 
-  Widget _buildDivider(final NewBookScreenViewModel vm) =>
-      Divider(thickness: 1, indent: 16, endIndent: 16, color: vm.textColor);
+  Widget _buildRatingsBar(
+    final NewBookScreenViewModel vm,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      child: Row(
+        children: <Widget>[
+          Text(
+            'new-book.rating'.tr,
+            style: vm.titleStyle,
+          ),
+          const Spacer(),
+          RatingBar(
+            allowHalfRating: true,
+            minRating: 0,
+            initialRating: bookRating,
+            direction: Axis.horizontal,
+            itemSize: 24,
+            itemCount: 5,
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+            ratingWidget: RatingWidget(
+              full: Icon(Icons.star, color: vm.textColor),
+              half: Icon(Icons.star_half, color: vm.textColor),
+              empty: Icon(Icons.star_border, color: vm.textColor),
+            ),
+            onRatingUpdate: (final double rating) {
+              bookRating = rating;
+            },
+          ),
+          const Spacer(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBookToggles(
+    final NewBookScreenViewModel vm,
+    final double sw,
+  ) {
+    Widget _buildInfoCell(final String key, {final bool rightBorder = false}) {
+      late Function _action;
+      String _label = '';
+      bool _checked = false;
+
+      switch (key) {
+        case 'inFavesList':
+          _checked = addToFaves;
+          _label = 'new-book.add-to-faves'.tr;
+          _action = () {
+            setState(() {
+              addToFaves = !addToFaves;
+            });
+          };
+          break;
+        case 'inWishList':
+          _checked = addToWishlist;
+          _label = 'new-book.add-to-wishlist'.tr;
+          _action = () {
+            setState(() {
+              addToWishlist = !addToWishlist;
+            });
+          };
+          break;
+        case 'inShoppingList':
+          _checked = addToShoppingList;
+          _label = 'new-book.add-to-shopping-list'.tr;
+          _action = () {
+            setState(() {
+              addToShoppingList = !addToShoppingList;
+            });
+          };
+          break;
+        case 'haveRead':
+          _checked = alreadyRead;
+          _label = 'new-book.have-read'.tr;
+          _action = () {
+            setState(() {
+              alreadyRead = !alreadyRead;
+            });
+          };
+          break;
+      }
+      return Container(
+        width: (0.5 * sw) - 16,
+        decoration: rightBorder
+            ? BoxDecoration(
+                border: Border(
+                  right: BorderSide(
+                    width: 1,
+                    color: vm.textColor.withOpacity(0.4),
+                  ),
+                ),
+              )
+            : null,
+        child: Row(
+          children: <Widget>[
+            Checkbox(
+              fillColor: MaterialStateProperty.all(vm.userColor),
+              value: _checked,
+              onChanged: (final bool? newVal) => _action(),
+            ),
+            Text(
+              _label,
+              style: TextStyle(
+                color: _checked ? vm.textColor : vm.textColor.withOpacity(0.4),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: vm.textColor.withOpacity(0.4)),
+        ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                _buildInfoCell('inFavesList', rightBorder: true),
+                _buildInfoCell('inWishList'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                _buildInfoCell('haveRead', rightBorder: true),
+                _buildInfoCell('inShoppingList'),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(final NewBookScreenViewModel vm) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        TextButton(
+          onPressed: Get.back,
+          child: Text(
+            'cancel'.tr,
+            style: TextStyle(color: vm.textColor),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () => submitFn(vm),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: vm.userColor,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          ),
+          child: Text(
+            'save'.tr,
+            style: const TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        )
+      ],
+    );
+  }
 
   @override
   Widget build(final BuildContext context) {
@@ -60,124 +279,6 @@ class _NewBookFormState extends State<NewBookForm> {
         final BuildContext context,
         final NewBookScreenViewModel vm,
       ) {
-        Widget _formFieldChild({
-          required final TextEditingController controller,
-          required final String title,
-          final bool? autoValidate,
-          final TextInputType? keyboardType,
-          final String? Function(String? s)? validatorFn,
-          final bool? mini = false,
-        }) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                width: sw,
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: controller.value.text.isEmpty
-                        ? vm.userColor.withAlpha(180)
-                        : vm.userColor.withAlpha(255),
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              const SizedBox(height: 4),
-              SizedBox(
-                width: mini! ? 100 : sw,
-                child: TextFormField(
-                  maxLength: mini ? 5 : 150,
-                  autovalidateMode: autoValidate!
-                      ? AutovalidateMode.onUserInteraction
-                      : AutovalidateMode.disabled,
-                  keyboardType: keyboardType ?? TextInputType.text,
-                  decoration: InputDecoration(
-                    counterText: '',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: vm.textColor.withAlpha(100),
-                      ),
-                    ),
-                    errorBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                      ),
-                    ),
-                    focusedErrorBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: vm.textColor,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  style: TextStyle(color: vm.textColor),
-                  controller: controller,
-                  validator: validatorFn ??
-                      (final _) {
-                        return null;
-                      },
-                ),
-              ),
-            ],
-          );
-        }
-
-        Widget _buildFormField({
-          required final TextEditingController controller,
-          required final String title,
-          final String? Function(String? s)? validatorFn,
-          final bool? mini = false,
-          final TextInputType? keyboardType,
-          final bool? autoValidate = false,
-        }) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: <Widget>[
-                mini!
-                    ? SizedBox(
-                        width: 100,
-                        child: _formFieldChild(
-                          controller: controller,
-                          autoValidate: autoValidate,
-                          keyboardType: keyboardType,
-                          mini: mini,
-                          validatorFn: validatorFn,
-                          title: title,
-                        ),
-                      )
-                    : Expanded(
-                        child: _formFieldChild(
-                          controller: controller,
-                          autoValidate: autoValidate,
-                          keyboardType: keyboardType,
-                          mini: mini,
-                          validatorFn: validatorFn,
-                          title: title,
-                        ),
-                      ),
-              ],
-            ),
-          );
-        }
-
-        Widget _buildYearPicker() {
-          return Container();
-        }
-
-        Widget _buildActionButtons() {
-          return Container();
-        }
-
         return SizedBox(
           width: sw,
           child: Form(
@@ -185,90 +286,98 @@ class _NewBookFormState extends State<NewBookForm> {
             child: ListView(
               children: <Widget>[
                 const SizedBox(height: 48),
-
                 // Image picker
-                _buildImageGrabber(),
-
-                const SizedBox(height: 8),
-
+                _buildImageGrabber(vm),
+                const SizedBox(height: 16),
                 // Title field
-                _buildFormField(
-                  title: 'new-book.title'.tr,
+                NewBookFormField(
                   controller: titleController,
-                  validatorFn: (final String? s) {
-                    if (s!.isEmpty) {
-                      return 'new-book.title-error'.tr;
-                    }
-                    return null;
-                  },
+                  title: 'new-book.title'.tr,
+                  validatorFn: vm.titleValidatorFn,
                   autoValidate: true,
+                  forTitle: true,
+                  sw: sw,
+                  vm: vm,
                 ),
-
-                const SizedBox(height: 8),
-
+                const SizedBox(height: 16),
                 // Author(s) field
-                _buildFormField(
+                NewBookFormField(
                   title: 'new-book.author'.tr,
                   controller: authorController,
+                  sw: sw,
+                  vm: vm,
                 ),
-
-                const SizedBox(height: 8),
-
+                const SizedBox(height: 16),
+                NewBookFormField(
+                  controller: descriptionController,
+                  title: 'new-book.description'.tr,
+                  sw: sw,
+                  vm: vm,
+                  keyboardType: TextInputType.multiline,
+                ),
+                const SizedBox(height: 16),
                 // Ratings bar
-                // TODO(Rob): Add ratings bar
+                _buildRatingsBar(vm),
                 // _buildRatinsBar(vm),
-
-                const SizedBox(height: 8),
-
-                // Checkboxes for bool fields
-                // TODO(Rob): Add checkbox section
-                // _buildCheckboxes(vm),
-
-                const SizedBox(height: 8),
-
+                const SizedBox(height: 16),
+                _buildBookToggles(vm, sw),
+                const SizedBox(height: 16),
                 // Publisher(s) field
-                _buildFormField(
+                NewBookFormField(
                   title: 'new-book.publisher'.tr,
                   controller: publisherController,
+                  sw: sw,
+                  vm: vm,
                 ),
-
-                const SizedBox(height: 8),
-
+                const SizedBox(height: 16),
+                // Page count and Publish year row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    // Page count field
-                    _buildFormField(
+                    NewBookFormField(
                       title: 'new-book.page-count'.tr,
                       controller: pageCountController,
                       mini: true,
                       keyboardType: TextInputType.number,
-                      validatorFn: (s) {
-                        // TODO: Fix RegExp validators
-                        if (!RegExp('[a-zA-Z]').hasMatch(s!)) {
-                          return 'Numbers only!';
-                        }
-                      },
+                      validatorFn: vm.numberValidatorFn,
+                      sw: sw,
+                      vm: vm,
+                      maxLength: 5,
                     ),
-                    // PublishYear field
-                    _buildFormField(
+                    NewBookFormField(
                       title: 'new-book.publish-year'.tr,
                       controller: publishYearController,
                       mini: true,
                       keyboardType: TextInputType.number,
-                      validatorFn: (s) {
-                        // TODO: Fix RegExp validators
-                        if (!RegExp("?=.*[a-zA-Z]").hasMatch(s!)) {
-                          return 'Numbers only!';
-                        }
-                      },
+                      validatorFn: vm.numberValidatorFn,
+                      sw: sw,
+                      vm: vm,
+                      maxLength: 4,
                     ),
                   ],
                 ),
-
-                const SizedBox(height: 8),
-
-                _buildActionButtons(),
+                const SizedBox(height: 16),
+                // ISBN field
+                Row(
+                  children: <Widget>[
+                    const Spacer(),
+                    NewBookFormField(
+                      title: 'new-book.isbn'.tr,
+                      controller: isbnController,
+                      mini: true,
+                      keyboardType: TextInputType.number,
+                      validatorFn: vm.numberValidatorFn,
+                      sw: sw,
+                      vm: vm,
+                      maxLength: 13,
+                      forIsbn: true,
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+                const SizedBox(height: 48),
+                _buildActionButtons(vm),
+                const SizedBox(height: 48),
               ],
             ),
           ),
