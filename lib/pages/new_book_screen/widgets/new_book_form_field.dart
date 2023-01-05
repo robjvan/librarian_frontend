@@ -5,7 +5,6 @@ import 'package:librarian_frontend/pages/new_book_screen/new_book_screen_view_mo
 class NewBookFormField extends StatefulWidget {
   final TextEditingController controller;
   final String title;
-  final double sw;
   final NewBookScreenViewModel vm;
   final String? Function(String? s)? validatorFn;
   final bool? mini;
@@ -18,7 +17,6 @@ class NewBookFormField extends StatefulWidget {
   const NewBookFormField({
     required this.controller,
     required this.title,
-    required this.sw,
     required this.vm,
     this.mini = false,
     this.validatorFn,
@@ -136,7 +134,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
                     validatorFn: widget.validatorFn,
                     title: widget.title,
                     vm: widget.vm,
-                    sw: widget.sw,
+                    sw: sw,
                     maxLength: widget.maxLength,
                     width: widget.width,
                     forTitle: widget.forTitle,
@@ -150,7 +148,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
                     validatorFn: widget.validatorFn,
                     title: widget.title,
                     vm: widget.vm,
-                    sw: widget.sw,
+                    sw: sw,
                     maxLength: widget.maxLength,
                     width: widget.width,
                     forTitle: widget.forTitle,
