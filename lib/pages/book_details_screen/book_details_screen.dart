@@ -58,7 +58,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Text(
-          description! != '' ? description : 'description unavailable',
+          description != '' ? description : 'description unavailable',
           style: description != ''
               ? TextStyle(color: vm.textColor, fontSize: 16)
               : vm.unavailableStyle,
