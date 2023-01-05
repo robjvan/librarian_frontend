@@ -20,22 +20,22 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
   final TextEditingController _publisherController = TextEditingController();
   final TextEditingController _isbnController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  FocusNode? keywordNode;
-  FocusNode? titleNode;
-  FocusNode? authorNode;
-  FocusNode? publisherNode;
-  FocusNode? isbnNode;
-  FocusNode? buttonNode;
+  // FocusNode? keywordNode;
+  // FocusNode? titleNode;
+  // FocusNode? authorNode;
+  // FocusNode? publisherNode;
+  // FocusNode? isbnNode;
+  // FocusNode? buttonNode;
 
   @override
   void initState() {
     super.initState();
-    keywordNode = FocusNode();
-    titleNode = FocusNode();
-    authorNode = FocusNode();
-    publisherNode = FocusNode();
-    isbnNode = FocusNode();
-    buttonNode = FocusNode();
+    // keywordNode = FocusNode();
+    // titleNode = FocusNode();
+    // authorNode = FocusNode();
+    // publisherNode = FocusNode();
+    // isbnNode = FocusNode();
+    // buttonNode = FocusNode();
   }
 
   @override
@@ -46,12 +46,12 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
     _publisherController.dispose();
     _isbnController.dispose();
 
-    keywordNode!.dispose();
-    titleNode!.dispose();
-    authorNode!.dispose();
-    publisherNode!.dispose();
-    isbnNode!.dispose();
-    buttonNode!.dispose();
+    // keywordNode!.dispose();
+    // titleNode!.dispose();
+    // authorNode!.dispose();
+    // publisherNode!.dispose();
+    // isbnNode!.dispose();
+    // buttonNode!.dispose();
 
     super.dispose();
   }
@@ -82,13 +82,13 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
     Widget _genericRow(
       final TextEditingController controller,
       final String labelText,
-      final FocusNode? node,
+      // final FocusNode? node,
     ) =>
         Row(
           children: <Widget>[
             Expanded(
               child: TextField(
-                focusNode: node,
+                // focusNode: node,
                 style: TextStyle(color: vm.textColor),
                 controller: controller,
                 maxLines: 1,
@@ -117,7 +117,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
         child: _genericRow(
           _yearController,
           'manual-search-dialog.search-row-labels.keywords'.tr,
-          keywordNode,
+          // keywordNode,
         ),
       ),
       const SizedBox(height: 16),
@@ -126,7 +126,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
         child: _genericRow(
           _titleController,
           'manual-search-dialog.search-row-labels.title'.tr,
-          titleNode,
+          // titleNode,
         ),
       ),
       const SizedBox(height: 16),
@@ -135,7 +135,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
         child: _genericRow(
           _authorController,
           'manual-search-dialog.search-row-labels.author'.tr,
-          authorNode,
+          // authorNode,
         ),
       ),
       const SizedBox(height: 16),
@@ -144,7 +144,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
         child: _genericRow(
           _publisherController,
           'manual-search-dialog.search-row-labels.publisher'.tr,
-          publisherNode,
+          // publisherNode,
         ),
       ),
       const SizedBox(height: 16),
@@ -153,7 +153,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
         child: _genericRow(
           _isbnController,
           'manual-search-dialog.search-row-labels.isbn'.tr,
-          isbnNode,
+          // isbnNode,
         ),
       ),
     ];
@@ -173,13 +173,11 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             TextButton(
+              onPressed: Get.back,
               child: Text('cancel'.tr, style: TextStyle(color: vm.textColor)),
-              onPressed: () {
-                Navigator.pop(context);
-              },
             ),
             ElevatedButton(
-              focusNode: buttonNode,
+              // focusNode: buttonNode,
               style: ElevatedButton.styleFrom(
                 backgroundColor: vm.userColor,
                 padding:
@@ -187,7 +185,7 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
               ),
               child: Text(
                 'search'.tr,
-                style: TextStyle(color: vm.textColor, fontSize: 18),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
               onPressed: () {
                 SearchParams _searchParams = SearchParams.createEmpty();
