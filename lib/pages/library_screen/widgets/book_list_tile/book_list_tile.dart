@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get/get.dart';
 import 'package:librarian_frontend/models/models.dart';
+import 'package:librarian_frontend/pages/book_details_screen/book_details_screen.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/book_list_tile/book_list_tile_view_model.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
@@ -15,12 +17,7 @@ class BookListTile extends StatelessWidget {
   Widget _buildBookThumbnail(final BuildContext context, final Book book) =>
       GestureDetector(
         onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (final _) => BookDetailsScreen(book, book.id),
-          //   ),
-          // );
+          Get.to(() => BookDetailsScreen(book, book.id));
         },
         child: SizedBox(
           width: 40,
@@ -44,12 +41,7 @@ class BookListTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: GestureDetector(
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (final _) => BookDetailsScreen(book, book.id),
-              //   ),
-              // );
+              Get.to(() => BookDetailsScreen(book, book.id));
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -67,7 +59,7 @@ class BookListTile extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: Text(
-                    book.authors[0],
+                    book.authors![0],
                     style: TextStyle(color: vm.textColor),
                   ),
                 ),
