@@ -54,6 +54,7 @@ class BookListTile extends StatelessWidget {
                       color: vm.textColor,
                       fontWeight: FontWeight.bold,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 SizedBox(
