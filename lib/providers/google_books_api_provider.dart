@@ -13,14 +13,14 @@ class GoogleBooksApiProvider {
   Future<http.Response> getBookDataFromISBN(final String? isbn) => http
       .get(
         Uri.parse(
-          '${_apiUrl}isbn:$isbn&maxResults=40&key=${AppKeys.googleApiKey}',
+          '${_apiUrl}isbn:$isbn&maxResults=40&key=${googleApiKey}',
         ),
       );
 
   Future<http.Response> getBookDataFromISBNOtherUrl(final String? isbn) =>
       http.get(
         Uri.parse(
-          '${_secondaryApiUrl}ISBN:$isbn&maxResults=40&key=${AppKeys.googleApiKey}',
+          '${_secondaryApiUrl}ISBN:$isbn&maxResults=40&key=${googleApiKey}',
         ),
       );
 
@@ -29,7 +29,7 @@ class GoogleBooksApiProvider {
   ) async =>
       http.get(
         Uri.parse(
-          '$_apiUrl$queryString&maxResults=40&key=${AppKeys.googleApiKey}',
+          '$_apiUrl$queryString&maxResults=40&key=${googleApiKey}',
         ),
       );
 }
