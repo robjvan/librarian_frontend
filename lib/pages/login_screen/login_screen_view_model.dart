@@ -35,7 +35,7 @@ class LoginScreenViewModel {
         userPassword: password,
       );
 
-      if (user.emailVerified) {
+      // if (user.emailVerified) {
         DocumentSnapshot<Object?> doc = await usersRef.doc(user.uid).get();
 
         if (!doc.exists) {
@@ -58,15 +58,15 @@ class LoginScreenViewModel {
             Get.offAll(const LibraryScreen()),
           );
         }
-      } else {
-        await user?.sendEmailVerification();
-        Get.snackbar(
-          '',
-          'login.verify-email'.tr,
-          snackPosition: SnackPosition.TOP,
-        );
-        await FirebaseAuth.instance.signOut();
-      }
+      // } else {
+      //   await user?.sendEmailVerification();
+      //   Get.snackbar(
+      //     '',
+      //     'login.verify-email'.tr,
+      //     snackPosition: SnackPosition.TOP,
+      //   );
+      //   await FirebaseAuth.instance.signOut();
+      // }
     }
 
     return LoginScreenViewModel(

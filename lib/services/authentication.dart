@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -134,29 +133,31 @@ class AuthService {
         password: userPassword,
       );
 
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: userEmail,
-        password: userPassword,
-      );
+      // final UserCredential userCredential =
+      //     await FirebaseAuth.instance.signInWithEmailAndPassword(
+      //   email: userEmail,
+      //   password: userPassword,
+      // );
 
-      user = userCredential.user;
+      // user = userCredential.user;
 
-      unawaited(user!.sendEmailVerification());
+      // unawaited(user!.sendEmailVerification());
 
-      final DocumentSnapshot<dynamic> doc = await usersRef.doc(user.uid).get();
+      
 
-      if (!doc.exists) {
-        unawaited(
-          usersRef.doc(user.uid).set(<String, dynamic>{
-            'id': user.uid,
-            'email': user.email,
-            'photoUrl': user.photoURL,
-            'displayName': displayName,
-            'firstRun': true,
-          }),
-        );
-      }
+      // final DocumentSnapshot<dynamic> doc = await usersRef.doc(user.uid).get();
+
+      // if (!doc.exists) {
+      //   unawaited(
+      //     usersRef.doc(user.uid).set(<String, dynamic>{
+      //       'id': user.uid,
+      //       'email': user.email,
+      //       'photoUrl': user.photoURL,
+      //       'displayName': displayName,
+      //       'firstRun': true,
+      //     }),
+      //   );
+      // }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         log('The password provided is too weak.');
@@ -176,8 +177,6 @@ class AuthService {
     User? user;
 
     try {
-      // log(userEmail);
-      // log(userPassword);
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: userEmail,
@@ -185,7 +184,7 @@ class AuthService {
       );
 
       user = userCredential.user;
-      // log(user);
+      
       return user;
       // if (user!.emailVerified) {
       // } else {
@@ -205,13 +204,13 @@ class AuthService {
       // }
 
     } on FirebaseAuthException catch (e) {
-      // log(e);
+      // TODO(Rob): Add snackbar popups for user feedback
       if (e.code == 'invalid-email') {
-        log('Improperly formatted email address.');
+        log('Improperly formatted email address.'); // TODO(Rob) - Add i18n strings
       } else if (e.code == 'user-not-found') {
-        log('No user found for that email.');
+        log('No user found for that email.'); // TODO(Rob) - Add i18n strings
       } else if (e.code == 'wrong-password') {
-        log('Wrong password provided for that user.');
+        log('Wrong password provided for that user.'); // TODO(Rob) - Add i18n strings
       }
       return null;
     }
@@ -236,8 +235,9 @@ class AuthService {
       //   }
       // });
       await Get.defaultDialog(
-        title: 'Sent!',
-        content: const Text('An email has been sent to do stuff with things'),
+        title: 'Sent!', // TODO(Rob) - Fix these strings
+        content: const Text(
+            'An email has been sent to do stuff with things'), // TODO(Rob) - Add i18n strings
         actions: <Widget>[
           ElevatedButton(
             onPressed: Get.back,
@@ -257,7 +257,8 @@ class AuthService {
       } else if (e.code == 'too-many-requests') {
         AuthService.customSnackBar(
           type: 'error',
-          content: 'Firebase error - too many requests',
+          content:
+              'Firebase error - too many requests', // TODO(Rob) - Add i18n strings
         );
       }
     }
@@ -273,8 +274,9 @@ class AuthService {
       await FirebaseAuth.instance.signOut();
     } on Exception {
       AuthService.customSnackBar(
-        type: 'error',
-        content: 'Error signing out. Try again.',
+        type: 'error', // TODO(Rob) - Add i18n strings
+        content:
+            'Error signing out. Try again.', // TODO(Rob) - Add i18n strings
       );
     }
   }
