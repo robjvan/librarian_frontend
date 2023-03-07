@@ -7,13 +7,11 @@ import 'package:get/get.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/services/authentication.dart';
 import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/utilities/theme.dart';
 import 'package:redux/redux.dart';
 
 @immutable
 class LoginScreenViewModel {
-  final TextStyle titleStyle;
-  final TextStyle passwordButtonStyle;
-  final TextStyle createAccountButtonStyle;
   final Function(
     BuildContext context,
     String email,
@@ -22,9 +20,6 @@ class LoginScreenViewModel {
   final ButtonStyle emailSigninButtonStyle;
 
   const LoginScreenViewModel({
-    required this.titleStyle,
-    required this.passwordButtonStyle,
-    required this.createAccountButtonStyle,
     required this.signInWithEmail,
     required this.emailSigninButtonStyle,
   });
@@ -76,22 +71,6 @@ class LoginScreenViewModel {
     }
 
     return LoginScreenViewModel(
-      titleStyle: const TextStyle(
-        fontFamily: 'CarroisSC',
-        fontSize: 64,
-        fontWeight: FontWeight.w600,
-        color: Color(0xFFFFFFFF),
-      ),
-      passwordButtonStyle: const TextStyle(
-        color: Color(0xFF424242),
-        fontSize: 16,
-        fontWeight: FontWeight.w900,
-      ),
-      createAccountButtonStyle: const TextStyle(
-        color: Color(0xFF424242),
-        fontSize: 16,
-        fontWeight: FontWeight.w900,
-      ),
       signInWithEmail: signInWithEmail,
       emailSigninButtonStyle: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(Colors.white),
