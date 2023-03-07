@@ -56,59 +56,104 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
     super.dispose();
   }
 
-  Widget _buildHeaderWidget(final ManualSearchDialogViewModel vm) => Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: <Widget>[
-            Text(
-              'manual-search-dialog.title'.tr,
-              style: TextStyle(
-                color: vm.textColor,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+  Widget _buildHeaderWidget(final ManualSearchDialogViewModel vm) {
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        children: <Widget>[
+          Text(
+            'manual-search-dialog.title'.tr,
+            style: TextStyle(
+              color: vm.textColor,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 16),
-            Text(
-              'manual-search-dialog.body'.tr,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: vm.textColor, fontSize: 18),
-            )
-          ],
-        ),
-      );
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'manual-search-dialog.body'.tr,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: vm.textColor, fontSize: 18),
+          )
+        ],
+      ),
+    );
+  }
 
   Widget _buildSearchForm(final ManualSearchDialogViewModel vm) {
     Widget _genericRow(
       final TextEditingController controller,
       final String labelText,
       // final FocusNode? node,
-    ) =>
-        Row(
+    ) {
+      return Row(
           children: <Widget>[
             Expanded(
-              child: TextField(
-                // focusNode: node,
-                style: TextStyle(color: vm.textColor),
-                controller: controller,
-                maxLines: 1,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  labelText: labelText,
-                  labelStyle: TextStyle(color: vm.textColor.withOpacity(0.7)),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: vm.userColor),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: vm.userColor),
-                    borderRadius: BorderRadius.circular(10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  width: Get.width,
+                  child: Text(
+                    labelText,
+                    style: vm.titleStyle,
+                    textAlign: TextAlign.start,
                   ),
                 ),
+                const SizedBox(height: 4),
+                TextFormField(
+                  // focusNode: node,
+                  style: TextStyle(color: vm.textColor),
+                  controller: controller,
+                  maxLength: 32,
+                  maxLines: 1,
+                  textInputAction: TextInputAction.done,
+                  decoration: InputDecoration(
+                    // hintText: '(required)' : '(optional)',
+                    // hintStyle: TextStyle(
+                    //   color: vm.textColor.withOpacity(0.4),
+                    //   fontStyle: FontStyle.italic,
+                    //   fontSize: 14,
+                    // ),
+                    counterText: '',
+                    contentPadding: const EdgeInsets.all(8),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: vm.textColor.withAlpha(100),
+                      ),
+                    ),
+                    errorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                    focusedErrorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: vm.textColor,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  textAlign: TextAlign.start,
+                  validator: (final String? newVal) {
+                    if (newVal!.isEmpty) {
+                      return '$labelText cannot be empty!';
+                    }
+                    return null;
+                  },
+                ),
+              ],
               ),
             )
           ],
         );
+    }
 
     final List<Widget> searchRows = <Widget>[
       const SizedBox(height: 16),
@@ -167,80 +212,83 @@ class _ManualSearchDialogState extends State<ManualSearchDialog> {
     );
   }
 
-  Widget _buildBottomButtons(final ManualSearchDialogViewModel vm) => Padding(
-        padding: const EdgeInsets.only(top: 32, bottom: 24.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            TextButton(
-              onPressed: Get.back,
-              child: Text('cancel'.tr, style: TextStyle(color: vm.textColor)),
+  Widget _buildBottomButtons(final ManualSearchDialogViewModel vm) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 32, bottom: 24.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          TextButton(
+            onPressed: Get.back,
+            child: Text('cancel'.tr, style: TextStyle(color: vm.textColor)),
+          ),
+          ElevatedButton(
+            // focusNode: buttonNode,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: vm.userColor,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
-            ElevatedButton(
-              // focusNode: buttonNode,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: vm.userColor,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
-              child: Text(
-                'search'.tr,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
-              ),
-              onPressed: () {
-                SearchParams _searchParams = SearchParams.createEmpty();
-                // ensure at least ONE of the fields is populated
-                if (_titleController.text.isNotEmpty ||
-                    _authorController.text.isNotEmpty ||
-                    _publisherController.text.isNotEmpty ||
-                    _yearController.text.isNotEmpty ||
-                    _isbnController.text.isNotEmpty) {
-                  _searchParams = _searchParams.copyWith(
-                    title: _titleController.text,
-                    author: _authorController.text,
-                    year: _yearController.text,
-                    publisher: _publisherController.text,
-                    isbn: _isbnController.text,
-                  ) as SearchParams;
-                  vm.dispatch(KeywordSearchAction(_searchParams));
-                }
-                Navigator.pop(context);
-              },
+            child: Text(
+              'search'.tr,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
-          ],
-        ),
-      );
+            onPressed: () {
+              SearchParams _searchParams = SearchParams.createEmpty();
+              // ensure at least ONE of the fields is populated
+              if (_titleController.text.isNotEmpty ||
+                  _authorController.text.isNotEmpty ||
+                  _publisherController.text.isNotEmpty ||
+                  _yearController.text.isNotEmpty ||
+                  _isbnController.text.isNotEmpty) {
+                _searchParams = _searchParams.copyWith(
+                  title: _titleController.text,
+                  author: _authorController.text,
+                  year: _yearController.text,
+                  publisher: _publisherController.text,
+                  isbn: _isbnController.text,
+                ) as SearchParams;
+                vm.dispatch(KeywordSearchAction(_searchParams));
+              }
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
-        backgroundColor: Colors.transparent,
-        body: StoreConnector<GlobalAppState, ManualSearchDialogViewModel>(
-          distinct: true,
-          converter: ManualSearchDialogViewModel.create,
-          builder: (
-            final BuildContext context,
-            final ManualSearchDialogViewModel vm,
-          ) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: vm.canvasColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      _buildHeaderWidget(vm),
-                      _buildSearchForm(vm),
-                      _buildBottomButtons(vm),
-                    ],
-                  ),
+  Widget build(final BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: StoreConnector<GlobalAppState, ManualSearchDialogViewModel>(
+        distinct: true,
+        converter: ManualSearchDialogViewModel.create,
+        builder: (
+          final BuildContext context,
+          final ManualSearchDialogViewModel vm,
+        ) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: vm.canvasColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    _buildHeaderWidget(vm),
+                    _buildSearchForm(vm),
+                    _buildBottomButtons(vm),
+                  ],
                 ),
               ),
-            );
-          },
-        ),
-      );
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
