@@ -51,7 +51,7 @@ final Map<String, String> spanishStrings = <String, String>{
       'Are you sure you want to delete your entire library?  ',
   'drawer.cannot-be-undone': 'This cannot be undone',
   'drawer.about-app-blurb':
-      'Easily track books you\'ve read, books you want to purchase, and all your favorites in one simple location',
+      "Easily track books you've read, books you want to purchase, and all your favorites in one simple location",
   //
   'parse-error.author': 'Unknown author',
   'parse-error.title': 'Unknown title',
