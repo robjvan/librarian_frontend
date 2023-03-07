@@ -16,9 +16,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String userDisplayName = '';
   String userEmail = '';
   String userPassword = '';
   bool _submitDisabled = true;
@@ -27,6 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -46,6 +49,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'register-blurb'.tr,
         style: AppTextStyles.blurbStyle,
         textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget _buildNameField() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 8),
+      child: TextFormField(
+        onChanged: (final String newVal) {
+          userDisplayName = newVal;
+          if (_formKey.currentState!.validate()) {
+            setState(() {
+              _submitDisabled = false;
+            });
+          } else {
+            setState(() {
+              _submitDisabled = true;
+            });
+          }
+        },
+        controller: nameController,
+        decoration: InputDecoration(
+          labelText: 'name'.tr, // "Display Name"
+          labelStyle: const TextStyle(fontSize: 20),
+        ),
       ),
     );
   }
@@ -73,13 +101,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           labelStyle: const TextStyle(fontSize: 20),
         ),
         validator: (final String? text) {
-          if (text == null || text.isEmpty) {
-            // return 'Email cannot be empty!';
-            return 'empty-email'.tr;
-          } else if (!RegExp(
+          final RegExp regEx = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-          ).hasMatch(text)) {
-            // return 'Email must be proper format!';
+          );
+
+          if (text == null || text.isEmpty) {
+            return 'empty-email'.tr;
+          } else if (!regEx.hasMatch(text)) {
             return 'login.email-format'.tr;
           }
           return null;
@@ -150,7 +178,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       onPressed: _submitDisabled
           ? null
           : () {
-              // vm.submitFn(_formKey, emailController.text, context);
+              vm.submitFn(
+                displayName: userDisplayName,
+                email: emailController.text,
+                password: passwordController.text,
+              );
             },
       child: Text('send'.tr),
     );
@@ -205,6 +237,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: <Widget>[
                         _buildBlurb(),
                         const SizedBox(height: 16.0),
+                        _buildNameField(),
                         _buildEmailField(),
                         _buildPasswordField(),
                         _showPasswordRequirements
