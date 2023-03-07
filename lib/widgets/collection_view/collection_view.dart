@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:librarian_frontend/models/models.dart';
-import 'package:librarian_frontend/widgets/collection_view/collection_view_view_model.dart';
 import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/widgets/collection_view/collection_view_view_model.dart';
 import 'package:librarian_frontend/widgets/widgets.dart';
 
 // final CollectionReference<Map<String, dynamic>> usersRef =

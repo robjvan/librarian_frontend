@@ -1,11 +1,8 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
-import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/pages/settings_drawer/settings_drawer_view_model.dart';
-import 'package:librarian_frontend/services/authentication.dart';
 import 'package:librarian_frontend/state.dart';
 
 class SettingsFooter extends StatelessWidget {

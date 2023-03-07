@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/pages/settings_drawer/settings_drawer_view_model.dart';
 import 'package:librarian_frontend/state.dart';
-import 'package:librarian_frontend/utilities/theme.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class SettingsSection extends StatefulWidget {
