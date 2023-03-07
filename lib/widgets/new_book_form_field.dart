@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:librarian_frontend/pages/new_book_screen/new_book_screen_view_model.dart';
 
 @immutable
@@ -38,7 +39,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
   Widget _formFieldChild({
     required final TextEditingController controller,
     required final String title,
-    required final double sw,
+    // required final double sw,
     required final NewBookScreenViewModel vm,
     final bool? autoValidate,
     final TextInputType? keyboardType,
@@ -53,7 +54,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         SizedBox(
-          width: sw,
+          width: Get.width,
           child: Text(
             title,
             style: vm.titleStyle,
@@ -62,7 +63,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
         ),
         const SizedBox(height: 4),
         SizedBox(
-          width: width ?? sw,
+          width: width ?? Get.width,
           child: TextFormField(
             maxLength: maxLength ?? 150,
             minLines: keyboardType == TextInputType.multiline ? 3 : 1,
@@ -134,7 +135,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
                     validatorFn: widget.validatorFn,
                     title: widget.title,
                     vm: widget.vm,
-                    sw: sw,
+                    // sw: sw,
                     maxLength: widget.maxLength,
                     width: widget.width,
                     forTitle: widget.forTitle,
@@ -148,7 +149,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
                     validatorFn: widget.validatorFn,
                     title: widget.title,
                     vm: widget.vm,
-                    sw: sw,
+                    // sw: sw,
                     maxLength: widget.maxLength,
                     width: widget.width,
                     forTitle: widget.forTitle,
