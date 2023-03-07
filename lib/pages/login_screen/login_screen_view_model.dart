@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:librarian_frontend/pages/pages.dart';
+import 'package:librarian_frontend/services/authentication.dart';
 import 'package:librarian_frontend/state.dart';
-import 'package:librarian_frontend/utilities/authentication.dart';
 import 'package:redux/redux.dart';
 
 @immutable

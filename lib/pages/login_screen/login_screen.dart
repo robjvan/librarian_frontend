@@ -7,7 +7,7 @@ import 'package:librarian_frontend/pages/login_screen/widgets/login_header/login
 import 'package:librarian_frontend/pages/login_screen/widgets/widgets.dart';
 import 'package:librarian_frontend/pages/pages.dart';
 import 'package:librarian_frontend/state.dart';
-import 'package:librarian_frontend/utilities/authentication.dart';
+import 'package:librarian_frontend/services/authentication.dart';
 import 'package:redux/redux.dart';
 
 final CollectionReference<Map<String, dynamic>> usersRef =
