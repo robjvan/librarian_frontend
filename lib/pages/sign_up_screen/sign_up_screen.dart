@@ -22,6 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String userEmail = '';
   String userPassword = '';
   bool _submitDisabled = true;
+  bool _obscurePassword = true;
+  bool _showPasswordRequirements = false;
 
   @override
   void dispose() {
@@ -41,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
       child: Text(
-        'send-reset-link'.tr,
+        'register-blurb'.tr,
         style: AppTextStyles.blurbStyle,
         textAlign: TextAlign.center,
       ),
@@ -50,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _buildEmailField() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 8),
       child: TextFormField(
         onChanged: (final String newVal) {
           userEmail = newVal;
@@ -88,40 +90,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _buildPasswordField() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
-      child: TextFormField(
-        onChanged: (final String newVal) {
-          userEmail = newVal;
-          if (_formKey.currentState!.validate()) {
-            setState(() {
-              _submitDisabled = false;
-            });
-          } else {
-            setState(() {
-              _submitDisabled = true;
-            });
-          }
-        },
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        controller: passwordController,
-        decoration: InputDecoration(
-          labelText: 'password'.tr, // TODO(Rob): Add i18n
-          labelStyle: const TextStyle(fontSize: 20),
+      padding: const EdgeInsets.fromLTRB(48, 8, 48, 16),
+      child: SizedBox(
+        child: TextFormField(
+          obscureText: _obscurePassword,
+          onChanged: (final String newVal) {
+            userEmail = newVal;
+            if (_formKey.currentState!.validate()) {
+              setState(() {
+                _submitDisabled = false;
+              });
+            } else {
+              setState(() {
+                _submitDisabled = true;
+              });
+            }
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          controller: passwordController,
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              icon: _obscurePassword
+                  ? const Icon(Icons.visibility)
+                  : const Icon(Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  _obscurePassword = !_obscurePassword;
+                });
+              },
+            ),
+            labelText: 'password'.tr, // TODO(Rob): Add i18n
+            labelStyle: const TextStyle(fontSize: 20),
+          ),
+          validator: (final String? text) {
+            final RegExp regex = RegExp(
+              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+            );
+
+            if (text == null || text.isEmpty) {
+              return 'password.empty-password'.tr;
+            } else {
+              if (!regex.hasMatch(text)) {
+                _showPasswordRequirements = true;
+                return 'password.invalid'.tr;
+                // return '';
+              } else if (regex.hasMatch(text)) {
+                _showPasswordRequirements = false;
+                return null;
+              }
+            }
+          },
         ),
-        validator: (final String? text) {
-          if (text == null || text.isEmpty) {
-            // return 'Password cannot be empty!';
-            return 'empty-password'.tr;
-          } else if (!RegExp(
-            // TODO(Rob): Change to password RegEx
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-          ).hasMatch(text)) {
-            // TODO(Rob): show widget listing password criteria if not met
-            // return 'Password must contain one upper case, one lower case, one number!';
-            // return 'login.email-format'.tr;
-          }
-          return null;
-        },
       ),
     );
   }
@@ -141,6 +160,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return TextButton(
       onPressed: Get.back,
       child: Text('cancel'.tr),
+    );
+  }
+
+  Widget _buildPasswordRequirements() {
+    return SizedBox(
+      width: Get.width,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 48.0, right: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text('password.rules'.tr, textAlign: TextAlign.start),
+            Text('password.lower-case'.tr),
+            Text('password.upper-case'.tr),
+            Text('password.symbol'.tr),
+            Text('password.number'.tr),
+          ],
+        ),
+      ),
     );
   }
 
@@ -165,9 +204,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Column(
                       children: <Widget>[
                         _buildBlurb(),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 16),
                         _buildEmailField(),
                         _buildPasswordField(),
+                        _showPasswordRequirements
+                            ? _buildPasswordRequirements()
+                            : Container(),
+                        const SizedBox(height: 16),
                         _buildSubmitButton(vm),
                         _buildCancelButton(),
                       ],
