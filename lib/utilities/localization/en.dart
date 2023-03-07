@@ -28,6 +28,7 @@ final Map<String, String> englishStrings = <String, String>{
   'empty-email': 'Email cannot be empty!',
   'empty-password': 'Password cannot be empty!',
   'sign-in': 'Sign In',
+  'name': 'Display Name',
   //
   'login.verify-email': 'Verify email address before signing in!',
   'login.error-initializing': 'Error initializing Firebase',
@@ -134,4 +135,7 @@ final Map<String, String> englishStrings = <String, String>{
   'password.rules': 'Password must contain the following:',
   //
   'register-blurb': 'Sign up to use Librarian',
+  'register.verification-sent': 'Verification Sent!',
+  'register.verify-email-blurb':
+      'Check your inbox and verify your email address!  You may sign in once this is completed.',
 };
