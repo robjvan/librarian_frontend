@@ -9,6 +9,7 @@ class ManualSearchDialogViewModel {
   final Color userColor;
   final bool isDarkMode;
   final Function(dynamic) dispatch;
+  final TextStyle titleStyle;
 
   ManualSearchDialogViewModel({
     required this.textColor,
@@ -16,6 +17,7 @@ class ManualSearchDialogViewModel {
     required this.canvasColor,
     required this.dispatch,
     required this.isDarkMode,
+    required this.titleStyle,
   });
 
   factory ManualSearchDialogViewModel.create(
@@ -35,6 +37,11 @@ class ManualSearchDialogViewModel {
           : AppColors.lightModeTextColor,
       dispatch: store.dispatch,
       isDarkMode: store.state.userSettings.useDarkMode,
+      titleStyle: TextStyle(
+        color: store.state.userSettings.userColor,
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+      ),
     );
   }
 }
