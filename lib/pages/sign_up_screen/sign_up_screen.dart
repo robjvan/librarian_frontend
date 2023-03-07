@@ -133,12 +133,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               if (!regex.hasMatch(text)) {
                 _showPasswordRequirements = true;
                 return 'password.invalid'.tr;
-                // return '';
               } else if (regex.hasMatch(text)) {
                 _showPasswordRequirements = false;
                 return null;
               }
             }
+            return null;
           },
         ),
       ),
@@ -204,13 +204,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Column(
                       children: <Widget>[
                         _buildBlurb(),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 16.0),
                         _buildEmailField(),
                         _buildPasswordField(),
                         _showPasswordRequirements
                             ? _buildPasswordRequirements()
                             : Container(),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 16.0),
                         _buildSubmitButton(vm),
                         _buildCancelButton(),
                       ],
