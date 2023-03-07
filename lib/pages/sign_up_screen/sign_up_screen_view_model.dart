@@ -4,17 +4,17 @@ import 'package:redux/redux.dart';
 
 @immutable
 class SignUpScreenViewModel {
-  // final TextStyle blurbStyle;
+  final Function submitFn;
 
-  const SignUpScreenViewModel(
-      // {
-      // required this.blurbStyle,
-      // }
-      );
+  const SignUpScreenViewModel({
+    required this.submitFn,
+  });
 
   factory SignUpScreenViewModel.create(final Store<GlobalAppState> store) {
     return SignUpScreenViewModel(
-        // blurbStyle: const TextStyle(fontSize: 18),
-        );
+      submitFn: () {
+        // store.dispatch(RegisterUserAction());
+      },
+    );
   }
 }
