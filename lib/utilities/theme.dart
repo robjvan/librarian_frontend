@@ -11,15 +11,23 @@ class AppTextStyles {
     fontFamily: AppFonts.carroisSC,
     letterSpacing: 1.5,
   );
+
+  static const TextStyle blurbStyle = TextStyle(fontSize: 18);
+
   static const TextStyle bodyTextStyle = TextStyle();
+
   static const TextStyle bodyHeaderTextStyle = TextStyle();
+
   static const TextStyle bookTitleStyle = TextStyle(
     fontSize: 24,
     fontFamily: AppFonts.carroisSC,
     fontWeight: FontWeight.bold,
   );
-  static const TextStyle bookAuthorStyle =
-      TextStyle(fontSize: 18, fontFamily: AppFonts.carroisSC);
+
+  static const TextStyle bookAuthorStyle = TextStyle(
+    fontSize: 18,
+    fontFamily: AppFonts.carroisSC,
+  );
 
   static const TextStyle loginHeaderStyle = TextStyle(
     fontFamily: 'CarroisSC',
@@ -39,6 +47,25 @@ class AppTextStyles {
     fontSize: 20,
     color: Color(0xFF424242),
     fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle passwordButtonStyle = TextStyle(
+    color: Color(0xFF424242),
+    fontSize: 16,
+    fontWeight: FontWeight.w900,
+  );
+
+  static const TextStyle createAccountButtonStyle = TextStyle(
+    color: Color(0xFF424242),
+    fontSize: 16,
+    fontWeight: FontWeight.w900,
+  );
+
+  static const TextStyle loginTitleStyle = TextStyle(
+    fontFamily: 'CarroisSC',
+    fontSize: 64,
+    fontWeight: FontWeight.w600,
+    color: Color(0xFFFFFFFF),
   );
 }
 
