@@ -16,16 +16,9 @@ class SettingsSection extends StatefulWidget {
 }
 
 class _SettingsSectionState extends State<SettingsSection> {
-  @override
-  Widget build(final BuildContext context) {
-    final double _sw = MediaQuery.of(context).size.width;
-
-    Widget _buildDarkModeToggle(
-      final SettingsDrawerViewModel vm,
-      final double _sw,
-    ) {
+  Widget _buildDarkModeToggle(final SettingsDrawerViewModel vm) {
       int _index = 0;
-      final double halfSw = (_sw - 64) / 3;
+    final double halfSw = (Get.width) / 3;
       if (vm.useDarkMode) {
         _index = 1;
       } else {
@@ -42,13 +35,13 @@ class _SettingsSectionState extends State<SettingsSection> {
             ],
             totalSwitches: 2,
             onToggle: (final _) => <dynamic>{vm.toggleDarkMode()},
+          // onToggle: vm.toggleDarkMode(),
             animate: true,
             curve: Curves.easeInOut,
             animationDuration: 250,
             inactiveFgColor: vm.textColor,
             activeBgColor: <Color>[vm.userColor],
-            inactiveBgColor:
-                vm.useDarkMode ? const Color(0xFF303030) : AppColors.lightGrey,
+          inactiveBgColor: vm.inactiveBgColor,
           )
         ],
       );
@@ -56,7 +49,7 @@ class _SettingsSectionState extends State<SettingsSection> {
 
     Widget _buildColorChooser(
       final SettingsDrawerViewModel vm,
-      final double _sw,
+    // final double _sw,
     ) {
       Color _newColor = vm.userColor;
       return Padding(
@@ -101,45 +94,7 @@ class _SettingsSectionState extends State<SettingsSection> {
                     ),
                   ),
                 );
-              },
-              // onTap: () async => showDialog(
-              //   context: context,
-              //   builder: (final BuildContext ctx) => StatefulBuilder(
-              //     builder: (
-              //       final BuildContext context,
-              //       final Function(void Function()) setState,
-              //     ) =>
-              //         AlertDialog(
-              //       backgroundColor: vm.canvasColor,
-              //       title: Text(
-              //         'color-picker.title'.tr,
-              //         style: TextStyle(color: vm.textColor),
-              //       ),
-              //       actions: <Widget>[
-              //         ElevatedButton(
-              //           style: ElevatedButton.styleFrom(
-              //             backgroundColor: _newColor,
-              //           ),
-              //           child: Text(
-              //             'submit'.tr,
-              //             style: const TextStyle(color: Colors.white),
-              //           ),
-              //           onPressed: () => Navigator.pop(context),
-              //         )
-              //       ],
-              //       content: BlockPicker(
-              //         useInShowDialog: true,
-              //         pickerColor: vm.userColor,
-              //         onColorChanged: (final Color selectedColor) {
-              //           setState(() => _newColor = selectedColor);
-              //           vm.dispatch(
-              //             ChangeUserColorAction(selectedColor),
-              //           );
-              //         },
-              //       ),
-              //     ),
-              //   ),
-              // ),
+            },
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
@@ -161,6 +116,23 @@ class _SettingsSectionState extends State<SettingsSection> {
       );
     }
 
+  Widget _buildTitle(final dynamic vm) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Text(
+        'drawer.settings.title'.tr,
+        style: TextStyle(
+          fontFamily: 'Montserrat',
+          fontSize: 20,
+          color: vm.textColor,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(final BuildContext context) {
     return StoreConnector<GlobalAppState, SettingsDrawerViewModel>(
       distinct: true,
       converter: SettingsDrawerViewModel.create,
@@ -169,20 +141,9 @@ class _SettingsSectionState extends State<SettingsSection> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Text(
-                'drawer.settings.title'.tr,
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: 20,
-                  color: vm.textColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            _buildDarkModeToggle(vm, _sw),
-            _buildColorChooser(vm, _sw),
+            _buildTitle(vm),
+            _buildDarkModeToggle(vm),
+            _buildColorChooser(vm),
           ],
         ),
       ),
