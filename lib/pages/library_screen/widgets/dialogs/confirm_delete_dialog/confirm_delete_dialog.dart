@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get/get.dart';
 import 'package:librarian_frontend/models/models.dart';
 import 'package:librarian_frontend/pages/library_screen/widgets/dialogs/confirm_delete_dialog/confirm_delete_dialog_view_model.dart';
 import 'package:librarian_frontend/state.dart';
@@ -24,7 +25,7 @@ class ConfirmDeleteDialog extends StatelessWidget {
             SimpleDialog(
           backgroundColor: vm.canvasColor,
           title: Text(
-            'Confirm Delete',
+            'confirm-delete'.tr,
             style: TextStyle(color: vm.textColor),
           ),
           children: <Widget>[
@@ -57,16 +58,14 @@ class ConfirmDeleteDialog extends StatelessWidget {
                     text: TextSpan(
                       style: TextStyle(color: vm.textColor),
                       children: <TextSpan>[
-                        const TextSpan(
-                          text: 'Are you sure you want to delete "',
-                        ),
+                        TextSpan(text: 'delete-book-confirm-pt1'.tr),
                         TextSpan(
                           text: book.title,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        const TextSpan(
-                          text: '"?  This cannot be undone.',
-                          style: TextStyle(fontStyle: FontStyle.italic),
+                        TextSpan(
+                          text: 'delete-book-confirm-pt2'.tr,
+                          style: const TextStyle(fontStyle: FontStyle.italic),
                         )
                       ],
                     ),
@@ -77,7 +76,7 @@ class ConfirmDeleteDialog extends StatelessWidget {
                     children: <Widget>[
                       TextButton(
                         child: Text(
-                          'Cancel',
+                          'cancel'.tr,
                           style: TextStyle(color: vm.textColor),
                         ),
                         onPressed: () => Navigator.pop(context, false),
@@ -88,7 +87,7 @@ class ConfirmDeleteDialog extends StatelessWidget {
                           backgroundColor: vm.userColor,
                         ),
                         child: Text(
-                          'Delete',
+                          'delete'.tr,
                           style: TextStyle(color: vm.textColor),
                         ),
                         onPressed: () => Navigator.pop(context, true),

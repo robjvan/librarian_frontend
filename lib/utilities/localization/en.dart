@@ -18,6 +18,11 @@ final Map<String, String> englishStrings = <String, String>{
   'forgot-password': 'Forgot password',
   'send': 'Send',
   'save': 'Save',
+  'delete': 'Delete',
+  'confirm-delete': 'Confirm Delete',
+  'delete-book-confirm-pt1': 'Are you sure you want to delete "',
+  'delete-book-confirm-pt2': '"?  This cannot be undone.',
+  'credits': '© 2023 Rob Vandelinder',
   //
   'login.email': 'Email',
   'login.password': 'Password',
@@ -41,6 +46,12 @@ final Map<String, String> englishStrings = <String, String>{
   'drawer.settings.title': 'Settings',
   'drawer.settings.dark-mode': 'Dark Mode',
   'drawer.settings.light-mode': 'Light Mode',
+  'drawer.clear-library': 'Clear Library',
+  'drawer.confirm-clear':
+      'Are you sure you want to delete your entire library?  ',
+  'drawer.cannot-be-undone': 'This cannot be undone',
+  'drawer.about-app-blurb':
+      "Easily track books you've read, books you want to purchase, and all your favorites in one simple location",
   //
   'parse-error.author': 'Unknown author',
   'parse-error.title': 'Unknown title',

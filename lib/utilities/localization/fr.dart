@@ -15,6 +15,14 @@ final Map<String, String> frenchStrings = <String, String>{
   'error': 'Error',
   'submit': 'Submit',
   'ok': 'OK',
+  'forgot-password': 'Forgot password',
+  'send': 'Send',
+  'save': 'Save',
+  'delete': 'Delete',
+  'confirm-delete': 'Confirm Delete',
+  'delete-book-confirm-pt1': 'Are you sure you want to delete "',
+  'delete-book-confirm-pt2': '"?  This cannot be undone.',
+  'credits': '© 2023 Rob Vandelinder',
   //
   'login.email': 'Email',
   'login.password': 'Password',
@@ -38,6 +46,12 @@ final Map<String, String> frenchStrings = <String, String>{
   'drawer.settings.title': 'Settings',
   'drawer.settings.dark-mode': 'Dark Mode',
   'drawer.settings.light-mode': 'Light Mode',
+  'drawer.clear-library': 'Clear Library',
+  'drawer.confirm-clear':
+      'Are you sure you want to delete your entire library?  ',
+  'drawer.cannot-be-undone': 'This cannot be undone',
+  'drawer.about-app-blurb':
+      'Easily track books you\'ve read, books you want to purchase, and all your favorites in one simple location',
   //
   'parse-error.author': 'Unknown author',
   'parse-error.title': 'Unknown title',
@@ -54,6 +68,8 @@ final Map<String, String> frenchStrings = <String, String>{
   //
   'book-details-screen.page-count': '@pageCount pages',
   'book-details-screen.publisher': 'Published @publishYear by @publisher',
+  'book-details-screen.empty-publishYear': 'Published by @publisher',
+  'book-details-screen.empty-publisher': 'Published @publishYear',
   'book-details-screen.in-faves': 'In Faves',
   'book-details-screen.in-wishlist': 'In Wishlist',
   'book-details-screen.in-shopping-list': 'In Shopping List',
@@ -88,5 +104,24 @@ final Map<String, String> frenchStrings = <String, String>{
   'color-picker.title': 'Choose Accent Color',
   'color-picker.label': 'Accent Color: ',
   //
-  'error-dialog.content': 'No results found!  @error'
+  'error-dialog.content': 'No results found!  @error',
+  'send-reset-link':
+      'Enter your email address to have a password reset link sent to your inbox.',
+  //
+  'new-book.title-error': 'Title cannot be empty',
+  'new-book.title': 'Title',
+  'new-book.author': 'Author',
+  'new-book.publisher': 'Publisher',
+  'new-book.publish-year': 'Publish Year',
+  'new-book.page-count': 'Page Count',
+  'new-book.description': 'Description',
+  'new-book.rating': 'Rating',
+  'new-book.is-mature': 'Mature content',
+  'new-book.add-to-wishlist': 'Add to wishlist',
+  'new-book.add-to-shopping-list': 'Add to shopping list',
+  'new-book.have-read': 'Already read it',
+  'new-book.add-to-faves': 'Add to favorites',
+  'new-book.isbn': 'ISBN',
+  'new-book.already-exists':
+      'This book is already in your library!  Try a different book.',
 };
