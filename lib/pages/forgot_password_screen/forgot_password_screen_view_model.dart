@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/services/authentication.dart';
+import 'package:librarian_frontend/state.dart';
 import 'package:redux/redux.dart';
 
 @immutable

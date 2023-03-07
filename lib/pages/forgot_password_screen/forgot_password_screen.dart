@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
-import 'package:librarian_frontend/pages/login_screen/forgot_password_screen/forgot_password_screen_view_model.dart';
-import 'package:librarian_frontend/pages/login_screen/widgets/login_header/login_header.dart';
+import 'package:librarian_frontend/pages/forgot_password_screen/forgot_password_screen_view_model.dart';
 import 'package:librarian_frontend/state.dart';
 import 'package:librarian_frontend/utilities/theme.dart';
+import 'package:librarian_frontend/widgets/login_header/login_header.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({final Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   void initState() {
     super.initState();
-    emailController.text = 'rob@test.com';
+    // emailController.text = 'rob@robjvan.ca';
   }
 
   Widget _buildSubheader() {
@@ -86,12 +86,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  Widget _buildBlurb(final ForgotPasswordScreenViewModel vm) {
+  Widget _buildBlurb() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
       child: Text(
         'send-reset-link'.tr,
-        style: vm.blurbStyle,
+        style: AppTextStyles.blurbStyle,
         textAlign: TextAlign.center,
       ),
     );
@@ -125,7 +125,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                        _buildBlurb(vm),
+                        _buildBlurb(),
                         const SizedBox(height: 32),
                         _buildEmailField(),
                         _buildSubmitButton(vm),
