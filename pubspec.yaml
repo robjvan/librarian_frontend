@@ -22,6 +22,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   flutter_colorpicker: ^1.0.3
   flutter_jailbreak_detection: ^1.8.0
+  flutter_launcher_icons: ^0.12.0
   flutter_native_splash: ^2.2.16
   flutter_rating_bar: ^4.0.1
   flutter_redux: ^0.10.0
@@ -45,6 +46,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.12.0"
   
 flutter:
   uses-material-design: true
@@ -84,3 +86,9 @@ flutter:
           style: italic
         - asset: assets/fonts/AlegreyaSansSC-Bold.ttf
           weight: 700
+          
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo/app_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
