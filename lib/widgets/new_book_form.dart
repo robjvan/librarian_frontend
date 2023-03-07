@@ -53,7 +53,8 @@ class _NewBookFormState extends State<NewBookForm> {
     super.dispose();
   }
 
-  Widget _buildImageGrabber(final NewBookScreenViewModel vm) => SizedBox(
+  Widget _buildImageGrabber(final NewBookScreenViewModel vm) {
+    return SizedBox(
         // height: 200,
         child: Row(
           children: <Widget>[
@@ -109,6 +110,7 @@ class _NewBookFormState extends State<NewBookForm> {
           ],
         ),
       );
+  }
 
   Widget _buildRatingsBar(
     final NewBookScreenViewModel vm,
