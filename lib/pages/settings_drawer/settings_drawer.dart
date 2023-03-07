@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:librarian_frontend/pages/settings_drawer/sections/settings_sections.dart';
 import 'package:librarian_frontend/pages/settings_drawer/settings_drawer_view_model.dart';
-import 'package:librarian_frontend/pages/settings_drawer/settings_footer/settings_footer.dart';
-import 'package:librarian_frontend/pages/settings_drawer/settings_header/settings_header.dart';
-import 'package:librarian_frontend/pages/settings_drawer/settings_section/settings_section.dart';
 import 'package:librarian_frontend/state.dart';
 
 class SettingsDrawer extends StatefulWidget {
