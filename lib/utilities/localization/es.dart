@@ -1,7 +1,7 @@
 final Map<String, String> spanishStrings = <String, String>{
   'app-title': 'Librarian',
   'login-button': 'Login',
-  'register-button': 'Register',
+  'register': 'Register',
   'cancel': 'Cancel',
   'search': 'Search',
   'yes': 'Yes',
@@ -26,7 +26,7 @@ final Map<String, String> spanishStrings = <String, String>{
   //
   'login.email': 'Email',
   'login.password': 'Password',
-  'login.sign-in': 'Sign In',
+  'sign-in': 'Sign In',
   'login.verify-email': 'Verify email address before signing in!',
   'login.error-initializing': 'Error initializing Firebase',
   'login.empty-email': 'Email cannot be empty!',

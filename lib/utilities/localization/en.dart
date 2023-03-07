@@ -1,7 +1,7 @@
 final Map<String, String> englishStrings = <String, String>{
   'app-title': 'Librarian',
   'login-button': 'Login',
-  'register-button': 'Register',
+  'register': 'Register',
   'cancel': 'Cancel',
   'search': 'Search',
   'yes': 'Yes',
@@ -23,15 +23,15 @@ final Map<String, String> englishStrings = <String, String>{
   'delete-book-confirm-pt1': 'Are you sure you want to delete "',
   'delete-book-confirm-pt2': '"?  This cannot be undone.',
   'credits': '© 2023 Rob Vandelinder',
+  'email': 'Email',
+  'password': 'Password',
+  'empty-email': 'Email cannot be empty!',
+  'empty-password': 'Password cannot be empty!',
+  'sign-in': 'Sign In',
   //
-  'login.email': 'Email',
-  'login.password': 'Password',
-  'login.sign-in': 'Sign In',
   'login.verify-email': 'Verify email address before signing in!',
   'login.error-initializing': 'Error initializing Firebase',
-  'login.empty-email': 'Email cannot be empty!',
   'login.email-format': 'Email must be proper format!',
-  'login.empty-password': 'Password cannot be empty!',
   'login.create-account': 'Sign Up',
   'login.forgot-password': 'Forgot Password?',
   'login.reset-pass-sent': 'Password reset email has been sent to @email',
@@ -124,4 +124,13 @@ final Map<String, String> englishStrings = <String, String>{
   'new-book.isbn': 'ISBN',
   'new-book.already-exists':
       'This book is already in your library!  Try a different book.',
+  //
+  'password.empty-email': 'Password cannot be empty!',
+  'password.lower-case': 'one lower case letter',
+  'password.upper-case': 'one lower case letter',
+  'password.symbol': r'one special character (@,*,-,$,#,&, etc)',
+  'password.number': 'one number',
+  //
+  'register.email': '',
+  'register.password': '',
 };
