@@ -119,8 +119,7 @@ class _NewBookFormFieldState extends State<NewBookFormField> {
 
   @override
   Widget build(final BuildContext context) {
-    final double sw = MediaQuery.of(context).size.width;
-    
+   
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
