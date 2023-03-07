@@ -153,7 +153,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildForgotPassButton(final LoginScreenViewModel vm) {
     return TextButton(
       child: Text('login.forgot-password'.tr,
-          style: AppTextStyles.passwordButtonStyle),
+        style: AppTextStyles.passwordButtonStyle,
+      ),
       onPressed: () => Get.to(() => const ForgotPasswordScreen()),
     );
   }
