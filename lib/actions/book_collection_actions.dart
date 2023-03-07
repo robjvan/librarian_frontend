@@ -56,3 +56,5 @@ class ToggleHaveReadAction {
   @override
   String toString() => 'ToggleHaveReadAction{bookId: $bookId}';
 }
+
+class ClearLibraryAction {}

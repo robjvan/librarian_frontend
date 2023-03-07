@@ -26,6 +26,9 @@ List<Middleware<GlobalAppState>> buildGlobalAppStateMiddleware(
       TypedMiddleware<GlobalAppState, ToggleInFavesListAction>(
         firebase.handleToggleInFavesListRequest(),
       ),
+      TypedMiddleware<GlobalAppState, ClearLibraryAction>(
+        firebase.handleClearLibraryRequest(),
+      ),
       TypedMiddleware<GlobalAppState, SearchIsbnAction>(
         gbooks.handleSearchIsbnRequest(),
       ),

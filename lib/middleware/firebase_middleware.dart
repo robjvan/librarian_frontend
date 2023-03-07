@@ -43,7 +43,6 @@ Middleware<GlobalAppState> handleAddBookToFirebaseRequest() => (
             .where('sortAuthor', isEqualTo: _tempBook.sortAuthor)
             .get()
             .then((final QuerySnapshot<Map<String, dynamic>> snapshot) {
-
           if (snapshot.docs.isNotEmpty) {
             Get.snackbar(
               'error'.tr,
@@ -155,5 +154,32 @@ Middleware<GlobalAppState> handleToggleInWishlistRequest() => (
             .update(<String, dynamic>{'inWishList': false});
       } on Exception {
         log('Error deleting book, try again later');
+      }
+    };
+
+Middleware<GlobalAppState> handleClearLibraryRequest() => (
+      final Store<GlobalAppState> store,
+      final dynamic action,
+      final dynamic next,
+    ) async {
+      try {
+        final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('books')
+                .get();
+
+        for (final QueryDocumentSnapshot<Map<String, dynamic>> docSnapshot
+            in querySnapshot.docs) {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('books')
+              .doc(docSnapshot.id)
+              .delete();
+        }
+      } on Exception catch (e) {
+        print(e);
       }
     };
