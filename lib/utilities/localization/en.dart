@@ -125,12 +125,13 @@ final Map<String, String> englishStrings = <String, String>{
   'new-book.already-exists':
       'This book is already in your library!  Try a different book.',
   //
-  'password.empty-email': 'Password cannot be empty!',
-  'password.lower-case': 'one lower case letter',
-  'password.upper-case': 'one lower case letter',
-  'password.symbol': r'one special character (@,*,-,$,#,&, etc)',
-  'password.number': 'one number',
+  'password.empty-password': 'Password cannot be empty!',
+  'password.lower-case': '- one lower case letter',
+  'password.upper-case': '- one lower case letter',
+  'password.symbol': r'- one special character (@,*,-,$,#,&, etc)',
+  'password.number': '- one number',
+  'password.invalid': 'Password is not valid!',
+  'password.rules': 'Password must contain the following:',
   //
-  'register.email': '',
-  'register.password': '',
+  'register-blurb': 'Sign up to use Librarian',
 };

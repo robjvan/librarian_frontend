@@ -58,7 +58,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: emailController,
         decoration: InputDecoration(
-          labelText: 'login.email'.tr,
+          labelText: 'email'.tr,
           labelStyle: const TextStyle(fontSize: 20),
         ),
         validator: (final String? text) {
