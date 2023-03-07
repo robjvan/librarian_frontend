@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:librarian_frontend/actions/actions.dart';
 import 'package:librarian_frontend/pages/library_screen/library_screen_view_model.dart';
-import 'package:librarian_frontend/pages/library_screen/widgets/widgets.dart';
 import 'package:librarian_frontend/pages/settings_drawer/settings_drawer.dart';
 import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/widgets/widgets.dart';
 import 'package:redux/redux.dart';
 
 class LibraryScreen extends StatelessWidget {

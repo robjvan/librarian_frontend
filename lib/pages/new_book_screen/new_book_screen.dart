@@ -3,9 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:librarian_frontend/pages/new_book_screen/new_book_screen_view_model.dart';
-import 'package:librarian_frontend/pages/new_book_screen/widgets/new_book_form.dart';
-import 'package:librarian_frontend/pages/new_book_screen/widgets/widgets.dart';
 import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/widgets/widgets.dart';
 
 class NewBookScreen extends StatelessWidget {
   const NewBookScreen({super.key});
