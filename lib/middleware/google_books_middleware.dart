@@ -8,9 +8,9 @@ import 'package:librarian_frontend/api/api_utils.dart';
 import 'package:librarian_frontend/api/apis.dart';
 import 'package:librarian_frontend/main.dart';
 import 'package:librarian_frontend/models/models.dart';
-import 'package:librarian_frontend/pages/library_screen/widgets/dialogs/dialogs.dart';
 import 'package:librarian_frontend/providers/providers.dart';
 import 'package:librarian_frontend/state.dart';
+import 'package:librarian_frontend/widgets/widgets.dart';
 import 'package:redux/redux.dart';
 
 Middleware<GlobalAppState> handleSearchIsbnRequest() {
